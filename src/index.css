@@ -1,0 +1,273 @@
+@import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@700;900&family=Noto+Sans:wght@400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Rye&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Mulish:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Muli:wght@200;300;400;500;600;700;800;900&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html,
+body,
+#root {
+  min-height: 100%;
+  max-width: 100vw;
+}
+
+html,
+body {
+  overflow-x: hidden;
+}
+
+img,
+video,
+svg {
+  max-width: 100%;
+}
+
+.overflow-x-auto {
+  -webkit-overflow-scrolling: touch;
+}
+
+body {
+  @apply font-body text-gov-ink bg-[#f8fafc];
+  font-family: 'Noto Sans', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Card and Container Styles */
+.gov-card {
+  @apply bg-white border border-gov-border rounded-sm shadow-gov transition-shadow duration-200;
+}
+
+.gov-card:hover {
+  box-shadow: 0 3px 8px rgba(53, 165, 241, 0.15);
+}
+
+.gov-title-bar {
+  @apply bg-gov-navy text-white px-4 py-2.5 font-display font-bold tracking-wide text-sm md:text-base flex items-center justify-between;
+}
+
+.gov-form-box {
+  background-color: #eaf6ff;
+  @apply border border-gov-border rounded-sm p-5 md:p-6;
+}
+
+/* Input Styles */
+.gov-input {
+  @apply w-full border border-gov-border rounded-sm px-3 py-2 text-sm bg-white text-gov-ink placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-gov-blue focus:border-gov-blue transition-all;
+}
+
+.gov-label {
+  @apply block text-xs font-bold text-gov-slate uppercase tracking-wider mb-1;
+}
+
+/* Button Styles */
+.gov-btn {
+  @apply inline-flex items-center justify-center gap-1.5 px-4 py-2 rounded-sm text-sm font-semibold transition-all duration-150 cursor-pointer select-none active:scale-[0.99];
+}
+
+.gov-btn-primary {
+  @apply gov-btn bg-[#35a5f1] hover:bg-[#1e8fdb] text-white shadow-sm disabled:opacity-50 disabled:cursor-not-allowed disabled:active:scale-100;
+}
+
+.gov-btn-secondary {
+  @apply gov-btn bg-white text-gov-navy border border-gov-navy hover:bg-gov-lightblue disabled:opacity-50 disabled:cursor-not-allowed;
+}
+
+.gov-btn-outline {
+  @apply gov-btn bg-transparent text-[#35a5f1] border border-[#35a5f1] hover:bg-[#35a5f1] hover:text-white;
+}
+
+.gov-btn-danger {
+  @apply gov-btn bg-white text-gov-maroon border border-gov-maroon hover:bg-red-50 disabled:opacity-50 disabled:cursor-not-allowed;
+}
+
+.gov-btn-success {
+  @apply gov-btn bg-[#00875a] text-white hover:bg-[#006644];
+}
+
+/* Official SBTET Table Styles */
+.gov-table {
+  @apply w-full text-xs md:text-sm border-collapse text-left border border-gov-border;
+}
+
+.gov-table th {
+  @apply bg-gov-navy text-white px-3 py-2 font-semibold text-xs uppercase tracking-wider border-r border-gov-navy/20 last:border-r-0;
+}
+
+.gov-table td {
+  @apply px-3 py-2 border-b border-r border-gov-border text-gov-ink last:border-r-0;
+}
+
+.gov-table tr:nth-child(even) td {
+  background-color: #f8fafc;
+}
+
+.gov-table tr:hover td {
+  background-color: #e8f4fe;
+}
+
+/* Status Badges */
+.status-badge {
+  @apply inline-flex items-center px-2 py-0.5 rounded-sm text-[11px] font-bold uppercase tracking-wider border border-transparent;
+}
+
+/* Blinking (NEW) Marquee Badge Animation */
+@keyframes blink-badge {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.15;
+    transform: scale(0.96);
+  }
+}
+
+.blink-new {
+  animation: blink-badge 1.1s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  display: inline-block;
+  font-weight: 900;
+  color: #dc2626;
+  text-shadow: 0 0 1px rgba(220, 38, 38, 0.3);
+}
+
+/* Marquee Ticker */
+@keyframes marquee-scroll {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee-scroll 40s linear infinite;
+}
+
+.marquee-track:hover {
+  animation-play-state: paused;
+}
+
+/* Custom Scrollbar for dense government lists */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #f1f5f9;
+}
+::-webkit-scrollbar-thumb {
+  background: #35a5f166;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #35a5f1;
+}
+
+/* Text-size accessibility control */
+html[data-text-size="sm"] {
+  font-size: 14px;
+}
+html[data-text-size="md"] {
+  font-size: 16px;
+}
+html[data-text-size="lg"] {
+  font-size: 18px;
+}
+
+/* Clean Print Media Styling */
+@media print {
+  header,
+  footer,
+  .no-print,
+  .marquee-track,
+  button:not(.allow-print) {
+    display: none !important;
+  }
+  body, html {
+    background: white !important;
+    font-size: 11pt !important;
+  }
+  .gov-card {
+    border: 1px solid #999 !important;
+    box-shadow: none !important;
+    page-break-inside: avoid;
+  }
+}
+
+:root {
+  --font-display: 'Merriweather', Georgia, 'Times New Roman', serif;
+  --font-sans: 'Noto Sans', Arial, Helvetica, sans-serif;
+}
+
+.font-display { font-family: var(--font-display); }
+.font-sans { font-family: var(--font-sans); }
+body { font-family: var(--font-sans); }
+
+@keyframes gov-marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+.marquee-track {
+  animation: gov-marquee 38s linear infinite;
+  will-change: transform;
+}
+.marquee-track:hover {
+  animation-play-state: paused;
+}
+
+@keyframes gov-blink {
+  0%, 49%   { opacity: 1; }
+  50%, 100% { opacity: 0; }
+}
+.blink-new {
+  animation: gov-blink 1s steps(1, start) infinite;
+}
+
+@keyframes gov-spin {
+  to { transform: rotate(360deg); }
+}
+.gov-spinner-ring {
+  animation: gov-spin 0.9s linear infinite;
+}
+.gov-spinner-ring-outer {
+  animation: gov-spin 1.6s linear infinite reverse;
+}
+
+/* WhatsApp Chat UI Styles */
+.whatsapp-chat-bg {
+  background-color: #efeae2;
+  background-image: radial-gradient(#d4cdc3 0.75px, transparent 0.75px), radial-gradient(#d4cdc3 0.75px, #efeae2 0.75px);
+  background-size: 30px 30px;
+  background-position: 0 0, 15px 15px;
+}
+
+@keyframes typing-bounce {
+  0%, 60%, 100% {
+    transform: translateY(0);
+    opacity: 0.4;
+  }
+  30% {
+    transform: translateY(-4px);
+    opacity: 1;
+  }
+}
+
+.typing-dot-1 {
+  animation: typing-bounce 1.2s infinite ease-in-out;
+  animation-delay: 0s;
+}
+
+.typing-dot-2 {
+  animation: typing-bounce 1.2s infinite ease-in-out;
+  animation-delay: 0.2s;
+}
+
+.typing-dot-3 {
+  animation: typing-bounce 1.2s infinite ease-in-out;
+  animation-delay: 0.4s;
+}
