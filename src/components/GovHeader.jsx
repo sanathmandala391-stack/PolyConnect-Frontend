@@ -259,14 +259,14 @@ export default function GovHeader() {
       {/* 2. Main Blue Navigation Bar */}
       <nav
         className="bg-[#35a5f1] text-white shadow-md relative w-full"
-        style={{ fontFamily: "'Mulish', sans-serif", fontWeight: 400, fontSize: "10px" }}
+        style={{ fontFamily: "'Mulish', sans-serif", fontWeight: 400, fontSize: "14px" }}
       >
         <div className="max-w-7xl mx-auto px-3 sm:px-6 flex items-center justify-between min-h-[44px]">
 
           {/* Mobile Home Icon (Visible on mobile on the left) */}
           <NavLink
             to="/"
-            className="xl:hidden p-2.5 flex items-center text-white hover:bg-[] transition-colors"
+            className="xl:hidden p-2.5 flex items-center text-white hover:bg-[#2888c9] transition-colors"
             aria-label="Home"
           >
             <i className="fa-solid fa-house text-lg text-white" />
@@ -274,14 +274,14 @@ export default function GovHeader() {
 
           {/* Desktop Nav Items */}
           <div
-            className="hidden xl:flex items-center flex-nowrap"
-            style={{ fontFamily: "'Mulish', sans-serif", fontWeight: 400, fontSize: "18px" }}
+            className="hidden xl:flex items-center flex-nowrap text-[14px]"
+            style={{ fontFamily: "'Mulish', sans-serif", fontWeight: 400 }}
           >
             <NavLink
               to="/"
               className={({ isActive }) =>
                 `px-3.5 py-3 flex items-center justify-center text-white hover:bg-[#2888c9] transition-colors shrink-0 ${
-                  isActive ? "bg-[]" : ""
+                  isActive ? "bg-[#2888c9]" : ""
                 }`
               }
               aria-label="Home"
