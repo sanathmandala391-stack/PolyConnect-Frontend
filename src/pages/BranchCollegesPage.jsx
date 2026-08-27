@@ -34,67 +34,17 @@ export default function BranchCollegesPage() {
   const courseName = colleges[0]?.courseName || branchCode;
 
   return (
-    <div className="courses-page-wrapper">
+    <div className="courses-page-wrapper w-full">
       <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=Muli:wght@400;600;700&display=swap');
+
         .courses-page-wrapper {
-          font-family: Arial, Helvetica, sans-serif;
+          font-family: 'Muli', sans-serif;
           color: #333333;
-          background-color: #ffffff;
           min-height: 100vh;
           width: 100%;
         }
 
-        /* Top Breadcrumb Bar */
-        .breadcrumb-bar {
-          background-color: #ebf0f5;
-          padding: 12px 36px;
-          font-size: 15px;
-          border-bottom: 1px solid #e0e5eb;
-          display: flex;
-          align-items: center;
-        }
-
-        .breadcrumb-bar .home-link {
-          font-weight: bold;
-          color: #0b3b60;
-          text-decoration: none;
-          cursor: pointer;
-        }
-
-        .breadcrumb-bar .home-link:hover {
-          text-decoration: underline;
-        }
-
-        .breadcrumb-bar .sep {
-          margin: 0 8px;
-          color: #6c757d;
-        }
-
-        .breadcrumb-bar .current {
-          color: #6c757d;
-        }
-
-        /* Main Content Area */
-        .courses-content {
-          max-width: 1100px;
-          margin: 0 auto;
-          padding: 36px 24px 60px;
-        }
-
-        .page-title {
-          font-size: 22px;
-          font-weight: bold;
-          margin-bottom: 6px;
-          color: #212529;
-        }
-
-        .page-subtitle {
-          font-size: 14px;
-          color: #555555;
-          margin-bottom: 24px;
-        }
-
-        /* Table */
         .courses-table-container {
           width: 100%;
           overflow-x: auto;
@@ -110,9 +60,9 @@ export default function BranchCollegesPage() {
         .courses-table th,
         .courses-table td {
           border: 1px solid #212529;
-          padding: 9px 14px;
+          padding: 8px 12px;
           text-align: left;
-          font-size: 14px;
+          font-size: 13.5px;
           line-height: 1.45;
         }
 
@@ -124,8 +74,9 @@ export default function BranchCollegesPage() {
 
         .courses-table td.sno-col,
         .courses-table th.sno-col {
-          width: 70px;
+          width: 60px;
           min-width: 50px;
+          text-align: center;
         }
 
         .courses-table td.intake-col,
@@ -146,42 +97,51 @@ export default function BranchCollegesPage() {
         }
 
         .status-msg {
-          padding: 30px;
+          padding: 24px;
           text-align: center;
           color: #666666;
-          font-size: 15px;
+          font-size: 14px;
         }
 
         .error-msg {
-          padding: 20px;
+          padding: 16px;
           text-align: center;
           color: #d9534f;
           font-weight: bold;
-          font-size: 15px;
+          font-size: 14px;
         }
       `}</style>
 
       {/* Top Breadcrumb */}
-      <div className="breadcrumb-bar">
-        <span className="home-link" onClick={() => navigate("/")}>
+      <div
+        className="-mx-3 sm:-mx-4 md:-mx-6 bg-[#d8dadc] px-4 sm:px-8 py-2 flex items-center mb-4 text-[13px] sm:text-[14px]"
+        style={{ boxSizing: "border-box", marginTop: "-16px" }}
+      >
+        <span
+          className="font-bold text-[#0b3b60] hover:underline cursor-pointer"
+          onClick={() => navigate("/")}
+        >
           Home
         </span>
-        <span className="sep">/</span>
-        <span className="home-link" onClick={() => navigate("/courses")}>
+        <span className="mx-2 text-gray-500">/</span>
+        <span
+          className="font-bold text-[#0b3b60] hover:underline cursor-pointer"
+          onClick={() => navigate("/courses")}
+        >
           Courses
         </span>
-        <span className="sep">/</span>
-        <span className="current">{branchCode}</span>
+        <span className="mx-2 text-gray-500">/</span>
+        <span className="text-gray-600 font-semibold">{branchCode}</span>
       </div>
 
-      <div className="courses-content">
-        <div className="page-title">
+      <div className="w-full max-w-[1100px] mx-auto px-1 sm:px-4 py-2 sm:py-4">
+        <h1 className="text-lg sm:text-2xl font-bold mb-1 text-[#212529]">
           {branchCode} - {courseName}
-        </div>
+        </h1>
         {academicYear && (
-          <div className="page-subtitle">
+          <p className="text-xs sm:text-sm text-gray-600 mb-6 font-medium">
             Colleges offering this branch for Academic Year {academicYear}
-          </div>
+          </p>
         )}
 
         {loading && <div className="status-msg">Loading colleges...</div>}
@@ -202,7 +162,7 @@ export default function BranchCollegesPage() {
                 {colleges.map((c, index) => (
                   <tr key={c.collegeCode + index}>
                     <td className="sno-col">{index + 1}</td>
-                    <td className="code-col">{c.collegeCode}</td>
+                    <td className="code-col font-mono font-medium">{c.collegeCode}</td>
                     <td>{c.collegeName}</td>
                     <td className="intake-col">{c.intake}</td>
                   </tr>
