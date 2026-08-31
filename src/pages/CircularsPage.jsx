@@ -11,7 +11,18 @@ const TYPE_STYLES = {
 };
 
 export default function CircularsPage() {
-  const [circulars, setCirculars] = useState(null);
+  const [circulars, setCirculars] = useState(() => {
+    try {
+      const cached = localStorage.getItem("pc_cache_circulars");
+      if (cached) {
+        const parsed = JSON.parse(cached);
+        if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+      }
+    } catch {
+      // ignore
+    }
+    return null;
+  });
   const [error, setError] = useState("");
   const [typeFilter, setTypeFilter] = useState("ALL");
   const [search, setSearch] = useState("");
@@ -27,13 +38,20 @@ export default function CircularsPage() {
           const sorted = [...res.data].sort(
             (a, b) => new Date(b.timeStamp || b.NotificationDate || 0) - new Date(a.timeStamp || a.NotificationDate || 0)
           );
+          try {
+            localStorage.setItem("pc_cache_circulars", JSON.stringify(sorted));
+          } catch {
+            // Storage quota
+          }
           setCirculars(sorted);
         } else {
-          setCirculars([]);
+          setCirculars((prev) => prev || []);
         }
       })
       .catch((err) => {
-        if (isMounted) setError(apiErrorMessage(err, "SBTET circulars service is temporarily unavailable."));
+        if (isMounted && !circulars) {
+          setError(apiErrorMessage(err, "SBTET circulars service is temporarily unavailable."));
+        }
       });
     return () => {
       isMounted = false;

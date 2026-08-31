@@ -3017,8 +3017,28 @@ const EXTENDED_SLIDES = [...BANNER_SLIDES, BANNER_SLIDES[0]];
 const SLIDE_INTERVAL_MS = 3000;
 
 export default function HomePage() {
-  const [notifications, setNotifications] = useState([]);
-  const [loadingNotifications, setLoadingNotifications] = useState(true);
+  const [notifications, setNotifications] = useState(() => {
+    try {
+      const cached = localStorage.getItem("pc_cache_circulars");
+      if (cached) {
+        const parsed = JSON.parse(cached);
+        if (Array.isArray(parsed) && parsed.length > 0) {
+          return parsed.slice(0, 5);
+        }
+      }
+    } catch {
+      // Ignore parse error
+    }
+    return [];
+  });
+  const [loadingNotifications, setLoadingNotifications] = useState(() => {
+    try {
+      const cached = localStorage.getItem("pc_cache_circulars");
+      return !cached;
+    } catch {
+      return true;
+    }
+  });
   const [notificationsError, setNotificationsError] = useState(false);
   
   // Carousel States
@@ -3039,9 +3059,6 @@ function isRecentNotification(dateValue) {
   return diffDays >= 0 && diffDays <= 5;
 }
 
-
-
-
   useEffect(() => {
     let isMounted = true;
     api
@@ -3050,12 +3067,18 @@ function isRecentNotification(dateValue) {
         if (!isMounted) return;
         if (Array.isArray(res.data)) {
           const sorted = [...res.data]
-            .sort((a, b) => new Date(b.timeStamp || b.NotificationDate || 0).getTime() - new Date(a.timeStamp || a.NotificationDate || 0).getTime())
-            .slice(0, 5);
-          setNotifications(sorted);
+            .sort((a, b) => new Date(b.timeStamp || b.NotificationDate || 0).getTime() - new Date(a.timeStamp || a.NotificationDate || 0).getTime());
+          try {
+            localStorage.setItem("pc_cache_circulars", JSON.stringify(sorted));
+          } catch {
+            // Storage quota or disabled
+          }
+          setNotifications(sorted.slice(0, 5));
         }
       })
-      .catch(() => { if (isMounted) setNotificationsError(true); })
+      .catch(() => {
+        if (isMounted && notifications.length === 0) setNotificationsError(true);
+      })
       .finally(() => { if (isMounted) setLoadingNotifications(false); });
     return () => { isMounted = false; };
   }, []);

@@ -6,10 +6,29 @@ export default function CoursesPage() {
   const navigate = useNavigate();
 
   const [activeTab, setActiveTab] = useState("courses"); // "courses" | "colleges"
-  const [courses, setCourses] = useState([]);
-  const [academicYear, setAcademicYear] = useState("");
+  const [courses, setCourses] = useState(() => {
+    try {
+      const cached = localStorage.getItem("pc_cache_courses");
+      return cached ? JSON.parse(cached) : [];
+    } catch {
+      return [];
+    }
+  });
+  const [academicYear, setAcademicYear] = useState(() => {
+    try {
+      return localStorage.getItem("pc_cache_acad_year") || "";
+    } catch {
+      return "";
+    }
+  });
   const [search, setSearch] = useState("");
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(() => {
+    try {
+      return !localStorage.getItem("pc_cache_courses");
+    } catch {
+      return true;
+    }
+  });
   const [error, setError] = useState("");
   const [selectedBranchCode, setSelectedBranchCode] = useState(null);
   const [collegeSummary, setCollegeSummary] = useState([]);
@@ -18,23 +37,32 @@ export default function CoursesPage() {
   const [summaryLoaded, setSummaryLoaded] = useState(false);
 
   useEffect(() => {
+    let isMounted = true;
     const load = async () => {
       try {
-        setLoading(true);
-        setError("");
         const [courseList, year] = await Promise.all([
           getAllCourses(),
           getCurrentAcademicYear(),
         ]);
+        if (!isMounted) return;
         setCourses(courseList);
         setAcademicYear(year);
+        try {
+          localStorage.setItem("pc_cache_courses", JSON.stringify(courseList));
+          if (year) localStorage.setItem("pc_cache_acad_year", year);
+        } catch {
+          // ignore
+        }
       } catch (err) {
-        setError("Failed to load courses. Please try again.");
+        if (isMounted && courses.length === 0) {
+          setError("Failed to load courses. Please try again.");
+        }
       } finally {
-        setLoading(false);
+        if (isMounted) setLoading(false);
       }
     };
     load();
+    return () => { isMounted = false; };
   }, []);
 
   useEffect(() => {
