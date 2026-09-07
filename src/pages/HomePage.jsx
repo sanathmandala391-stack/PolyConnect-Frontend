@@ -2310,7 +2310,8 @@ import sbtet3 from "../images/sbtet3.png"
 import sbtet4 from "../images/sbtet4.png"
 import sbtetDip from "../images/sbtet-diploma.jpg"
 import  sbtetShort from "../images/sbtet-shothand.jpg"
-import SbtetType from "../images/typewriter.jpg"
+import SbtetType from "../images/typewriter.jpg";
+import newGif from "../images/new.gif";
 
 
 // --- Stats data ---
@@ -3049,14 +3050,64 @@ export default function HomePage() {
 
 const NEW_GIF_URL = "https://tgpolycet.nic.in/images/new.gif";
 
-function isRecentNotification(dateValue) {
-  if (!dateValue) return false;
-  const notifDate = new Date(dateValue);
-  if (isNaN(notifDate.getTime())) return false;
+function parseNotificationDate(val) {
+  if (!val) return null;
+  if (typeof val === "number") return new Date(val);
+  if (val instanceof Date) return isNaN(val.getTime()) ? null : val;
+  const str = String(val).trim();
+  if (!str) return null;
 
-  const diffMs = Date.now() - notifDate.getTime();
+  // ASP.NET JSON /Date(123456789)/
+  const aspMatch = str.match(/\/Date\((\d+)\)\//);
+  if (aspMatch) {
+    const d = new Date(parseInt(aspMatch[1], 10));
+    return isNaN(d.getTime()) ? null : d;
+  }
+
+  // DD-MM-YYYY or DD/MM/YYYY
+  const ddmmyyyy = str.match(/^(\d{1,2})[-/](\d{1,2})[-/](\d{4})(.*)$/);
+  if (ddmmyyyy) {
+    const day = parseInt(ddmmyyyy[1], 10);
+    const month = parseInt(ddmmyyyy[2], 10) - 1;
+    const year = parseInt(ddmmyyyy[3], 10);
+    const d = new Date(year, month, day);
+    if (!isNaN(d.getTime())) return d;
+  }
+
+  const d = new Date(str);
+  if (!isNaN(d.getTime())) return d;
+  return null;
+}
+
+function isRecentNotification(itemOrDate, daysThreshold = 7) {
+  if (!itemOrDate) return false;
+
+  let candidates = [];
+  if (typeof itemOrDate === "object" && !(itemOrDate instanceof Date)) {
+    if (itemOrDate.timeStamp) candidates.push(itemOrDate.timeStamp);
+    if (itemOrDate.timestamp) candidates.push(itemOrDate.timestamp);
+    if (itemOrDate.NotificationDate) candidates.push(itemOrDate.NotificationDate);
+    if (itemOrDate.date) candidates.push(itemOrDate.date);
+    if (itemOrDate.createdAt) candidates.push(itemOrDate.createdAt);
+    if (itemOrDate.created_at) candidates.push(itemOrDate.created_at);
+  } else {
+    candidates.push(itemOrDate);
+  }
+
+  const validTimestamps = candidates
+    .map((c) => parseNotificationDate(c))
+    .filter((d) => d !== null && !isNaN(d.getTime()))
+    .map((d) => d.getTime());
+
+  if (validTimestamps.length === 0) return false;
+
+  const newestTime = Math.max(...validTimestamps);
+  const now = Date.now();
+  const diffMs = now - newestTime;
   const diffDays = diffMs / (1000 * 60 * 60 * 24);
-  return diffDays >= 0 && diffDays <= 5;
+
+  // Active from publish day up to next 7 days
+  return diffDays >= -1 && diffDays <= daysThreshold;
 }
 
   useEffect(() => {
@@ -3318,12 +3369,18 @@ function isRecentNotification(dateValue) {
   </span>
   <span className="text-[#0084ff] group-hover:underline font-normal">
     {n.Title || n.title}
-    {isRecentNotification(n.NotificationDate || n.date) && (
+    {isRecentNotification(n) && (
       <img
-        src={NEW_GIF_URL}
+        src={newGif || NEW_GIF_URL}
         alt="New"
         className="inline-block h-[12px] w-auto align-middle ml-1.5"
-        onError={(e) => { e.currentTarget.style.display = "none"; }}
+        onError={(e) => {
+          if (e.currentTarget.src !== NEW_GIF_URL) {
+            e.currentTarget.src = NEW_GIF_URL;
+          } else {
+            e.currentTarget.style.display = "none";
+          }
+        }}
       />
     )}
   </span>
