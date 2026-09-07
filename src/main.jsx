@@ -7,6 +7,14 @@ import App from "./App";
 import "./index.css";
 import { UpdatesProvider } from "./context/UpdatesContext";
 
+// Auto-reload on deployment chunk update (Vite preload error)
+if (typeof window !== "undefined") {
+  window.addEventListener("vite:preloadError", (event) => {
+    event.preventDefault();
+    window.location.reload();
+  });
+}
+
 // Non-blocking background warmup ping to wake up Render backend if it is sleeping
 const API_BASE = import.meta.env.VITE_API_BASE_URL || "";
 if (API_BASE && typeof window !== "undefined") {

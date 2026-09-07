@@ -6,6 +6,7 @@ import { TextSizeProvider } from "./context/TextSizeContext";
 import Layout from "./components/Layout";
 import ProtectedRoute from "./components/ProtectedRoute";
 import WebsiteLoader from "./components/WebsiteLoader";
+import ErrorBoundary from "./components/ErrorBoundary";
 
 // Public Pages (Lazy Loaded)
 const HomePage = lazy(() => import("./pages/HomePage"));
@@ -196,11 +197,13 @@ function AppRoutes() {
 export default function App() {
   return (
     <BrowserRouter>
-      <TextSizeProvider>
-        <AuthProvider>
-          <AppRoutes />
-        </AuthProvider>
-      </TextSizeProvider>
+      <ErrorBoundary>
+        <TextSizeProvider>
+          <AuthProvider>
+            <AppRoutes />
+          </AuthProvider>
+        </TextSizeProvider>
+      </ErrorBoundary>
     </BrowserRouter>
   );
 }
