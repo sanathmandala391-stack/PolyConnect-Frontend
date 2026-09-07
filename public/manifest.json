@@ -1,0 +1,15 @@
+{
+  "name": "PolyConnect",
+  "short_name": "PolyConnect",
+  "icons": [
+    {
+      "src": "https://res.cloudinary.com/dkpo3plax/image/upload/v1788765946/Screenshot_2026-09-07_125110.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "start_url": "/",
+  "display": "standalone",
+  "theme_color": "#0f172a",
+  "background_color": "#ffffff"
+}
