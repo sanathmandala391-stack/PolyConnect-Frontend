@@ -1,4 +1,0 @@
-User-agent: *
-Allow: /
-
-Sitemap: https://polyconnect-two.vercel.app/sitemap.xml
