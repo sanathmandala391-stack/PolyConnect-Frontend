@@ -1,6 +1,10 @@
 {
   "rewrites": [
     {
+      "source": "/sbtet-api/:path*",
+      "destination": "https://www.sbtet.telangana.gov.in/api/api/:path*"
+    },
+    {
       "source": "/(.*)",
       "destination": "/index.html"
     }

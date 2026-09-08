@@ -7,6 +7,13 @@ export default defineConfig({
     global: "globalThis",
   },
   server: {
+    proxy: {
+      "/sbtet-api": {
+        target: "https://www.sbtet.telangana.gov.in/api/api",
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/sbtet-api/, ""),
+      },
+    },
     allowedHosts: [
       "b64a-2409-40f0-6402-6754-cce6-9cdd-9d51-8c33.ngrok-free.app",
       "0829-2409-40f0-6424-cfbb-a013-21f6-51ab-e26c.ngrok-free.app",

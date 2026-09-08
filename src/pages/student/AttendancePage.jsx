@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import axios from "axios";
 import api, { apiErrorMessage } from "../../api/client";
 import { useAuth } from "../../context/AuthContext";
 import GovLoader from "../../components/GovLoader";
@@ -25,6 +26,45 @@ function parseJsonSafely(val) {
       return null;
     }
   }
+  return null;
+}
+
+/**
+ * Fetch live Biometric Attendance Report dynamically for any given student PIN.
+ * Uses /sbtet-api rewrite proxy (Vercel rewrite / Vite proxy) and backend proxy.
+ */
+async function fetchLiveAttendanceReport(pin) {
+  if (!pin) return null;
+  const cleanPin = pin.trim().toUpperCase();
+
+  // 1. Primary: /sbtet-api proxy route (same-origin, no CORS block on Vercel or Vite)
+  try {
+    const res = await axios.get(`/sbtet-api/PreExamination/getAttendanceReport?Pin=${encodeURIComponent(cleanPin)}`, { timeout: 10000 });
+    const data = parseJsonSafely(res.data);
+    if (data?.Table && Array.isArray(data.Table) && data.Table.length > 0) {
+      return data;
+    }
+  } catch (err) {
+    console.warn("Direct sbtet-api proxy fetch failed:", err?.message || err);
+  }
+
+  // 2. Secondary: PolyConnect Spring Boot backend proxy /student/attendance/live
+  try {
+    const res = await api.get("/student/attendance/live");
+    const data = parseJsonSafely(res.data);
+    if (data?.Table && Array.isArray(data.Table) && data.Table.length > 0) {
+      return data;
+    }
+    if (data?.rawResponse) {
+      const pRaw = parseJsonSafely(data.rawResponse);
+      if (pRaw?.Table && Array.isArray(pRaw.Table) && pRaw.Table.length > 0) {
+        return pRaw;
+      }
+    }
+  } catch (err) {
+    console.warn("Backend live proxy attendance call failed:", err?.message || err);
+  }
+
   return null;
 }
 
@@ -71,13 +111,15 @@ export default function AttendancePage() {
   const [syncing, setSyncing] = useState(false);
   const [error, setError] = useState("");
 
+  const currentPin = user?.pin || user?.username || "";
+
   useEffect(() => {
     let isMounted = true;
     async function load() {
       try {
-        const [attRes, liveRes] = await Promise.allSettled([
+        const [attRes, liveData] = await Promise.allSettled([
           api.get("/student/attendance"),
-          api.get("/student/attendance/live"),
+          currentPin ? fetchLiveAttendanceReport(currentPin) : Promise.resolve(null),
         ]);
 
         if (!isMounted) return;
@@ -85,8 +127,8 @@ export default function AttendancePage() {
         if (attRes.status === "fulfilled" && attRes.value?.data) {
           setAttendance(attRes.value.data);
         }
-        if (liveRes.status === "fulfilled" && liveRes.value?.data) {
-          setLiveReport(liveRes.value.data);
+        if (liveData.status === "fulfilled" && liveData.value) {
+          setLiveReport(liveData.value);
         }
       } catch (err) {
         if (isMounted) {
@@ -103,15 +145,15 @@ export default function AttendancePage() {
     return () => {
       isMounted = false;
     };
-  }, []);
+  }, [currentPin]);
 
   async function handleSync() {
     setSyncing(true);
     setError("");
     try {
-      const liveRes = await api.get("/student/attendance/live");
-      if (liveRes?.data) {
-        setLiveReport(liveRes.data);
+      const liveData = currentPin ? await fetchLiveAttendanceReport(currentPin) : null;
+      if (liveData) {
+        setLiveReport(liveData);
       }
       const sumRes = await api.get("/student/attendance");
       if (sumRes?.data) {
