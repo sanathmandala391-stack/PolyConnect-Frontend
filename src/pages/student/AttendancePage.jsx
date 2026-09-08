@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
 import api, { apiErrorMessage } from "../../api/client";
 import { useAuth } from "../../context/AuthContext";
 import GovLoader from "../../components/GovLoader";
@@ -29,59 +28,39 @@ function parseJsonSafely(val) {
   return null;
 }
 
-/**
- * Fetch live Biometric Attendance Report dynamically for any given student PIN.
- * Uses backend proxy /student/attendance/live and CORS proxies as fallback.
- */
-async function fetchLiveAttendanceReport(pin) {
-  if (!pin) return null;
-  const cleanPin = pin.trim().toUpperCase();
+function extractSbtetDetails(liveData, attData) {
+  const candidates = [
+    liveData,
+    parseJsonSafely(liveData),
+    liveData?.rawResponse,
+    parseJsonSafely(liveData?.rawResponse),
+    liveData?.summaryJson,
+    parseJsonSafely(liveData?.summaryJson),
+    liveData?.data,
+    parseJsonSafely(liveData?.data),
+    attData,
+    parseJsonSafely(attData),
+    attData?.rawResponse,
+    parseJsonSafely(attData?.rawResponse),
+    attData?.summaryJson,
+    parseJsonSafely(attData?.summaryJson),
+    attData?.data,
+    parseJsonSafely(attData?.data),
+  ];
 
-  // 1. Primary: Spring Boot backend proxy /student/attendance/live (server-side, avoids browser CORS)
-  try {
-    const res = await api.get("/student/attendance/live");
-    const data = parseJsonSafely(res.data);
-    if (data?.Table && Array.isArray(data.Table) && data.Table.length > 0) {
-      return data;
+  let tableRow = null;
+  let table1Rows = [];
+
+  for (const item of candidates) {
+    if (!item) continue;
+    if (Array.isArray(item.Table) && item.Table.length > 0) {
+      tableRow = item.Table[0];
+      if (Array.isArray(item.Table1)) table1Rows = item.Table1;
+      break;
     }
-    if (data?.rawResponse) {
-      const pRaw = parseJsonSafely(data.rawResponse);
-      if (pRaw?.Table && Array.isArray(pRaw.Table) && pRaw.Table.length > 0) {
-        return pRaw;
-      }
-    }
-  } catch (err) {
-    console.warn("Backend live proxy attendance call failed, attempting CORS proxy:", err?.message || err);
   }
 
-  // 2. Secondary: CORS-proxied direct SBTET API fetch
-  const sbtetUrl = `https://www.sbtet.telangana.gov.in/api/api/PreExamination/getAttendanceReport?Pin=${encodeURIComponent(cleanPin)}`;
-
-  try {
-    const corsRes = await axios.get(
-      `https://api.allorigins.win/raw?url=${encodeURIComponent(sbtetUrl)}`,
-      { timeout: 8000 }
-    );
-    const data = parseJsonSafely(corsRes.data);
-    if (data?.Table && Array.isArray(data.Table) && data.Table.length > 0) {
-      return data;
-    }
-  } catch (err) {
-    // Continue to next fallback
-  }
-
-  try {
-    const corsRes2 = await axios.get(
-      `https://corsproxy.io/?${encodeURIComponent(sbtetUrl)}`,
-      { timeout: 8000 }
-    );
-    const data = parseJsonSafely(corsRes2.data);
-    if (data?.Table && Array.isArray(data.Table) && data.Table.length > 0) {
-      return data;
-    }
-  } catch (err) {}
-
-  return null;
+  return { tableRow, table1Rows };
 }
 
 export default function AttendancePage() {
@@ -92,15 +71,13 @@ export default function AttendancePage() {
   const [syncing, setSyncing] = useState(false);
   const [error, setError] = useState("");
 
-  const currentPin = user?.pin || user?.username || "";
-
   useEffect(() => {
     let isMounted = true;
     async function load() {
       try {
-        const [attRes, liveData] = await Promise.allSettled([
+        const [attRes, liveRes] = await Promise.allSettled([
           api.get("/student/attendance"),
-          currentPin ? fetchLiveAttendanceReport(currentPin) : Promise.resolve(null),
+          api.get("/student/attendance/live"),
         ]);
 
         if (!isMounted) return;
@@ -108,8 +85,8 @@ export default function AttendancePage() {
         if (attRes.status === "fulfilled" && attRes.value?.data) {
           setAttendance(attRes.value.data);
         }
-        if (liveData.status === "fulfilled" && liveData.value) {
-          setLiveReport(liveData.value);
+        if (liveRes.status === "fulfilled" && liveRes.value?.data) {
+          setLiveReport(liveRes.value.data);
         }
       } catch (err) {
         if (isMounted) {
@@ -126,15 +103,15 @@ export default function AttendancePage() {
     return () => {
       isMounted = false;
     };
-  }, [currentPin]);
+  }, []);
 
   async function handleSync() {
     setSyncing(true);
     setError("");
     try {
-      const liveData = currentPin ? await fetchLiveAttendanceReport(currentPin) : null;
-      if (liveData) {
-        setLiveReport(liveData);
+      const liveRes = await api.get("/student/attendance/live");
+      if (liveRes?.data) {
+        setLiveReport(liveRes.data);
       }
       const sumRes = await api.get("/student/attendance");
       if (sumRes?.data) {
@@ -156,58 +133,18 @@ export default function AttendancePage() {
     window.print();
   }
 
-  // Extract student details from live report Table[0] or fallback to backend attendance entity
-  const sbtetSummary = (() => {
-    // 1. Check liveReport
-    const parsedLive = parseJsonSafely(liveReport);
-    if (parsedLive?.Table && Array.isArray(parsedLive.Table) && parsedLive.Table.length > 0) {
-      return parsedLive.Table[0];
-    }
-    if (parsedLive?.rawResponse) {
-      const pRaw = parseJsonSafely(parsedLive.rawResponse);
-      if (pRaw?.Table?.[0]) return pRaw.Table[0];
-    }
-
-    // 2. Check attendance
-    const parsedAtt = parseJsonSafely(attendance);
-    if (parsedAtt?.Table && Array.isArray(parsedAtt.Table) && parsedAtt.Table.length > 0) {
-      return parsedAtt.Table[0];
-    }
-    if (parsedAtt?.rawResponse) {
-      const pRaw = parseJsonSafely(parsedAtt.rawResponse);
-      if (pRaw?.Table?.[0]) return pRaw.Table[0];
-    }
-    if (parsedAtt?.summaryJson) {
-      const pSum = parseJsonSafely(parsedAtt.summaryJson);
-      if (pSum?.Table?.[0]) return pSum.Table[0];
-      if (pSum?.AttendeeId || pSum?.Semester) return pSum;
-    }
-
-    return null;
-  })();
+  const { tableRow, table1Rows } = extractSbtetDetails(liveReport, attendance);
 
   const days = Array.from({ length: 31 }, (_, i) =>
     String(i + 1).padStart(2, "0")
   );
 
-  // Parse daily attendance records from Table1 or attendance.dailyRecordsJson
+  // Parse daily attendance records
   const dailyRecords = (() => {
     const records = {};
 
-    const findTable1 = (obj) => {
-      const parsed = parseJsonSafely(obj);
-      if (parsed?.Table1 && Array.isArray(parsed.Table1)) return parsed.Table1;
-      if (parsed?.rawResponse) {
-        const pRaw = parseJsonSafely(parsed.rawResponse);
-        if (pRaw?.Table1 && Array.isArray(pRaw.Table1)) return pRaw.Table1;
-      }
-      return null;
-    };
-
-    const table1 = findTable1(liveReport) || findTable1(attendance);
-
-    if (Array.isArray(table1)) {
-      table1.forEach((row) => {
+    if (Array.isArray(table1Rows) && table1Rows.length > 0) {
+      table1Rows.forEach((row) => {
         const month = row.AttendanceMonth || row.month;
         const day = String(row.Day || row.day || "").padStart(2, "0");
         const status = row.Status || row.status || "-";
@@ -217,8 +154,7 @@ export default function AttendancePage() {
       });
     }
 
-    // Merge with attendance?.dailyRecordsJson if present
-    const parsedDaily = parseJsonSafely(attendance?.dailyRecordsJson);
+    const parsedDaily = parseJsonSafely(attendance?.dailyRecordsJson) || parseJsonSafely(liveReport?.dailyRecordsJson);
     if (parsedDaily && typeof parsedDaily === "object") {
       Object.assign(records, parsedDaily);
     }
@@ -236,19 +172,19 @@ export default function AttendancePage() {
   }
 
   // Computed field values
-  const studentPin = sbtetSummary?.Pin || user?.pin || attendance?.studentPin || "—";
-  const studentName = sbtetSummary?.Name || user?.fullName || "—";
-  const attendeeId = sbtetSummary?.AttendeeId || attendance?.attendeeId || attendance?.summary?.AttendeeId || user?.attendeeId || "—";
-  const collegeCode = sbtetSummary?.CollegeCode || user?.collegeCode || (studentPin !== "—" ? studentPin.slice(0, 5).replace(/^[0-9]{2}/, "") : "") || "—";
-  const branchCode = sbtetSummary?.BranchCode || user?.branchCode || (studentPin !== "—" && studentPin.includes("-") ? studentPin.split("-")?.[1] : "") || "—";
-  const semester = sbtetSummary?.Semester || (sbtetSummary?.semid ? `${sbtetSummary.semid}SEM` : null) || (attendance?.semester ? (String(attendance.semester).toUpperCase().endsWith("SEM") ? String(attendance.semester).toUpperCase() : `${attendance.semester}SEM`) : (user?.currentSemester ? (String(user.currentSemester).toUpperCase().endsWith("SEM") ? String(user.currentSemester).toUpperCase() : `${user.currentSemester}SEM`) : "—"));
+  const studentPin = tableRow?.Pin || user?.pin || attendance?.studentPin || "—";
+  const studentName = tableRow?.Name || user?.fullName || "—";
+  const attendeeId = tableRow?.AttendeeId || tableRow?.attendeeId || attendance?.attendeeId || attendance?.AttendeeId || user?.attendeeId || "—";
+  const collegeCode = tableRow?.CollegeCode || user?.collegeCode || (studentPin !== "—" ? studentPin.slice(0, 5).replace(/^[0-9]{2}/, "") : "") || "—";
+  const branchCode = tableRow?.BranchCode || user?.branchCode || (studentPin !== "—" && studentPin.includes("-") ? studentPin.split("-")?.[1] : "") || "—";
+  const semester = tableRow?.Semester || (tableRow?.semid ? `${tableRow.semid}SEM` : null) || (attendance?.semester ? (String(attendance.semester).toUpperCase().endsWith("SEM") ? String(attendance.semester).toUpperCase() : `${attendance.semester}SEM`) : (user?.currentSemester ? (String(user.currentSemester).toUpperCase().endsWith("SEM") ? String(user.currentSemester).toUpperCase() : `${user.currentSemester}SEM`) : "—"));
 
-  const workingDays = sbtetSummary?.WorkingDays != null ? sbtetSummary.WorkingDays : (attendance?.workingDays ?? "—");
-  const presentDays = sbtetSummary?.NumberOfDaysPresent != null ? sbtetSummary.NumberOfDaysPresent : (attendance?.presentDays ?? "—");
-  const attendancePercentage = sbtetSummary?.Percentage != null ? Number(sbtetSummary.Percentage).toFixed(2) : (attendance?.currentStandingPercentage != null ? Number(attendance.currentStandingPercentage).toFixed(2) : "—");
+  const workingDays = tableRow?.WorkingDays != null ? tableRow.WorkingDays : (attendance?.workingDays ?? "—");
+  const presentDays = tableRow?.NumberOfDaysPresent != null ? tableRow.NumberOfDaysPresent : (attendance?.presentDays ?? "—");
+  const attendancePercentage = tableRow?.Percentage != null ? Number(tableRow.Percentage).toFixed(2) : (attendance?.currentStandingPercentage != null ? Number(attendance.currentStandingPercentage).toFixed(2) : "—");
 
-  const calculatedDate = (sbtetSummary?.UpdatedDate || attendance?.lastSyncedAt)
-    ? new Date(sbtetSummary?.UpdatedDate || attendance?.lastSyncedAt).toLocaleString("en-US", {
+  const calculatedDate = (tableRow?.UpdatedDate || attendance?.lastSyncedAt)
+    ? new Date(tableRow?.UpdatedDate || attendance?.lastSyncedAt).toLocaleString("en-US", {
         month: "short",
         day: "numeric",
         year: "numeric",
@@ -259,9 +195,9 @@ export default function AttendancePage() {
       })
     : "—";
 
-  const totalWorkingDaysExams = sbtetSummary?.ExamsWorkingDays != null ? sbtetSummary.ExamsWorkingDays : (sbtetSummary?.TotalWorkingDays != null ? sbtetSummary.TotalWorkingDays : (attendance?.examsWorkingDays ?? 90));
-  const totalPresentDaysExams = sbtetSummary?.ExamsNDP != null ? sbtetSummary.ExamsNDP : (sbtetSummary?.NumberOfDaysPresent != null ? sbtetSummary.NumberOfDaysPresent : (attendance?.presentDays ?? "—"));
-  const examAttendancePercentage = sbtetSummary?.ExamsPer != null ? Number(sbtetSummary.ExamsPer).toFixed(2) : (sbtetSummary?.TotalPercentage != null ? Number(sbtetSummary.TotalPercentage).toFixed(2) : (attendance?.examEligibilityPercentage != null ? Number(attendance.examEligibilityPercentage).toFixed(2) : "—"));
+  const totalWorkingDaysExams = tableRow?.ExamsWorkingDays != null ? tableRow.ExamsWorkingDays : (tableRow?.TotalWorkingDays != null ? tableRow.TotalWorkingDays : (attendance?.examsWorkingDays ?? 90));
+  const totalPresentDaysExams = tableRow?.ExamsNDP != null ? tableRow.ExamsNDP : (tableRow?.NumberOfDaysPresent != null ? tableRow.NumberOfDaysPresent : (attendance?.presentDays ?? "—"));
+  const examAttendancePercentage = tableRow?.ExamsPer != null ? Number(tableRow.ExamsPer).toFixed(2) : (tableRow?.TotalPercentage != null ? Number(tableRow.TotalPercentage).toFixed(2) : (attendance?.examEligibilityPercentage != null ? Number(attendance.examEligibilityPercentage).toFixed(2) : "—"));
 
   return (
     <>
