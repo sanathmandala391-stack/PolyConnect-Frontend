@@ -39,9 +39,19 @@
       "url": "https://polyconnect-two.vercel.app/"
     }
     </script>
+    <!-- Network Preconnect & DNS Prefetch to Backend & CDNs -->
+    <link rel="dns-prefetch" href="https://polyconnect-backend.onrender.com" />
+    <link rel="preconnect" href="https://polyconnect-backend.onrender.com" crossorigin />
+    <link rel="dns-prefetch" href="https://res.cloudinary.com" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin />
+    <script>
+      // Instantly wake up the backend in the background while assets load
+      try {
+        fetch("https://polyconnect-backend.onrender.com/api/courses/academic-year", { mode: "cors", cache: "no-store" }).catch(function(){});
+      } catch (e) {}
+    </script>
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
