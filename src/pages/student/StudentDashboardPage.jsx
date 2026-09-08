@@ -105,14 +105,20 @@ export default function StudentDashboardPage() {
   useEffect(() => {
     if (!data?.student?.pin) return;
     let isMounted = true;
-    const cleanPin = data.student.pin.trim().toUpperCase();
 
-    axios
-      .get(`https://www.sbtet.telangana.gov.in/api/api/PreExamination/getAttendanceReport?Pin=${encodeURIComponent(cleanPin)}`, { timeout: 8000 })
+    api
+      .get("/student/attendance/live")
       .then((res) => {
         if (!isMounted) return;
-        const sbtetData = typeof res.data === "string" ? JSON.parse(res.data) : res.data;
-        const row = sbtetData?.Table?.[0];
+        let liveData = res.data;
+        if (typeof liveData === "string") {
+          try {
+            liveData = JSON.parse(liveData);
+          } catch {
+            liveData = null;
+          }
+        }
+        const row = liveData?.Table?.[0] || (liveData?.rawResponse ? JSON.parse(liveData.rawResponse)?.Table?.[0] : null);
         if (row) {
           const sem = row.Semester ? row.Semester.replace(/SEM$/i, "") : (row.semid ? String(row.semid) : undefined);
           setData((prev) => {
@@ -133,37 +139,7 @@ export default function StudentDashboardPage() {
           });
         }
       })
-      .catch(() => {
-        api
-          .get("/student/attendance/live", { params: { pin: cleanPin } })
-          .then((res) => {
-            if (!isMounted) return;
-            const liveData = typeof res.data === "string" ? JSON.parse(res.data) : res.data;
-            const row = liveData?.Table?.[0];
-            if (row) {
-              const sem = row.Semester ? row.Semester.replace(/SEM$/i, "") : (row.semid ? String(row.semid) : undefined);
-              setData((prev) => {
-                if (!prev) return prev;
-                return {
-                  ...prev,
-                  student: {
-                    ...prev.student,
-                    currentSemester: sem || prev.student?.currentSemester,
-                  },
-                  attendance: {
-                    ...prev.attendance,
-                    currentStandingPercentage: row.Percentage != null ? row.Percentage : prev.attendance?.currentStandingPercentage,
-                    examEligibilityPercentage: row.ExamsPer != null ? row.ExamsPer : (row.TotalPercentage != null ? row.TotalPercentage : prev.attendance?.examEligibilityPercentage),
-                    detentionRisk: (row.ExamsPer != null ? row.ExamsPer : row.TotalPercentage) < 75,
-                  },
-                };
-              });
-            } else {
-              setData((prev) => (prev ? { ...prev, attendance: res.data } : prev));
-            }
-          })
-          .catch(() => {});
-      });
+      .catch(() => {});
 
     return () => {
       isMounted = false;

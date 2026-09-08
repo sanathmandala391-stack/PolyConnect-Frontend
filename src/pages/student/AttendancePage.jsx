@@ -8,43 +8,74 @@ import BackButton from "../../components/BackButton";
 
 const MONTHS = ["June", "July", "August", "September", "October"];
 
+function parseJsonSafely(val) {
+  if (!val) return null;
+  if (typeof val === "object") return val;
+  if (typeof val === "string") {
+    try {
+      const p1 = JSON.parse(val);
+      if (typeof p1 === "string") {
+        try {
+          return JSON.parse(p1);
+        } catch {
+          return p1;
+        }
+      }
+      return p1;
+    } catch {
+      return null;
+    }
+  }
+  return null;
+}
+
 /**
  * Fetch live Biometric Attendance Report dynamically for any given student PIN.
- * Tries direct SBTET endpoint first, then falls back to backend proxies.
+ * Uses backend proxy /student/attendance/live and CORS proxies as fallback.
  */
 async function fetchLiveAttendanceReport(pin) {
   if (!pin) return null;
   const cleanPin = pin.trim().toUpperCase();
 
-  // 1. Direct SBTET official API endpoint
+  // 1. Primary: Spring Boot backend proxy /student/attendance/live (server-side, avoids browser CORS)
   try {
-    const res = await axios.get(
-      `https://www.sbtet.telangana.gov.in/api/api/PreExamination/getAttendanceReport?Pin=${encodeURIComponent(cleanPin)}`,
+    const res = await api.get("/student/attendance/live");
+    const data = parseJsonSafely(res.data);
+    if (data?.Table && Array.isArray(data.Table) && data.Table.length > 0) {
+      return data;
+    }
+    if (data?.rawResponse) {
+      const pRaw = parseJsonSafely(data.rawResponse);
+      if (pRaw?.Table && Array.isArray(pRaw.Table) && pRaw.Table.length > 0) {
+        return pRaw;
+      }
+    }
+  } catch (err) {
+    console.warn("Backend live proxy attendance call failed, attempting CORS proxy:", err?.message || err);
+  }
+
+  // 2. Secondary: CORS-proxied direct SBTET API fetch
+  const sbtetUrl = `https://www.sbtet.telangana.gov.in/api/api/PreExamination/getAttendanceReport?Pin=${encodeURIComponent(cleanPin)}`;
+
+  try {
+    const corsRes = await axios.get(
+      `https://api.allorigins.win/raw?url=${encodeURIComponent(sbtetUrl)}`,
       { timeout: 8000 }
     );
-    const data = typeof res.data === "string" ? JSON.parse(res.data) : res.data;
+    const data = parseJsonSafely(corsRes.data);
     if (data?.Table && Array.isArray(data.Table) && data.Table.length > 0) {
       return data;
     }
   } catch (err) {
-    console.warn("Direct SBTET attendance fetch failed, checking backend proxy:", err?.message || err);
+    // Continue to next fallback
   }
 
-  // 2. Fallback to backend live proxy endpoint
   try {
-    const res = await api.get(`/student/attendance/live?pin=${encodeURIComponent(cleanPin)}`);
-    const data = typeof res.data === "string" ? JSON.parse(res.data) : res.data;
-    if (data?.Table && Array.isArray(data.Table) && data.Table.length > 0) {
-      return data;
-    }
-  } catch (err) {
-    console.warn("Backend live proxy attendance failed:", err?.message || err);
-  }
-
-  // 3. Fallback to /sbtet/attendance proxy
-  try {
-    const res = await api.get(`/sbtet/attendance?pin=${encodeURIComponent(cleanPin)}`);
-    const data = typeof res.data === "string" ? JSON.parse(res.data) : res.data;
+    const corsRes2 = await axios.get(
+      `https://corsproxy.io/?${encodeURIComponent(sbtetUrl)}`,
+      { timeout: 8000 }
+    );
+    const data = parseJsonSafely(corsRes2.data);
     if (data?.Table && Array.isArray(data.Table) && data.Table.length > 0) {
       return data;
     }
@@ -127,15 +158,31 @@ export default function AttendancePage() {
 
   // Extract student details from live report Table[0] or fallback to backend attendance entity
   const sbtetSummary = (() => {
-    if (liveReport?.Table && Array.isArray(liveReport.Table) && liveReport.Table.length > 0) {
-      return liveReport.Table[0];
+    // 1. Check liveReport
+    const parsedLive = parseJsonSafely(liveReport);
+    if (parsedLive?.Table && Array.isArray(parsedLive.Table) && parsedLive.Table.length > 0) {
+      return parsedLive.Table[0];
     }
-    if (attendance?.rawResponse) {
-      try {
-        const parsed = typeof attendance.rawResponse === "string" ? JSON.parse(attendance.rawResponse) : attendance.rawResponse;
-        if (parsed?.Table?.[0]) return parsed.Table[0];
-      } catch (e) {}
+    if (parsedLive?.rawResponse) {
+      const pRaw = parseJsonSafely(parsedLive.rawResponse);
+      if (pRaw?.Table?.[0]) return pRaw.Table[0];
     }
+
+    // 2. Check attendance
+    const parsedAtt = parseJsonSafely(attendance);
+    if (parsedAtt?.Table && Array.isArray(parsedAtt.Table) && parsedAtt.Table.length > 0) {
+      return parsedAtt.Table[0];
+    }
+    if (parsedAtt?.rawResponse) {
+      const pRaw = parseJsonSafely(parsedAtt.rawResponse);
+      if (pRaw?.Table?.[0]) return pRaw.Table[0];
+    }
+    if (parsedAtt?.summaryJson) {
+      const pSum = parseJsonSafely(parsedAtt.summaryJson);
+      if (pSum?.Table?.[0]) return pSum.Table[0];
+      if (pSum?.AttendeeId || pSum?.Semester) return pSum;
+    }
+
     return null;
   })();
 
@@ -147,15 +194,17 @@ export default function AttendancePage() {
   const dailyRecords = (() => {
     const records = {};
 
-    // 1. From live Table1 array if available
-    const table1 = liveReport?.Table1 || (() => {
-      try {
-        const parsed = typeof attendance?.rawResponse === "string" ? JSON.parse(attendance.rawResponse) : attendance?.rawResponse;
-        return parsed?.Table1;
-      } catch (e) {
-        return null;
+    const findTable1 = (obj) => {
+      const parsed = parseJsonSafely(obj);
+      if (parsed?.Table1 && Array.isArray(parsed.Table1)) return parsed.Table1;
+      if (parsed?.rawResponse) {
+        const pRaw = parseJsonSafely(parsed.rawResponse);
+        if (pRaw?.Table1 && Array.isArray(pRaw.Table1)) return pRaw.Table1;
       }
-    })();
+      return null;
+    };
+
+    const table1 = findTable1(liveReport) || findTable1(attendance);
 
     if (Array.isArray(table1)) {
       table1.forEach((row) => {
@@ -168,16 +217,10 @@ export default function AttendancePage() {
       });
     }
 
-    // 2. Merge with attendance?.dailyRecordsJson if present
-    if (attendance?.dailyRecordsJson) {
-      try {
-        const parsed = typeof attendance.dailyRecordsJson === "string"
-          ? JSON.parse(attendance.dailyRecordsJson)
-          : attendance.dailyRecordsJson;
-        if (parsed && typeof parsed === "object") {
-          Object.assign(records, parsed);
-        }
-      } catch (e) {}
+    // Merge with attendance?.dailyRecordsJson if present
+    const parsedDaily = parseJsonSafely(attendance?.dailyRecordsJson);
+    if (parsedDaily && typeof parsedDaily === "object") {
+      Object.assign(records, parsedDaily);
     }
 
     return records;
@@ -195,10 +238,10 @@ export default function AttendancePage() {
   // Computed field values
   const studentPin = sbtetSummary?.Pin || user?.pin || attendance?.studentPin || "—";
   const studentName = sbtetSummary?.Name || user?.fullName || "—";
-  const attendeeId = sbtetSummary?.AttendeeId || attendance?.attendeeId || user?.attendeeId || "—";
+  const attendeeId = sbtetSummary?.AttendeeId || attendance?.attendeeId || attendance?.summary?.AttendeeId || user?.attendeeId || "—";
   const collegeCode = sbtetSummary?.CollegeCode || user?.collegeCode || (studentPin !== "—" ? studentPin.slice(0, 5).replace(/^[0-9]{2}/, "") : "") || "—";
   const branchCode = sbtetSummary?.BranchCode || user?.branchCode || (studentPin !== "—" && studentPin.includes("-") ? studentPin.split("-")?.[1] : "") || "—";
-  const semester = sbtetSummary?.Semester || (sbtetSummary?.semid ? `${sbtetSummary.semid}SEM` : null) || (user?.currentSemester ? (String(user.currentSemester).toUpperCase().endsWith("SEM") ? String(user.currentSemester).toUpperCase() : `${user.currentSemester}SEM`) : (attendance?.semester ? (String(attendance.semester).toUpperCase().endsWith("SEM") ? String(attendance.semester).toUpperCase() : `${attendance.semester}SEM`) : "—"));
+  const semester = sbtetSummary?.Semester || (sbtetSummary?.semid ? `${sbtetSummary.semid}SEM` : null) || (attendance?.semester ? (String(attendance.semester).toUpperCase().endsWith("SEM") ? String(attendance.semester).toUpperCase() : `${attendance.semester}SEM`) : (user?.currentSemester ? (String(user.currentSemester).toUpperCase().endsWith("SEM") ? String(user.currentSemester).toUpperCase() : `${user.currentSemester}SEM`) : "—"));
 
   const workingDays = sbtetSummary?.WorkingDays != null ? sbtetSummary.WorkingDays : (attendance?.workingDays ?? "—");
   const presentDays = sbtetSummary?.NumberOfDaysPresent != null ? sbtetSummary.NumberOfDaysPresent : (attendance?.presentDays ?? "—");
