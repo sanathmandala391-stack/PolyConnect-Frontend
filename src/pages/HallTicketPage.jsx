@@ -138,19 +138,23 @@ export default function HallTicketPage() {
   }
 
   return (
+    
+
+    
     <div className="min-h-screen bg-[#f8f9fa] text-[#333333] flex flex-col font-sans w-full">
       {/* Top Gray Sub-header Bar */}
       <div
         className="-mx-3 sm:-mx-4 md:-mx-6 bg-[#d8dadc] px-4 sm:px-8 py-2 flex items-center mb-4"
-        style={{ boxSizing: "border-box", marginTop: "-16px" }}
+        style={{ boxSizing: "border-box", marginTop: "-16px", marginLeft: "-1006px", width: "7900px"  }}
       >
         <h1
           className="m-0 text-[13px] sm:text-[14px] text-[#212529] leading-none"
-          style={{ fontFamily: "'Mulish', sans-serif", fontWeight: 700 }}
+          style={{ fontFamily: "'Mulish', sans-serif", fontWeight: 700, marginLeft: "990px" }}
         >
           Download Hall Ticket
         </h1>
       </div>
+    
 
       {/* Main Content Area */}
       <main className="flex-1 w-full max-w-[1240px] mx-auto py-1 sm:py-3">
