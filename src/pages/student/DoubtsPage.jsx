@@ -8,9 +8,10 @@ const GEMINI_API_KEY = import.meta.env.VITE_GEMINI_API_KEY || "";
 
 // Candidate models for highest availability
 const CANDIDATE_MODELS = [
-  "gemini-3.6-flash",
-  "gemini-flash-latest",
-  "gemini-3.5-flash-lite",
+  "gemini-2.5-flash",
+  "gemini-2.0-flash",
+  "gemini-1.5-flash",
+  "gemini-1.5-pro",
 ];
 
 const QUICK_SUGGESTIONS = [
@@ -319,6 +320,12 @@ function MarkdownLite({ text }) {
 
 // Call Gemini API directly for live student responses
 async function callGeminiAcademicAI(question, attachedFile) {
+  if (!GEMINI_API_KEY || GEMINI_API_KEY.trim() === "") {
+    throw new Error(
+      "Gemini API key is not configured in production. Please set 'VITE_GEMINI_API_KEY' in your Vercel Project Environment Variables and redeploy."
+    );
+  }
+
   const parts = [];
 
   const systemPrompt =
@@ -377,7 +384,14 @@ async function callGeminiAcademicAI(question, attachedFile) {
         }
       } else {
         const errData = await response.json().catch(() => ({}));
-        lastError = new Error(errData?.error?.message || `HTTP ${response.status}`);
+        const rawMsg = errData?.error?.message || `HTTP ${response.status}`;
+        if (rawMsg.includes("unregistered callers") || rawMsg.includes("API Key")) {
+          lastError = new Error(
+            "Invalid or missing Gemini API Key. Please verify that 'VITE_GEMINI_API_KEY' in Vercel environment variables is a valid Google AI Studio key (starts with 'AIzaSy...')."
+          );
+        } else {
+          lastError = new Error(rawMsg);
+        }
       }
     } catch (err) {
       lastError = err;
