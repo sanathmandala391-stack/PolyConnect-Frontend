@@ -9,13 +9,27 @@
       content="POLYCONNECT is a unified SBTET Polytechnic student services platform for Telangana, providing results, attendance, circulars, notifications, academic resources, and student services."
     />
 
-    <!-- Favicon & Icons -->
-    <link rel="icon" type="image/png" href="/favicon.png" />
-    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
-    <link rel="shortcut icon" href="/favicon.ico" />
-    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://polyconnect-two.vercel.app/" />
 
-    <!-- Open Graph / Search Metadata -->
+    <!-- Favicon & Icons for Google Search, Browsers & Mobile -->
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="48x48" href="/favicon-48x48.png" />
+    <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png" />
+    <link rel="icon" type="image/png" sizes="144x144" href="/favicon-144x144.png" />
+    <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192x192.png" />
+    <link rel="icon" type="image/png" sizes="512x512" href="/favicon-512x512.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+
+    <!-- Mobile & Application Meta -->
+    <meta name="application-name" content="PolyConnect" />
+    <meta name="apple-mobile-web-app-title" content="PolyConnect" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="theme-color" content="#0d5c75" />
+
+    <!-- Open Graph / Social / Google Metadata -->
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://polyconnect-two.vercel.app/" />
     <meta property="og:site_name" content="PolyConnect" />
@@ -29,14 +43,35 @@
     <meta name="twitter:description" content="POLYCONNECT is a unified SBTET Polytechnic student services platform for Telangana, providing results, attendance, circulars, notifications, academic resources, and student services." />
     <meta name="twitter:image" content="https://res.cloudinary.com/dkpo3plax/image/upload/v1788765946/Screenshot_2026-09-07_125110.png" />
 
-    <!-- Structured Data (JSON-LD) for Google Site Name -->
+    <!-- Structured Data (JSON-LD) for Google Site Name & Organization Knowledge Graph -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
-      "@type": "WebSite",
-      "name": "PolyConnect",
-      "alternateName": ["PolyConnect SBTET", "PolyConnect Student Services", "POLYCONNECT"],
-      "url": "https://polyconnect-two.vercel.app/"
+      "@graph": [
+        {
+          "@type": "WebSite",
+          "@id": "https://polyconnect-two.vercel.app/#website",
+          "name": "PolyConnect",
+          "alternateName": ["POLYCONNECT", "PolyConnect SBTET", "PolyConnect Student Services"],
+          "url": "https://polyconnect-two.vercel.app/",
+          "publisher": {
+            "@type": "Organization",
+            "@id": "https://polyconnect-two.vercel.app/#organization"
+          }
+        },
+        {
+          "@type": "Organization",
+          "@id": "https://polyconnect-two.vercel.app/#organization",
+          "name": "PolyConnect",
+          "url": "https://polyconnect-two.vercel.app/",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://polyconnect-two.vercel.app/favicon-512x512.png",
+            "width": 512,
+            "height": 512
+          }
+        }
+      ]
     }
     </script>
     <!-- Network Preconnect & DNS Prefetch to Backend & CDNs -->
