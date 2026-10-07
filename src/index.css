@@ -32,11 +32,25 @@ body {
 }
 
 /* SBTET Exact Navigation Font */
-.sbtet-nav-font,
-.sbtet-nav-font * {
+.sbtet-nav-font {
   font-family: 'Mulish', 'Muli', sans-serif !important;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+/* Explicitly preserve Font Awesome glyphs across all navigation elements */
+.sbtet-nav-font i,
+.sbtet-nav-font [class*="fa-"],
+.sbtet-nav-font .fa-solid,
+.sbtet-nav-font .fa-regular {
+  font-family: "Font Awesome 6 Free", "FontAwesome" !important;
+  font-style: normal;
+}
+
+.sbtet-nav-font .fa-brands,
+.sbtet-nav-font [class*="fa-brands"] {
+  font-family: "Font Awesome 6 Brands", "FontAwesome" !important;
+  font-style: normal;
 }
 
 /* Card and Container Styles */
