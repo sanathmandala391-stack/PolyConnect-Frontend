@@ -304,7 +304,7 @@ export default function GovHeader() {
                   <div>
                     <div className="bg-[#35a5f1] text-white font-semibold px-3 py-1.5 uppercase text-xs mb-2">DIPLOMA</div>
                     <ul className="space-y-1 divide-y divide-gray-100 font-sans">
-                      <li><Link to="/halltickets" className="block py-1.5 px-2 hover:bg-slate-100 text-slate-700">Halltickets</Link></li>
+                      <li><Link to="/halltickets" className="block py-1.5 px-2 hover:bg-slate-100 hover:text-[#35a5f1] font-medium text-slate-900">Halltickets</Link></li>
                       <li><Link to="/Results/consolidatedResults" className="block py-1.5 px-2 hover:bg-slate-100 hover:text-[#35a5f1] font-medium text-slate-900">Consolidated Results</Link></li>
                       <li><Link to="/student/results" className="block py-1.5 px-2 hover:bg-slate-100 hover:text-[#35a5f1] font-medium text-slate-900">Results</Link></li>
                       <li><Link to="/student/attendance" className="block py-1.5 px-2 hover:bg-slate-100 hover:text-[#35a5f1] font-medium text-slate-900">Attendance Summary & 31-Day Sheet</Link></li>
