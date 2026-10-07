@@ -592,7 +592,7 @@ export default function HomePage() {
                                 .replace(/\//g, "-")
                               : n.date || ""}
                           </span>
-                          <span className="text-[#0084ff] group-hover:underline font-normal">
+                          <span className="text-[#337ab7] group-hover:underline group-hover:text-[#23527c] font-normal">
                             {n.Title || n.title}
                             {isRecentNotification(n) && (
                               <img
@@ -677,17 +677,20 @@ export default function HomePage() {
             </div>
 
             {/* Links List Content */}
-            <div className="p-4 flex-1 overflow-y-auto">
+            <div
+              className="p-4 flex-1 overflow-y-auto"
+              style={{ fontFamily: "'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" }}
+            >
               {activeLinkTab === "quick" ? (
-                <ul className="list-none m-0 p-0 space-y-3">
+                <ul className="list-none m-0 p-0 space-y-3.5">
                   {QUICK_LINKS.map((link) => (
                     <li key={link.label}>
                       {link.internal ? (
                         <Link
                           to={link.url}
-                          className="flex items-center gap-2.5 text-[13.5px] text-[#0084ff] hover:text-[#005bb5] hover:underline font-normal no-underline group"
+                          className="flex items-center text-[15px] text-[#337ab7] hover:text-[#23527c] hover:underline font-normal no-underline"
                         >
-                          <i className="fa fa-arrow-circle-right text-[#2196f3] text-[17px] shrink-0 leading-none">&nbsp;</i>
+                          <i className="fa fa-arrow-circle-right text-[#337ab7] text-[17px] shrink-0 leading-none mr-2.5">&nbsp;</i>
                           <span>{link.label}</span>
                         </Link>
                       ) : (
@@ -695,9 +698,9 @@ export default function HomePage() {
                           href={link.url}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="flex items-center gap-2.5 text-[13.5px] text-[#0084ff] hover:text-[#005bb5] hover:underline font-normal no-underline group"
+                          className="flex items-center text-[15px] text-[#337ab7] hover:text-[#23527c] hover:underline font-normal no-underline"
                         >
-                          <i className="fa fa-arrow-circle-right text-[#2196f3] text-[17px] shrink-0 leading-none">&nbsp;</i>
+                          <i className="fa fa-arrow-circle-right text-[#337ab7] text-[17px] shrink-0 leading-none mr-2.5">&nbsp;</i>
                           <span>{link.label}</span>
                         </a>
                       )}
@@ -705,16 +708,16 @@ export default function HomePage() {
                   ))}
                 </ul>
               ) : (
-                <ul className="list-none m-0 p-0 space-y-3">
+                <ul className="list-none m-0 p-0 space-y-3.5">
                   {EXTERNAL_LINKS.map((link) => (
                     <li key={link.label}>
                       <a
                         href={link.url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="flex items-center gap-2.5 text-[13px] text-[#0084ff] hover:text-[#005bb5] hover:underline font-normal no-underline group"
+                        className="flex items-center text-[14px] text-[#337ab7] hover:text-[#23527c] hover:underline font-normal no-underline"
                       >
-                        <i className="fa fa-arrow-circle-right text-[#2196f3] text-[17px] shrink-0 leading-none">&nbsp;</i>
+                        <i className="fa fa-arrow-circle-right text-[#337ab7] text-[17px] shrink-0 leading-none mr-2.5">&nbsp;</i>
                         <span className="leading-snug">{link.label}</span>
                       </a>
                     </li>
@@ -842,7 +845,7 @@ export default function HomePage() {
                                   .replace(/\//g, "-")
                                 : n.date || ""}
                             </span>
-                            <span className="text-[#0084ff] group-hover:underline font-normal">
+                            <span className="text-[#337ab7] group-hover:underline group-hover:text-[#23527c] font-normal">
                               {n.Title || n.title}
                               {isRecentNotification(n) && (
                                 <img
