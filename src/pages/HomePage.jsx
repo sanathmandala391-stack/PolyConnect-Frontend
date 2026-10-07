@@ -687,9 +687,7 @@ export default function HomePage() {
                           to={link.url}
                           className="flex items-center gap-2.5 text-[13.5px] text-[#0084ff] hover:text-[#005bb5] hover:underline font-normal no-underline group"
                         >
-                          <span className="w-[18px] h-[18px] rounded-full bg-[#2196f3] text-white flex items-center justify-center text-[10px] font-bold shrink-0 transition-transform group-hover:translate-x-0.5">
-                            ➔
-                          </span>
+                          <i className="fa fa-arrow-circle-right text-[#2196f3] text-[17px] shrink-0 leading-none">&nbsp;</i>
                           <span>{link.label}</span>
                         </Link>
                       ) : (
@@ -699,9 +697,7 @@ export default function HomePage() {
                           rel="noopener noreferrer"
                           className="flex items-center gap-2.5 text-[13.5px] text-[#0084ff] hover:text-[#005bb5] hover:underline font-normal no-underline group"
                         >
-                          <span className="w-[18px] h-[18px] rounded-full bg-[#2196f3] text-white flex items-center justify-center text-[10px] font-bold shrink-0 transition-transform group-hover:translate-x-0.5">
-                            ➔
-                          </span>
+                          <i className="fa fa-arrow-circle-right text-[#2196f3] text-[17px] shrink-0 leading-none">&nbsp;</i>
                           <span>{link.label}</span>
                         </a>
                       )}
@@ -718,9 +714,7 @@ export default function HomePage() {
                         rel="noopener noreferrer"
                         className="flex items-center gap-2.5 text-[13px] text-[#0084ff] hover:text-[#005bb5] hover:underline font-normal no-underline group"
                       >
-                        <span className="w-[18px] h-[18px] rounded-full bg-[#2196f3] text-white flex items-center justify-center text-[10px] font-bold shrink-0 transition-transform group-hover:translate-x-0.5">
-                          ➔
-                        </span>
+                        <i className="fa fa-arrow-circle-right text-[#2196f3] text-[17px] shrink-0 leading-none">&nbsp;</i>
                         <span className="leading-snug">{link.label}</span>
                       </a>
                     </li>
