@@ -55,14 +55,71 @@ export default function StudentDashboardPage() {
 
   useEffect(() => {
     let isMounted = true;
-    api
-      .get("/student/dashboard")
-      .then((res) => {
-        if (isMounted) setData(res.data);
-      })
-      .catch((err) => {
-        if (isMounted) setError(apiErrorMessage(err, "Could not load student dashboard from the backend."));
-      });
+
+    async function loadDashboardData() {
+      try {
+        const [dashRes, liveRes, sumRes] = await Promise.allSettled([
+          api.get("/student/dashboard"),
+          api.get("/student/attendance/live"),
+          api.get("/student/attendance"),
+        ]);
+
+        if (!isMounted) return;
+
+        if (dashRes.status === "fulfilled" && dashRes.value?.data) {
+          let mergedData = { ...dashRes.value.data };
+
+          // Extract live attendance details immediately so user never has to manually click sync
+          const liveData = liveRes?.status === "fulfilled" ? liveRes.value?.data : null;
+          const sumData = sumRes?.status === "fulfilled" ? sumRes.value?.data : null;
+
+          let parsedLive = liveData;
+          if (typeof parsedLive === "string") {
+            try { parsedLive = JSON.parse(parsedLive); } catch { parsedLive = null; }
+          }
+          const row = parsedLive?.Table?.[0] || (parsedLive?.rawResponse ? JSON.parse(parsedLive.rawResponse)?.Table?.[0] : null);
+
+          if (row) {
+            const sem = row.Semester ? row.Semester.replace(/SEM$/i, "") : (row.semid ? String(row.semid) : undefined);
+            const standing = row.Percentage != null ? Number(row.Percentage) : undefined;
+            const examPer = row.ExamsPer != null ? Number(row.ExamsPer) : (row.TotalPercentage != null ? Number(row.TotalPercentage) : undefined);
+
+            mergedData = {
+              ...mergedData,
+              student: {
+                ...mergedData.student,
+                currentSemester: sem || mergedData.student?.currentSemester,
+              },
+              attendance: {
+                ...mergedData.attendance,
+                currentStandingPercentage: standing != null ? standing : mergedData.attendance?.currentStandingPercentage,
+                examEligibilityPercentage: examPer != null ? examPer : mergedData.attendance?.examEligibilityPercentage,
+                detentionRisk: (examPer != null ? examPer : 100) < 75,
+              },
+            };
+          } else if (sumData) {
+            mergedData = {
+              ...mergedData,
+              attendance: {
+                ...mergedData.attendance,
+                currentStandingPercentage: sumData.currentStandingPercentage ?? mergedData.attendance?.currentStandingPercentage,
+                examEligibilityPercentage: sumData.examEligibilityPercentage ?? mergedData.attendance?.examEligibilityPercentage,
+                detentionRisk: (sumData.examEligibilityPercentage ?? 100) < 75,
+              },
+            };
+          }
+
+          setData(mergedData);
+        } else if (dashRes.status === "rejected") {
+          setError(apiErrorMessage(dashRes.reason, "Could not load student dashboard from the backend."));
+        }
+      } catch (err) {
+        if (isMounted) setError(apiErrorMessage(err, "Could not load student dashboard."));
+      }
+    }
+
+    loadDashboardData();
+
     return () => {
       isMounted = false;
     };
@@ -95,51 +152,6 @@ export default function StudentDashboardPage() {
       .finally(() => {
         if (isMounted) setAcademicSummaryLoading(false);
       });
-
-    return () => {
-      isMounted = false;
-    };
-  }, [data?.student?.pin]);
-
-  // Background live attendance and semester sync
-  useEffect(() => {
-    if (!data?.student?.pin) return;
-    let isMounted = true;
-
-    api
-      .get("/student/attendance/live")
-      .then((res) => {
-        if (!isMounted) return;
-        let liveData = res.data;
-        if (typeof liveData === "string") {
-          try {
-            liveData = JSON.parse(liveData);
-          } catch {
-            liveData = null;
-          }
-        }
-        const row = liveData?.Table?.[0] || (liveData?.rawResponse ? JSON.parse(liveData.rawResponse)?.Table?.[0] : null);
-        if (row) {
-          const sem = row.Semester ? row.Semester.replace(/SEM$/i, "") : (row.semid ? String(row.semid) : undefined);
-          setData((prev) => {
-            if (!prev) return prev;
-            return {
-              ...prev,
-              student: {
-                ...prev.student,
-                currentSemester: sem || prev.student?.currentSemester,
-              },
-              attendance: {
-                ...prev.attendance,
-                currentStandingPercentage: row.Percentage != null ? row.Percentage : prev.attendance?.currentStandingPercentage,
-                examEligibilityPercentage: row.ExamsPer != null ? row.ExamsPer : (row.TotalPercentage != null ? row.TotalPercentage : prev.attendance?.examEligibilityPercentage),
-                detentionRisk: (row.ExamsPer != null ? row.ExamsPer : row.TotalPercentage) < 75,
-              },
-            };
-          });
-        }
-      })
-      .catch(() => {});
 
     return () => {
       isMounted = false;
