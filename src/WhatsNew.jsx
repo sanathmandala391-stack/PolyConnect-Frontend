@@ -42,7 +42,7 @@ export default function WhatsNew() {
                   alt="new"
                   className="w-4 h-4 shrink-0 object-contain inline-block"
                   onError={(e) => {
-                    e.currentTarget.src = "https://tgpolycet.nic.in/images/new.gif";
+                    e.currentTarget.src = "https://www.sbtet.telangana.gov.in/contents/img/gif.gif";
                   }}
                 />
 

@@ -24,8 +24,9 @@ export default {
         },
       },
       fontFamily: {
+        mulish: ["'Mulish'", "'Muli'", 'sans-serif'],
         display: ["'Merriweather'", "Georgia", "serif"],
-          sans: ['Noto Sans', 'Arial', 'sans-serif'],
+        sans: ['Noto Sans', 'Arial', 'sans-serif'],
         body: ["'Noto Sans'", "'Segoe UI'", "-apple-system", "sans-serif"],
       },
       boxShadow: {
