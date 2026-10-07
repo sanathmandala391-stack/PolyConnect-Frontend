@@ -145,12 +145,17 @@ export default function GovHeader() {
             <div className="flex flex-col items-center text-center">
               <OfficialPhoto src={sbtetCommisioner} alt="Chairperson" />
               <span
-                className="text-[10.5px] sm:text-[11.5px] text-[#1a3c78] mt-1 leading-tight font-bold"
+                className="text-[10.5px] sm:text-[11.5px] text-[#0f4c81] mt-1 leading-tight font-bold"
               >
-                Smt. A. Sridevasena, IAS
+                Smt. A. Sridevasena,
               </span>
               <span
-                className="text-[9px] sm:text-[9.5px] text-[#1a3c78] uppercase tracking-wide font-bold"
+                className="text-[9.5px] sm:text-[10px] text-[#0f4c81] leading-tight font-bold"
+              >
+                IAS
+              </span>
+              <span
+                className="text-[9px] sm:text-[9.5px] text-[#0f4c81] uppercase tracking-wide font-bold"
               >
                 CHAIRPERSON
               </span>
@@ -160,12 +165,12 @@ export default function GovHeader() {
             <div className="flex flex-col items-center text-center">
               <OfficialPhoto src={sbtetSec} alt="Secretary" />
               <span
-                className="text-[10.5px] sm:text-[11.5px] text-[#1a3c78] mt-1 leading-tight font-bold"
+                className="text-[10.5px] sm:text-[11.5px] text-[#0f4c81] mt-1 leading-tight font-bold"
               >
                 Er A Pullaiah
               </span>
               <span
-                className="text-[9px] sm:text-[9.5px] text-[#1a3c78] uppercase tracking-wide font-bold"
+                className="text-[9px] sm:text-[9.5px] text-[#0f4c81] uppercase tracking-wide font-bold mt-0.5"
               >
                 SECRETARY
               </span>
@@ -199,7 +204,7 @@ export default function GovHeader() {
                 onClick={reset}
                 title="Default font size"
                 className={`w-5 h-5 sm:w-6 sm:h-6 flex items-center justify-center rounded-xs text-[10px] sm:text-[11px] font-semibold cursor-pointer ${size === "md"
-                  ? "bg-[#35a5f1] text-white"
+                  ? "bg-[#24a2dc] text-white"
                   : "bg-gray-100 text-[#1a3c78] hover:bg-gray-200"
                   }`}
               >
@@ -245,10 +250,10 @@ export default function GovHeader() {
             {/* Mobile App Download Link */}
             <a
               href="#"
-              className="flex items-center justify-center gap-1 text-[11px] sm:text-[12px] font-semibold text-[#1a3c78] hover:underline cursor-pointer"
+              className="flex items-center justify-center gap-1.5 text-[11.5px] sm:text-[12.5px] font-bold text-[#0f4c81] hover:underline cursor-pointer"
             >
-              <i className="fa-solid fa-circle-play text-[#1a3c78]" />
-              Download Mobile App
+              <i className="fa-solid fa-play text-[10px] text-[#0f4c81]" />
+              <span>Download Mobile App</span>
             </a>
           </div>
 
@@ -257,88 +262,88 @@ export default function GovHeader() {
 
       {/* 2. Main Blue Navigation Bar */}
       <nav
-        className="bg-[#35a5f1] text-white shadow-md relative w-full"
-        style={{ fontFamily: "'Mulish', sans-serif", fontWeight: 400, fontSize: "14px" }}
+        className="bg-[#24a2dc] text-white shadow-md relative w-full border-b-[3px] border-[#1d88b8]"
+        style={{ fontFamily: "'Mulish', 'Open Sans', sans-serif", fontSize: "14px" }}
       >
-        <div className="max-w-7xl mx-auto px-3 sm:px-6 flex items-center justify-between min-h-[44px]">
+        <div className="max-w-7xl mx-auto px-2 sm:px-4 flex items-center justify-between min-h-[42px]">
 
           {/* Mobile Home Icon (Visible on mobile on the left) */}
           <NavLink
             to="/"
-            className="xl:hidden p-2.5 flex items-center text-white hover:bg-[#2888c9] transition-colors"
+            className="xl:hidden p-2.5 flex items-center text-white hover:bg-[#1a93cc] transition-colors"
             aria-label="Home"
           >
-            <i className="fa-solid fa-house text-lg text-white" />
+            <i className="fa-solid fa-house text-base text-white" />
           </NavLink>
 
           {/* Desktop Nav Items */}
           <div
-            className="hidden xl:flex items-center flex-nowrap text-[12px]"
-            style={{ fontFamily: "'Mulish', sans-serif" }}
+            className="hidden xl:flex items-center flex-nowrap text-[12px] xl:text-[12.5px]"
+            style={{ fontFamily: "'Mulish', 'Open Sans', sans-serif" }}
           >
             <NavLink
               to="/"
               className={({ isActive }) =>
-                `px-3 py-3 flex items-center justify-center text-white hover:bg-[#2888c9] transition-colors shrink-0 ${isActive ? "bg-[#2888c9]" : ""
+                `px-3 py-2.5 flex items-center justify-center text-white hover:bg-[#1a93cc] transition-colors shrink-0 ${isActive ? "bg-[#1d88b8]" : ""
                 }`
               }
               aria-label="Home"
             >
-              <i className="fa-solid fa-house-chimney text-sm" />
+              <i className="fa-solid fa-house text-[14px] text-white" />
             </NavLink>
 
             {/* 1. STUDENT SERVICES MEGA MENU */}
             <div className="group static">
               <button
                 type="button"
-                className="px-2.5 xl:px-3 py-3 text-[12px] sm:text-[12.5px] uppercase font-semibold tracking-wider flex items-center gap-1.5 whitespace-nowrap text-white hover:bg-[#2888c9] transition-colors shrink-0 cursor-pointer"
-                style={{ fontFamily: "'Mulish', sans-serif" }}
+                className="px-2.5 xl:px-3 py-2.5 xl:py-3 text-[12px] xl:text-[12.5px] uppercase font-bold tracking-normal flex items-center gap-1.5 whitespace-nowrap text-white hover:bg-[#1a93cc] transition-colors shrink-0 cursor-pointer"
+                style={{ fontFamily: "'Mulish', 'Open Sans', sans-serif" }}
               >
                 <i className="fa-solid fa-gear text-[13px] shrink-0" />
                 <span>STUDENT SERVICES</span>
-                <i className="fa-solid fa-chevron-down text-[10px] ml-0.5 shrink-0" />
+                <i className="fa-solid fa-chevron-down text-[9.5px] ml-0.5 shrink-0 opacity-90" />
               </button>
 
               <div className="hidden group-hover:block absolute top-full left-0 right-0 w-full bg-white text-slate-800 shadow-2xl border-t border-gray-200 z-50 p-6">
-                <div className="max-w-7xl mx-auto grid grid-cols-4 gap-6 text-[12px]" style={{ fontFamily: "'Mulish', sans-serif" }}>
+                <div className="max-w-7xl mx-auto grid grid-cols-4 gap-6 text-[12px]" style={{ fontFamily: "'Mulish', 'Open Sans', sans-serif" }}>
                   <div>
-                    <div className="bg-[#35a5f1] text-white font-bold px-3 py-1.5 uppercase text-[11px] mb-2 tracking-wide" style={{ fontFamily: "'Mulish', sans-serif" }}>DIPLOMA</div>
+                    <div className="bg-[#24a2dc] text-white font-bold px-3 py-1.5 uppercase text-[11px] mb-2 tracking-wide" style={{ fontFamily: "'Mulish', 'Open Sans', sans-serif" }}>DIPLOMA</div>
                     <ul className="divide-y divide-dotted divide-[#cbd5e1]">
-                      <li><Link to="/courses" className="block py-2 px-1 hover:bg-slate-50 hover:text-[#35a5f1] font-normal text-[13px] text-[#444444] transition-colors">View Syllabus</Link></li>
-                      <li><Link to="/student/attendance" className="block py-2 px-1 hover:bg-slate-50 hover:text-[#35a5f1] font-normal text-[13px] text-[#444444] transition-colors">View Attendance</Link></li>
-                      <li><Link to="/student/community" className="block py-2 px-1 hover:bg-slate-50 hover:text-[#35a5f1] font-normal text-[13px] text-[#444444] transition-colors">Submit Feedback</Link></li>
-                      <li><Link to="/circulars" className="block py-2 px-1 hover:bg-slate-50 hover:text-[#35a5f1] font-normal text-[13px] text-[#444444] transition-colors">Time Table</Link></li>
-                      <li><Link to="/Fee/exam" className="block py-2 px-1 hover:bg-slate-50 hover:text-[#35a5f1] font-normal text-[13px] text-[#444444] transition-colors">Exam fee payment</Link></li>
-                      <li><Link to="/halltickets" className="block py-2 px-1 hover:bg-slate-50 hover:text-[#35a5f1] font-normal text-[13px] text-[#444444] transition-colors">Hall Ticket download & Condonation Fee</Link></li>
-                      <li><Link to="/Results/consolidatedResults" className="block py-2 px-1 hover:bg-slate-50 hover:text-[#35a5f1] font-normal text-[13px] text-[#444444] transition-colors">Consolidated Results</Link></li>
-                      <li><Link to="/student/results" className="block py-2 px-1 hover:bg-slate-50 hover:text-[#35a5f1] font-normal text-[13px] text-[#444444] transition-colors">Results</Link></li>
-                      <li><Link to="/student/doubts" className="block py-2 px-1 hover:bg-slate-50 hover:text-[#35a5f1] font-normal text-[13px] text-[#444444] transition-colors">Doubt Solver AI (ChatBot)</Link></li>
-                      <li><Link to="/student/seniors" className="block py-2 px-1 hover:bg-slate-50 hover:text-[#35a5f1] font-normal text-[13px] text-[#444444] transition-colors">Senior Connect (1-on-1 Mentorship)</Link></li>
-                      <li><Link to="/student/community" className="block py-2 px-1 hover:bg-slate-50 hover:text-[#35a5f1] font-normal text-[13px] text-[#444444] transition-colors">Polytechnic Community Forums</Link></li>
+                      <li><Link to="/courses" className="block py-2 px-1 hover:bg-slate-50 hover:text-[#24a2dc] font-normal text-[13px] text-[#444444] transition-colors">View Syllabus</Link></li>
+                      <li><Link to="/student/attendance" className="block py-2 px-1 hover:bg-slate-50 hover:text-[#24a2dc] font-normal text-[13px] text-[#444444] transition-colors">View Attendance</Link></li>
+                      <li><Link to="/student/community" className="block py-2 px-1 hover:bg-slate-50 hover:text-[#24a2dc] font-normal text-[13px] text-[#444444] transition-colors">Submit Feedback</Link></li>
+                      <li><Link to="/circulars" className="block py-2 px-1 hover:bg-slate-50 hover:text-[#24a2dc] font-normal text-[13px] text-[#444444] transition-colors">Time Table</Link></li>
+                      <li><Link to="/Fee/exam" className="block py-2 px-1 hover:bg-slate-50 hover:text-[#24a2dc] font-normal text-[13px] text-[#444444] transition-colors">Exam fee payment</Link></li>
+                      <li><Link to="/halltickets" className="block py-2 px-1 hover:bg-slate-50 hover:text-[#24a2dc] font-normal text-[13px] text-[#444444] transition-colors">Hall Ticket download & Condonation Fee</Link></li>
+                      <li><Link to="/Results/consolidatedResults" className="block py-2 px-1 hover:bg-slate-50 hover:text-[#24a2dc] font-normal text-[13px] text-[#444444] transition-colors">Consolidated Results</Link></li>
+                      <li><Link to="/student/results" className="block py-2 px-1 hover:bg-slate-50 hover:text-[#24a2dc] font-normal text-[13px] text-[#444444] transition-colors">Results</Link></li>
+                      <li><Link to="/student/doubts" className="block py-2 px-1 hover:bg-slate-50 hover:text-[#24a2dc] font-normal text-[13px] text-[#444444] transition-colors">Doubt Solver AI (ChatBot)</Link></li>
+                      <li><Link to="/student/seniors" className="block py-2 px-1 hover:bg-slate-50 hover:text-[#24a2dc] font-normal text-[13px] text-[#444444] transition-colors">Senior Connect (1-on-1 Mentorship)</Link></li>
+                      <li><Link to="/student/community" className="block py-2 px-1 hover:bg-slate-50 hover:text-[#24a2dc] font-normal text-[13px] text-[#444444] transition-colors">Polytechnic Community Forums</Link></li>
                     </ul>
                   </div>
                   <div>
-                    <div className="bg-[#35a5f1] text-white font-bold px-3 py-1.5 uppercase text-[11px] mb-2 tracking-wide" style={{ fontFamily: "'Mulish', sans-serif" }}>TW & SH</div>
+                    <div className="bg-[#24a2dc] text-white font-bold px-3 py-1.5 uppercase text-[11px] mb-2 tracking-wide" style={{ fontFamily: "'Mulish', 'Open Sans', sans-serif" }}>TW & SH</div>
                     <ul className="divide-y divide-dotted divide-[#cbd5e1]">
-                      <li><a href="#" className="block py-2 px-1 hover:bg-slate-50 hover:text-[#35a5f1] font-normal text-[13px] text-[#444444] transition-colors">Apply for CBT\ Offilne Exam</a></li>
-                      <li><Link to="/Fee/exam" className="block py-2 px-1 hover:bg-slate-50 hover:text-[#35a5f1] font-normal text-[13px] text-[#444444] transition-colors">Fee Payment</Link></li>
-                      <li><a href="#" className="block py-2 px-1 hover:bg-slate-50 hover:text-[#35a5f1] font-normal text-[13px] text-[#444444] transition-colors">Reschedule CBT Exam\ View Application</a></li>
-                      <li><Link to="/halltickets" className="block py-2 px-1 hover:bg-slate-50 hover:text-[#35a5f1] font-normal text-[13px] text-[#444444] transition-colors">Hallticket Download</Link></li>
-                      <li><a href="#" className="block py-2 px-1 hover:bg-slate-50 hover:text-[#35a5f1] font-normal text-[13px] text-[#444444] transition-colors">CBT Practice</a></li>
-                      <li><a href="#" className="block py-2 px-1 hover:bg-slate-50 hover:text-[#35a5f1] font-normal text-[13px] text-[#444444] transition-colors">CBT Instructions</a></li>
+                      <li><a href="#" className="block py-2 px-1 hover:bg-slate-50 hover:text-[#24a2dc] font-normal text-[13px] text-[#444444] transition-colors">Apply for CBT\ Offilne Exam</a></li>
+                      <li><Link to="/Fee/exam" className="block py-2 px-1 hover:bg-slate-50 hover:text-[#24a2dc] font-normal text-[13px] text-[#444444] transition-colors">Fee Payment</Link></li>
+                      <li><a href="#" className="block py-2 px-1 hover:bg-slate-50 hover:text-[#24a2dc] font-normal text-[13px] text-[#444444] transition-colors">Reschedule CBT Exam\ View Application</a></li>
+                      <li><Link to="/halltickets" className="block py-2 px-1 hover:bg-slate-50 hover:text-[#24a2dc] font-normal text-[13px] text-[#444444] transition-colors">Hallticket Download</Link></li>
+                      <li><a href="#" className="block py-2 px-1 hover:bg-slate-50 hover:text-[#24a2dc] font-normal text-[13px] text-[#444444] transition-colors">CBT Practice</a></li>
+                      <li><a href="#" className="block py-2 px-1 hover:bg-slate-50 hover:text-[#24a2dc] font-normal text-[13px] text-[#444444] transition-colors">CBT Instructions</a></li>
                     </ul>
                   </div>
                   <div>
-                    <div className="bg-[#35a5f1] text-white font-bold px-3 py-1.5 uppercase text-[11px] mb-2 tracking-wide" style={{ fontFamily: "'Mulish', sans-serif" }}>CCIC</div>
+                    <div className="bg-[#24a2dc] text-white font-bold px-3 py-1.5 uppercase text-[11px] mb-2 tracking-wide" style={{ fontFamily: "'Mulish', 'Open Sans', sans-serif" }}>CCIC</div>
                     <ul className="divide-y divide-dotted divide-[#cbd5e1]">
-                      <li><a href="#" className="block py-2 px-1 hover:bg-slate-50 hover:text-[#35a5f1] font-normal text-[13px] text-[#444444] transition-colors">CCIC Results</a></li>
-                      <li><a href="#" className="block py-2 px-1 hover:bg-slate-50 hover:text-[#35a5f1] font-normal text-[13px] text-[#444444] transition-colors">Photo Copy & Revaluation</a></li>
+                      <li><a href="#" className="block py-2 px-1 hover:bg-slate-50 hover:text-[#24a2dc] font-normal text-[13px] text-[#444444] transition-colors">CCIC Results</a></li>
+                      <li><a href="#" className="block py-2 px-1 hover:bg-slate-50 hover:text-[#24a2dc] font-normal text-[13px] text-[#444444] transition-colors">Photo Copy & Revaluation</a></li>
                     </ul>
                   </div>
                   <div>
-                    <div className="bg-[#35a5f1] text-white font-bold px-3 py-1.5 uppercase text-[11px] mb-2 tracking-wide" style={{ fontFamily: "'Mulish', sans-serif" }}>ISB ONLINE SKILLING PROGRAMMES</div>
+                    <div className="bg-[#24a2dc] text-white font-bold px-3 py-1.5 uppercase text-[11px] mb-2 tracking-wide" style={{ fontFamily: "'Mulish', 'Open Sans', sans-serif" }}>ISB ONLINE SKILLING PROGRAMMES</div>
                     <ul className="divide-y divide-dotted divide-[#cbd5e1]">
-                      <li><a href="#" className="block py-2 px-1 hover:bg-slate-50 hover:text-[#35a5f1] font-normal text-[13px] text-[#444444] transition-colors">Student Enrolment</a></li>
+                      <li><a href="#" className="block py-2 px-1 hover:bg-slate-50 hover:text-[#24a2dc] font-normal text-[13px] text-[#444444] transition-colors">Student Enrolment</a></li>
                     </ul>
                   </div>
                 </div>
@@ -349,36 +354,36 @@ export default function GovHeader() {
             <div className="group static">
               <button
                 type="button"
-                className="px-2.5 xl:px-3 py-3 text-[12px] sm:text-[12.5px] uppercase font-semibold tracking-wider flex items-center gap-1.5 whitespace-nowrap text-white hover:bg-[#2888c9] transition-colors shrink-0 cursor-pointer"
-                style={{ fontFamily: "'Mulish', sans-serif" }}
+                className="px-2.5 xl:px-3 py-2.5 xl:py-3 text-[12px] xl:text-[12.5px] uppercase font-bold tracking-normal flex items-center gap-1.5 whitespace-nowrap text-white hover:bg-[#1a93cc] transition-colors shrink-0 cursor-pointer"
+                style={{ fontFamily: "'Mulish', 'Open Sans', sans-serif" }}
               >
                 <i className="fa-solid fa-gear text-[13px] shrink-0" />
                 <span>COLLEGE SERVICES</span>
-                <i className="fa-solid fa-chevron-down text-[10px] ml-0.5 shrink-0" />
+                <i className="fa-solid fa-chevron-down text-[9.5px] ml-0.5 shrink-0 opacity-90" />
               </button>
 
               <div className="hidden group-hover:block absolute top-full left-0 right-0 w-full bg-white text-slate-800 shadow-2xl border-t border-gray-200 z-50 p-6">
-                <div className="max-w-7xl mx-auto grid grid-cols-3 gap-6 text-[12px]" style={{ fontFamily: "'Mulish', sans-serif" }}>
+                <div className="max-w-7xl mx-auto grid grid-cols-3 gap-6 text-[12px]" style={{ fontFamily: "'Mulish', 'Open Sans', sans-serif" }}>
                   <div>
-                    <div className="bg-[#35a5f1] text-white font-bold px-3 py-1.5 uppercase text-[11px] mb-2 tracking-wide" style={{ fontFamily: "'Mulish', sans-serif" }}>DIPLOMA</div>
+                    <div className="bg-[#24a2dc] text-white font-bold px-3 py-1.5 uppercase text-[11px] mb-2 tracking-wide" style={{ fontFamily: "'Mulish', 'Open Sans', sans-serif" }}>DIPLOMA</div>
                     <ul className="divide-y divide-dotted divide-[#cbd5e1]">
-                      <li><Link to="/hod/dashboard" className="block py-2 px-1 hover:bg-slate-50 hover:text-[#35a5f1] font-normal text-[13px] text-[#444444] transition-colors">Department HOD Dashboard</Link></li>
-                      <li><Link to="/hod/approvals" className="block py-2 px-1 hover:bg-slate-50 hover:text-[#35a5f1] font-normal text-[13px] text-[#444444] transition-colors">Student Registration Approvals</Link></li>
-                      <li><Link to="/hod/students" className="block py-2 px-1 hover:bg-slate-50 hover:text-[#35a5f1] font-normal text-[13px] text-[#444444] transition-colors">Department Students Roster</Link></li>
-                      <li><Link to="/hod/attendance" className="block py-2 px-1 hover:bg-slate-50 hover:text-[#35a5f1] font-normal text-[13px] text-[#444444] transition-colors">Department Attendance Register</Link></li>
+                      <li><Link to="/hod/dashboard" className="block py-2 px-1 hover:bg-slate-50 hover:text-[#24a2dc] font-normal text-[13px] text-[#444444] transition-colors">Department HOD Dashboard</Link></li>
+                      <li><Link to="/hod/approvals" className="block py-2 px-1 hover:bg-slate-50 hover:text-[#24a2dc] font-normal text-[13px] text-[#444444] transition-colors">Student Registration Approvals</Link></li>
+                      <li><Link to="/hod/students" className="block py-2 px-1 hover:bg-slate-50 hover:text-[#24a2dc] font-normal text-[13px] text-[#444444] transition-colors">Department Students Roster</Link></li>
+                      <li><Link to="/hod/attendance" className="block py-2 px-1 hover:bg-slate-50 hover:text-[#24a2dc] font-normal text-[13px] text-[#444444] transition-colors">Department Attendance Register</Link></li>
                     </ul>
                   </div>
                   <div>
-                    <div className="bg-[#35a5f1] text-white font-bold px-3 py-1.5 uppercase text-[11px] mb-2 tracking-wide" style={{ fontFamily: "'Mulish', sans-serif" }}>TW & SH</div>
+                    <div className="bg-[#24a2dc] text-white font-bold px-3 py-1.5 uppercase text-[11px] mb-2 tracking-wide" style={{ fontFamily: "'Mulish', 'Open Sans', sans-serif" }}>TW & SH</div>
                     <ul className="divide-y divide-dotted divide-[#cbd5e1]">
-                      <li><Link to="/login" className="block py-2 px-1 hover:bg-slate-50 hover:text-[#35a5f1] font-normal text-[13px] text-[#444444] transition-colors">College/ Institute Login</Link></li>
+                      <li><Link to="/login" className="block py-2 px-1 hover:bg-slate-50 hover:text-[#24a2dc] font-normal text-[13px] text-[#444444] transition-colors">College/ Institute Login</Link></li>
                     </ul>
                   </div>
                   <div>
-                    <div className="bg-[#35a5f1] text-white font-bold px-3 py-1.5 uppercase text-[11px] mb-2 tracking-wide" style={{ fontFamily: "'Mulish', sans-serif" }}>CCIC</div>
+                    <div className="bg-[#24a2dc] text-white font-bold px-3 py-1.5 uppercase text-[11px] mb-2 tracking-wide" style={{ fontFamily: "'Mulish', 'Open Sans', sans-serif" }}>CCIC</div>
                     <ul className="divide-y divide-dotted divide-[#cbd5e1]">
-                      <li><a href="#" className="block py-2 px-1 hover:bg-slate-50 hover:text-[#35a5f1] font-normal text-[13px] text-[#444444] transition-colors">CCIC Exams Portal</a></li>
-                      <li><a href="#" className="block py-2 px-1 hover:bg-slate-50 hover:text-[#35a5f1] font-normal text-[13px] text-[#444444] transition-colors">CCIC Affiliation Portal</a></li>
+                      <li><a href="#" className="block py-2 px-1 hover:bg-slate-50 hover:text-[#24a2dc] font-normal text-[13px] text-[#444444] transition-colors">CCIC Exams Portal</a></li>
+                      <li><a href="#" className="block py-2 px-1 hover:bg-slate-50 hover:text-[#24a2dc] font-normal text-[13px] text-[#444444] transition-colors">CCIC Affiliation Portal</a></li>
                     </ul>
                   </div>
                 </div>
@@ -389,34 +394,34 @@ export default function GovHeader() {
             <div className="group static">
               <button
                 type="button"
-                className="px-2.5 xl:px-3 py-3 text-[12px] sm:text-[12.5px] uppercase font-semibold tracking-wider flex items-center gap-1.5 whitespace-nowrap text-white hover:bg-[#2888c9] transition-colors shrink-0 cursor-pointer"
-                style={{ fontFamily: "'Mulish', sans-serif" }}
+                className="px-2.5 xl:px-3 py-2.5 xl:py-3 text-[12px] xl:text-[12.5px] uppercase font-bold tracking-normal flex items-center gap-1.5 whitespace-nowrap text-white hover:bg-[#1a93cc] transition-colors shrink-0 cursor-pointer"
+                style={{ fontFamily: "'Mulish', 'Open Sans', sans-serif" }}
               >
                 <i className="fa-solid fa-gear text-[13px] shrink-0" />
                 <span>OTHERS SERVICES</span>
-                <i className="fa-solid fa-chevron-down text-[10px] ml-0.5 shrink-0" />
+                <i className="fa-solid fa-chevron-down text-[9.5px] ml-0.5 shrink-0 opacity-90" />
               </button>
 
               <div className="hidden group-hover:block absolute top-full left-0 right-0 w-full bg-white text-slate-800 shadow-2xl border-t border-gray-200 z-50 p-6">
-                <div className="max-w-7xl mx-auto grid grid-cols-3 gap-6 text-[12px]" style={{ fontFamily: "'Mulish', sans-serif" }}>
+                <div className="max-w-7xl mx-auto grid grid-cols-3 gap-6 text-[12px]" style={{ fontFamily: "'Mulish', 'Open Sans', sans-serif" }}>
                   <div>
-                    <div className="bg-[#35a5f1] text-white font-bold px-3 py-1.5 uppercase text-[11px] mb-2 tracking-wide" style={{ fontFamily: "'Mulish', sans-serif" }}>INSTITUTIONS</div>
+                    <div className="bg-[#24a2dc] text-white font-bold px-3 py-1.5 uppercase text-[11px] mb-2 tracking-wide" style={{ fontFamily: "'Mulish', 'Open Sans', sans-serif" }}>INSTITUTIONS</div>
                     <ul className="divide-y divide-dotted divide-[#cbd5e1]">
-                      <li><Link to="/circulars" className="block py-2 px-1 hover:bg-slate-50 hover:text-[#35a5f1] font-normal text-[13px] text-[#444444] transition-colors">Official Circulars & Timetables</Link></li>
-                      <li><Link to="/admin/dashboard" className="block py-2 px-1 hover:bg-slate-50 hover:text-[#35a5f1] font-normal text-[13px] text-[#444444] transition-colors">System Administration Panel</Link></li>
+                      <li><Link to="/circulars" className="block py-2 px-1 hover:bg-slate-50 hover:text-[#24a2dc] font-normal text-[13px] text-[#444444] transition-colors">Official Circulars & Timetables</Link></li>
+                      <li><Link to="/admin/dashboard" className="block py-2 px-1 hover:bg-slate-50 hover:text-[#24a2dc] font-normal text-[13px] text-[#444444] transition-colors">System Administration Panel</Link></li>
                     </ul>
                   </div>
                   <div>
-                    <div className="bg-[#35a5f1] text-white font-bold px-3 py-1.5 uppercase text-[11px] mb-2 tracking-wide" style={{ fontFamily: "'Mulish', sans-serif" }}>STAFF</div>
+                    <div className="bg-[#24a2dc] text-white font-bold px-3 py-1.5 uppercase text-[11px] mb-2 tracking-wide" style={{ fontFamily: "'Mulish', 'Open Sans', sans-serif" }}>STAFF</div>
                     <ul className="divide-y divide-dotted divide-[#cbd5e1]">
-                      <li><a href="#" className="block py-2 px-1 hover:bg-slate-50 hover:text-[#35a5f1] font-normal text-[13px] text-[#444444] transition-colors">Digital Evaluation</a></li>
+                      <li><a href="#" className="block py-2 px-1 hover:bg-slate-50 hover:text-[#24a2dc] font-normal text-[13px] text-[#444444] transition-colors">Digital Evaluation</a></li>
                     </ul>
                   </div>
                   <div>
-                    <div className="bg-[#35a5f1] text-white font-bold px-3 py-1.5 uppercase text-[11px] mb-2 tracking-wide" style={{ fontFamily: "'Mulish', sans-serif" }}>POLYCET</div>
+                    <div className="bg-[#24a2dc] text-white font-bold px-3 py-1.5 uppercase text-[11px] mb-2 tracking-wide" style={{ fontFamily: "'Mulish', 'Open Sans', sans-serif" }}>POLYCET</div>
                     <ul className="divide-y divide-dotted divide-[#cbd5e1]">
-                      <li><Link to="/student/doubts" className="block py-2 px-1 hover:bg-slate-50 hover:text-[#35a5f1] font-normal text-[13px] text-[#444444] transition-colors">AI Doubt Solver Assistant</Link></li>
-                      <li><a href="#" className="block py-2 px-1 hover:bg-slate-50 hover:text-[#35a5f1] font-normal text-[13px] text-[#444444] transition-colors">Apply for Polycet</a></li>
+                      <li><Link to="/student/doubts" className="block py-2 px-1 hover:bg-slate-50 hover:text-[#24a2dc] font-normal text-[13px] text-[#444444] transition-colors">AI Doubt Solver Assistant</Link></li>
+                      <li><a href="#" className="block py-2 px-1 hover:bg-slate-50 hover:text-[#24a2dc] font-normal text-[13px] text-[#444444] transition-colors">Apply for Polycet</a></li>
                     </ul>
                   </div>
                 </div>
@@ -427,33 +432,33 @@ export default function GovHeader() {
             <div className="group static">
               <button
                 type="button"
-                className="px-2.5 xl:px-3 py-3 text-[12px] sm:text-[12.5px] uppercase font-semibold tracking-wider flex items-center gap-1.5 whitespace-nowrap text-white hover:bg-[#2888c9] transition-colors shrink-0 cursor-pointer"
-                style={{ fontFamily: "'Mulish', sans-serif" }}
+                className="px-2.5 xl:px-3 py-2.5 xl:py-3 text-[12px] xl:text-[12.5px] uppercase font-bold tracking-normal flex items-center gap-1.5 whitespace-nowrap text-white hover:bg-[#1a93cc] transition-colors shrink-0 cursor-pointer"
+                style={{ fontFamily: "'Mulish', 'Open Sans', sans-serif" }}
               >
                 <i className="fa-solid fa-gear text-[13px] shrink-0" />
                 <span>AFFILIATED COLLEGES</span>
-                <i className="fa-solid fa-chevron-down text-[10px] ml-0.5 shrink-0" />
+                <i className="fa-solid fa-chevron-down text-[9.5px] ml-0.5 shrink-0 opacity-90" />
               </button>
 
               <div className="hidden group-hover:block absolute top-full left-0 right-0 w-full bg-white text-slate-800 shadow-2xl border-t border-gray-200 z-50 p-6">
-                <div className="max-w-7xl mx-auto grid grid-cols-3 gap-6 text-[12px]" style={{ fontFamily: "'Mulish', sans-serif" }}>
+                <div className="max-w-7xl mx-auto grid grid-cols-3 gap-6 text-[12px]" style={{ fontFamily: "'Mulish', 'Open Sans', sans-serif" }}>
                   <div>
-                    <div className="bg-[#35a5f1] text-white font-bold px-3 py-1.5 uppercase text-[11px] mb-2 tracking-wide" style={{ fontFamily: "'Mulish', sans-serif" }}>DIPLOMA</div>
+                    <div className="bg-[#24a2dc] text-white font-bold px-3 py-1.5 uppercase text-[11px] mb-2 tracking-wide" style={{ fontFamily: "'Mulish', 'Open Sans', sans-serif" }}>DIPLOMA</div>
                     <ul className="divide-y divide-dotted divide-[#cbd5e1]">
-                      <li><Link to="/admin/colleges" className="block py-2 px-1 hover:bg-slate-50 hover:text-[#35a5f1] font-normal text-[13px] text-[#444444] transition-colors">All Affiliated Polytechnic Colleges</Link></li>
+                      <li><Link to="/admin/colleges" className="block py-2 px-1 hover:bg-slate-50 hover:text-[#24a2dc] font-normal text-[13px] text-[#444444] transition-colors">All Affiliated Polytechnic Colleges</Link></li>
                     </ul>
                   </div>
                   <div>
-                    <div className="bg-[#35a5f1] text-white font-bold px-3 py-1.5 uppercase text-[11px] mb-2 tracking-wide" style={{ fontFamily: "'Mulish', sans-serif" }}>TW & SH</div>
+                    <div className="bg-[#24a2dc] text-white font-bold px-3 py-1.5 uppercase text-[11px] mb-2 tracking-wide" style={{ fontFamily: "'Mulish', 'Open Sans', sans-serif" }}>TW & SH</div>
                     <ul className="divide-y divide-dotted divide-[#cbd5e1]">
-                      <li><a href="#" className="block py-2 px-1 hover:bg-slate-50 hover:text-[#35a5f1] font-normal text-[13px] text-[#444444] transition-colors">Typewriting & Shorthand Institutions</a></li>
+                      <li><a href="#" className="block py-2 px-1 hover:bg-slate-50 hover:text-[#24a2dc] font-normal text-[13px] text-[#444444] transition-colors">Typewriting & Shorthand Institutions</a></li>
                     </ul>
                   </div>
                   <div>
-                    <div className="bg-[#35a5f1] text-white font-bold px-3 py-1.5 uppercase text-[11px] mb-2 tracking-wide" style={{ fontFamily: "'Mulish', sans-serif" }}>CCIC</div>
+                    <div className="bg-[#24a2dc] text-white font-bold px-3 py-1.5 uppercase text-[11px] mb-2 tracking-wide" style={{ fontFamily: "'Mulish', 'Open Sans', sans-serif" }}>CCIC</div>
                     <ul className="divide-y divide-dotted divide-[#cbd5e1]">
-                      <li><a href="#" className="block py-2 px-1 hover:bg-slate-50 hover:text-[#35a5f1] font-normal text-[13px] text-[#444444] transition-colors">CCIC Portal</a></li>
-                      <li><a href="#" className="block py-2 px-1 hover:bg-slate-50 hover:text-[#35a5f1] font-normal text-[13px] text-[#444444] transition-colors">CCIC Affiliated Colleges</a></li>
+                      <li><a href="#" className="block py-2 px-1 hover:bg-slate-50 hover:text-[#24a2dc] font-normal text-[13px] text-[#444444] transition-colors">CCIC Portal</a></li>
+                      <li><a href="#" className="block py-2 px-1 hover:bg-slate-50 hover:text-[#24a2dc] font-normal text-[13px] text-[#444444] transition-colors">CCIC Affiliated Colleges</a></li>
                     </ul>
                   </div>
                 </div>
@@ -464,32 +469,32 @@ export default function GovHeader() {
             <div className="group static">
               <button
                 type="button"
-                className="px-2.5 xl:px-3 py-3 text-[12px] sm:text-[12.5px] uppercase font-semibold tracking-wider flex items-center gap-1.5 whitespace-nowrap text-white hover:bg-[#2888c9] transition-colors shrink-0 cursor-pointer"
-                style={{ fontFamily: "'Mulish', sans-serif" }}
+                className="px-2.5 xl:px-3 py-2.5 xl:py-3 text-[12px] xl:text-[12.5px] uppercase font-bold tracking-normal flex items-center gap-1.5 whitespace-nowrap text-white hover:bg-[#1a93cc] transition-colors shrink-0 cursor-pointer"
+                style={{ fontFamily: "'Mulish', 'Open Sans', sans-serif" }}
               >
                 <i className="fa-solid fa-gear text-[13px] shrink-0" />
                 <span>COURSES</span>
-                <i className="fa-solid fa-chevron-down text-[10px] ml-0.5 shrink-0" />
+                <i className="fa-solid fa-chevron-down text-[9.5px] ml-0.5 shrink-0 opacity-90" />
               </button>
 
               <div className="hidden group-hover:block absolute top-full left-0 right-0 w-full bg-white text-slate-800 shadow-2xl border-t border-gray-200 z-50 p-6">
-                <div className="max-w-7xl mx-auto grid grid-cols-3 gap-6 text-[12px]" style={{ fontFamily: "'Mulish', sans-serif" }}>
+                <div className="max-w-7xl mx-auto grid grid-cols-3 gap-6 text-[12px]" style={{ fontFamily: "'Mulish', 'Open Sans', sans-serif" }}>
                   <div>
-                    <div className="bg-[#35a5f1] text-white font-bold px-3 py-1.5 uppercase text-[11px] mb-2 tracking-wide" style={{ fontFamily: "'Mulish', sans-serif" }}>DIPLOMA</div>
+                    <div className="bg-[#24a2dc] text-white font-bold px-3 py-1.5 uppercase text-[11px] mb-2 tracking-wide" style={{ fontFamily: "'Mulish', 'Open Sans', sans-serif" }}>DIPLOMA</div>
                     <ul className="divide-y divide-dotted divide-[#cbd5e1]">
-                      <li><Link to="/courses" className="block py-2 px-1 hover:bg-slate-50 hover:text-[#35a5f1] font-normal text-[13px] text-[#444444] transition-colors">Diploma Courses List</Link></li>
+                      <li><Link to="/courses" className="block py-2 px-1 hover:bg-slate-50 hover:text-[#24a2dc] font-normal text-[13px] text-[#444444] transition-colors">Diploma Courses List</Link></li>
                     </ul>
                   </div>
                   <div>
-                    <div className="bg-[#35a5f1] text-white font-bold px-3 py-1.5 uppercase text-[11px] mb-2 tracking-wide" style={{ fontFamily: "'Mulish', sans-serif" }}>TW & SH</div>
+                    <div className="bg-[#24a2dc] text-white font-bold px-3 py-1.5 uppercase text-[11px] mb-2 tracking-wide" style={{ fontFamily: "'Mulish', 'Open Sans', sans-serif" }}>TW & SH</div>
                     <ul className="divide-y divide-dotted divide-[#cbd5e1]">
-                      <li><Link to="/courses" className="block py-2 px-1 hover:bg-slate-50 hover:text-[#35a5f1] font-normal text-[13px] text-[#444444] transition-colors">Typewriting & Shorthand</Link></li>
+                      <li><Link to="/courses" className="block py-2 px-1 hover:bg-slate-50 hover:text-[#24a2dc] font-normal text-[13px] text-[#444444] transition-colors">Typewriting & Shorthand</Link></li>
                     </ul>
                   </div>
                   <div>
-                    <div className="bg-[#35a5f1] text-white font-bold px-3 py-1.5 uppercase text-[11px] mb-2 tracking-wide" style={{ fontFamily: "'Mulish', sans-serif" }}>CCIC</div>
+                    <div className="bg-[#24a2dc] text-white font-bold px-3 py-1.5 uppercase text-[11px] mb-2 tracking-wide" style={{ fontFamily: "'Mulish', 'Open Sans', sans-serif" }}>CCIC</div>
                     <ul className="divide-y divide-dotted divide-[#cbd5e1]">
-                      <li><Link to="/courses" className="block py-2 px-1 hover:bg-slate-50 hover:text-[#35a5f1] font-normal text-[13px] text-[#444444] transition-colors">CCIC Courses</Link></li>
+                      <li><Link to="/courses" className="block py-2 px-1 hover:bg-slate-50 hover:text-[#24a2dc] font-normal text-[13px] text-[#444444] transition-colors">CCIC Courses</Link></li>
                     </ul>
                   </div>
                 </div>
@@ -499,8 +504,8 @@ export default function GovHeader() {
             {/* CONTACT-US */}
             <a
               href="#contact-us"
-              className="px-2.5 xl:px-3 py-3 text-[12px] sm:text-[12.5px] uppercase font-semibold tracking-wider flex items-center gap-1.5 whitespace-nowrap text-white hover:bg-[#2888c9] transition-colors shrink-0 cursor-pointer"
-              style={{ fontFamily: "'Mulish', sans-serif" }}
+              className="px-2.5 xl:px-3 py-2.5 xl:py-3 text-[12px] xl:text-[12.5px] uppercase font-bold tracking-normal flex items-center gap-1.5 whitespace-nowrap text-white hover:bg-[#1a93cc] transition-colors shrink-0 cursor-pointer"
+              style={{ fontFamily: "'Mulish', 'Open Sans', sans-serif" }}
             >
               <i className="fa-solid fa-square-phone text-[14px] shrink-0" />
               <span>CONTACT-US</span>
@@ -510,38 +515,38 @@ export default function GovHeader() {
             <div className="group static">
               <button
                 type="button"
-                className="px-2.5 xl:px-3 py-3 text-[12px] sm:text-[12.5px] uppercase font-semibold tracking-wider flex items-center gap-1.5 whitespace-nowrap text-white hover:bg-[#2888c9] transition-colors shrink-0 cursor-pointer"
-                style={{ fontFamily: "'Mulish', sans-serif" }}
+                className="px-2.5 xl:px-3 py-2.5 xl:py-3 text-[12px] xl:text-[12.5px] uppercase font-bold tracking-normal flex items-center gap-1.5 whitespace-nowrap text-white hover:bg-[#1a93cc] transition-colors shrink-0 cursor-pointer"
+                style={{ fontFamily: "'Mulish', 'Open Sans', sans-serif" }}
               >
                 <i className="fa-solid fa-circle-info text-[14px] shrink-0" />
                 <span>MORE</span>
-                <i className="fa-solid fa-chevron-down text-[10px] ml-0.5 shrink-0" />
+                <i className="fa-solid fa-chevron-down text-[9.5px] ml-0.5 shrink-0 opacity-90" />
               </button>
 
               <div className="hidden group-hover:block absolute top-full left-0 right-0 w-full bg-white text-slate-800 shadow-2xl border-t border-gray-200 z-50 p-6">
-                <div className="max-w-7xl mx-auto grid grid-cols-3 gap-6 text-[12px]" style={{ fontFamily: "'Mulish', sans-serif" }}>
+                <div className="max-w-7xl mx-auto grid grid-cols-3 gap-6 text-[12px]" style={{ fontFamily: "'Mulish', 'Open Sans', sans-serif" }}>
                   <div>
-                    <div className="bg-[#35a5f1] text-white font-bold px-3 py-1.5 uppercase text-[11px] mb-2 tracking-wide" style={{ fontFamily: "'Mulish', sans-serif" }}>MORE</div>
+                    <div className="bg-[#24a2dc] text-white font-bold px-3 py-1.5 uppercase text-[11px] mb-2 tracking-wide" style={{ fontFamily: "'Mulish', 'Open Sans', sans-serif" }}>MORE</div>
                     <ul className="divide-y divide-dotted divide-[#cbd5e1]">
-                      <li><Link to="/student/community" className="block py-2 px-1 hover:bg-slate-50 hover:text-[#35a5f1] font-normal text-[13px] text-[#444444] transition-colors">Statewide Polytechnic Community</Link></li>
-                      <li><Link to="/register/student" className="block py-2 px-1 hover:bg-slate-50 hover:text-[#35a5f1] font-normal text-[13px] text-[#444444] transition-colors">Student Registration</Link></li>
-                      <li><Link to="/register/hod" className="block py-2 px-1 hover:bg-slate-50 hover:text-[#35a5f1] font-normal text-[13px] text-[#444444] transition-colors">HOD Registration</Link></li>
+                      <li><Link to="/student/community" className="block py-2 px-1 hover:bg-slate-50 hover:text-[#24a2dc] font-normal text-[13px] text-[#444444] transition-colors">Statewide Polytechnic Community</Link></li>
+                      <li><Link to="/register/student" className="block py-2 px-1 hover:bg-slate-50 hover:text-[#24a2dc] font-normal text-[13px] text-[#444444] transition-colors">Student Registration</Link></li>
+                      <li><Link to="/register/hod" className="block py-2 px-1 hover:bg-slate-50 hover:text-[#24a2dc] font-normal text-[13px] text-[#444444] transition-colors">HOD Registration</Link></li>
                     </ul>
                   </div>
                   <div>
-                    <div className="bg-[#35a5f1] text-white font-bold px-3 py-1.5 uppercase text-[11px] mb-2 tracking-wide" style={{ fontFamily: "'Mulish', sans-serif" }}>PORTAL</div>
+                    <div className="bg-[#24a2dc] text-white font-bold px-3 py-1.5 uppercase text-[11px] mb-2 tracking-wide" style={{ fontFamily: "'Mulish', 'Open Sans', sans-serif" }}>PORTAL</div>
                     <ul className="divide-y divide-dotted divide-[#cbd5e1]">
-                      <li><a href="#" className="block py-2 px-1 hover:bg-slate-50 hover:text-[#35a5f1] font-normal text-[13px] text-[#444444] transition-colors">Site Map</a></li>
-                      <li><a href="#" className="block py-2 px-1 hover:bg-slate-50 hover:text-[#35a5f1] font-normal text-[13px] text-[#444444] transition-colors">Tenders & Downloads</a></li>
-                      <li><Link to="/circulars" className="block py-2 px-1 hover:bg-slate-50 hover:text-[#35a5f1] font-normal text-[13px] text-[#444444] transition-colors">Latest News Notifications</Link></li>
+                      <li><a href="#" className="block py-2 px-1 hover:bg-slate-50 hover:text-[#24a2dc] font-normal text-[13px] text-[#444444] transition-colors">Site Map</a></li>
+                      <li><a href="#" className="block py-2 px-1 hover:bg-slate-50 hover:text-[#24a2dc] font-normal text-[13px] text-[#444444] transition-colors">Tenders & Downloads</a></li>
+                      <li><Link to="/circulars" className="block py-2 px-1 hover:bg-slate-50 hover:text-[#24a2dc] font-normal text-[13px] text-[#444444] transition-colors">Latest News Notifications</Link></li>
                     </ul>
                   </div>
                   <div>
-                    <div className="bg-[#35a5f1] text-white font-bold px-3 py-1.5 uppercase text-[11px] mb-2 tracking-wide" style={{ fontFamily: "'Mulish', sans-serif" }}>RTI</div>
+                    <div className="bg-[#24a2dc] text-white font-bold px-3 py-1.5 uppercase text-[11px] mb-2 tracking-wide" style={{ fontFamily: "'Mulish', 'Open Sans', sans-serif" }}>RTI</div>
                     <ul className="divide-y divide-dotted divide-[#cbd5e1]">
-                      <li><a href="#" className="block py-2 px-1 hover:bg-slate-50 hover:text-[#35a5f1] font-normal text-[13px] text-[#444444] transition-colors">Full details of Right to Information Act</a></li>
-                      <li><a href="#" className="block py-2 px-1 hover:bg-slate-50 hover:text-[#35a5f1] font-normal text-[13px] text-[#444444] transition-colors">About Right to Information</a></li>
-                      <li><a href="#" className="block py-2 px-1 hover:bg-slate-50 hover:text-[#35a5f1] font-normal text-[13px] text-[#444444] transition-colors">Obligations of Public Authority</a></li>
+                      <li><a href="#" className="block py-2 px-1 hover:bg-slate-50 hover:text-[#24a2dc] font-normal text-[13px] text-[#444444] transition-colors">Full details of Right to Information Act</a></li>
+                      <li><a href="#" className="block py-2 px-1 hover:bg-slate-50 hover:text-[#24a2dc] font-normal text-[13px] text-[#444444] transition-colors">About Right to Information</a></li>
+                      <li><a href="#" className="block py-2 px-1 hover:bg-slate-50 hover:text-[#24a2dc] font-normal text-[13px] text-[#444444] transition-colors">Obligations of Public Authority</a></li>
                     </ul>
                   </div>
                 </div>
@@ -555,8 +560,8 @@ export default function GovHeader() {
                   type="button"
                   onClick={() => setProfileOpen((prev) => !prev)}
                   title={user.fullName || user.username}
-                  className="bg-[#2888c9] hover:bg-[#1e78c2] text-white text-[12px] sm:text-[12.5px] uppercase font-semibold tracking-wider px-3.5 py-3 flex items-center gap-1.5 whitespace-nowrap transition-colors cursor-pointer"
-                  style={{ fontFamily: "'Mulish', sans-serif" }}
+                  className="bg-[#1d88b8] hover:bg-[#1676a1] text-white text-[12px] xl:text-[12.5px] uppercase font-bold tracking-normal px-3.5 py-2.5 xl:py-3 flex items-center gap-1.5 whitespace-nowrap transition-colors cursor-pointer"
+                  style={{ fontFamily: "'Mulish', 'Open Sans', sans-serif" }}
                 >
                   <i className="fa-solid fa-user text-[13px] shrink-0" />
                   <span className="truncate max-w-[120px]">
@@ -596,8 +601,8 @@ export default function GovHeader() {
             ) : (
               <Link
                 to="/login"
-                className="bg-[#2888c9] hover:bg-[#1e78c2] text-white text-[12px] sm:text-[12.5px] uppercase font-semibold tracking-wider px-3.5 py-3 flex items-center gap-1.5 whitespace-nowrap transition-colors shrink-0 cursor-pointer"
-                style={{ fontFamily: "'Mulish', sans-serif" }}
+                className="bg-[#1d88b8] hover:bg-[#1676a1] text-white text-[12px] xl:text-[12.5px] uppercase font-bold tracking-normal px-3.5 py-2.5 xl:py-3 flex items-center gap-1.5 whitespace-nowrap transition-colors shrink-0 cursor-pointer"
+                style={{ fontFamily: "'Mulish', 'Open Sans', sans-serif" }}
               >
                 <i className="fa-solid fa-user text-[13px] shrink-0" />
                 <span>LOGIN</span>
