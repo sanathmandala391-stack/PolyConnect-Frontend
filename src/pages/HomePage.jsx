@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { ExternalLink, ChevronRight, X, BookOpen, Clock, GraduationCap, CheckCircle } from "lucide-react";
+import { ExternalLink, ChevronRight, X, Clock, GraduationCap, CheckCircle } from "lucide-react";
 import api from "../api/client";
 import notificationIcon from "../images/ic.png";
 import notificationRowIcon from "../images/row.png";
@@ -202,7 +202,7 @@ const COURSES_DATA = [
   },
 ];
 
-// --- Stats Items matching Image 2 ---
+// --- Stats Items matching Images 3 & 4 ---
 const STAT_ITEMS = [
   { label: "Migration", count: "2110", suffix: "Certificate Issued", icon: CertificateIcon },
   { label: "Interim", count: "40869", suffix: "Certificate Issued", icon: CertificateIcon },
@@ -473,11 +473,41 @@ export default function HomePage() {
   }
 
   return (
-    <div className="space-y-5 sm:space-y-6 mt-0 sm:-mt-4">
-      {/* 1. Hero Carousel Banner */}
-      <div className="w-full">
+    <div className="space-y-4 sm:space-y-5 mt-0 sm:-mt-2">
+      {/* 1. What's New Ticker Bar (Exact match to Image 3) */}
+      <div className="bg-white border border-[#cbd5e1] flex items-center overflow-hidden h-[34px] shadow-2xs">
+        <div className="bg-[#5cb85c] text-white text-[12px] font-bold px-3 py-1.5 uppercase shrink-0 flex items-center h-full tracking-wide">
+          WHAT'S NEW
+        </div>
+        <div className="flex-1 overflow-hidden whitespace-nowrap relative px-4 text-[12.5px] text-[#222]">
+          <div className="marquee-track inline-block flex items-center gap-10">
+            {notifications.length > 0 ? (
+              notifications.map((n, idx) => (
+                <a
+                  key={n.ID || idx}
+                  href={n.Url || n.link || "/circulars"}
+                  target={n.Url ? "_blank" : "_self"}
+                  rel={n.Url ? "noopener noreferrer" : undefined}
+                  className="text-[#0084ff] hover:underline font-normal inline-flex items-center gap-1.5 no-underline"
+                >
+                  <span>{n.Title || n.title}</span>
+                  <img src={newGif || NEW_GIF_URL} alt="New" className="h-[11px] w-auto inline-block" />
+                </a>
+              ))
+            ) : (
+              <span className="text-gray-600 font-normal">
+                C-24 and C-26 Attendance Updated &nbsp;&bull;&nbsp; Attendance 31-Day Sheet updated &nbsp;&bull;&nbsp; Diploma Notifications &nbsp;&bull;&nbsp; Diploma Circulars
+              </span>
+            )}
+          </div>
+        </div>
+      </div>
+
+      {/* 2. Top Hero Section: Split 50% Banner + 50% Notifications (Exact match to Image 3) */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-5 items-stretch">
+        {/* Left: Carousel Slider */}
         <div
-          className="overflow-hidden relative bg-white h-[200px] sm:h-[260px] md:h-[320px] lg:h-[360px] border border-gray-200 shadow-xs"
+          className="overflow-hidden relative bg-white h-[280px] sm:h-[320px] md:h-[340px] border border-[#cbd5e1] shadow-2xs flex items-center justify-center"
           onMouseEnter={() => setIsPaused(true)}
           onMouseLeave={() => setIsPaused(false)}
         >
@@ -485,7 +515,7 @@ export default function HomePage() {
           <button
             type="button"
             onClick={goToPrevSlide}
-            className="absolute left-0 top-1/2 -translate-y-1/2 z-10 w-8 sm:w-10 h-10 sm:h-14 bg-[#4fc3f7] hover:bg-[#29b6f6] text-white text-xl sm:text-2xl font-bold flex items-center justify-center cursor-pointer shadow-sm transition-colors"
+            className="absolute left-0 top-1/2 -translate-y-1/2 z-10 w-8 sm:w-9 h-10 sm:h-12 bg-[#4fc3f7] hover:bg-[#29b6f6] text-white text-lg sm:text-xl font-bold flex items-center justify-center cursor-pointer shadow-sm transition-colors"
             aria-label="Previous banner"
           >
             &lsaquo;
@@ -495,7 +525,7 @@ export default function HomePage() {
           <button
             type="button"
             onClick={goToNextSlide}
-            className="absolute right-0 top-1/2 -translate-y-1/2 z-10 w-8 sm:w-10 h-10 sm:h-14 bg-[#4fc3f7] hover:bg-[#29b6f6] text-white text-xl sm:text-2xl font-bold flex items-center justify-center cursor-pointer shadow-sm transition-colors"
+            className="absolute right-0 top-1/2 -translate-y-1/2 z-10 w-8 sm:w-9 h-10 sm:h-12 bg-[#4fc3f7] hover:bg-[#29b6f6] text-white text-lg sm:text-xl font-bold flex items-center justify-center cursor-pointer shadow-sm transition-colors"
             aria-label="Next banner"
           >
             &rsaquo;
@@ -513,11 +543,11 @@ export default function HomePage() {
               onTransitionEnd={handleTransitionEnd}
             >
               {EXTENDED_SLIDES.map((slide, index) => (
-                <div key={`${slide.src}-${index}`} className="w-full h-full shrink-0">
+                <div key={`${slide.src}-${index}`} className="w-full h-full shrink-0 flex items-center justify-center bg-white">
                   <img
                     src={slide.src}
                     alt={slide.alt}
-                    className="block w-full h-full object-cover"
+                    className="block w-full h-full object-contain sm:object-cover"
                     draggable="false"
                   />
                 </div>
@@ -525,24 +555,127 @@ export default function HomePage() {
             </div>
           </div>
         </div>
+
+        {/* Right: Top Notifications Card (Exact match to Image 3) */}
+        <div
+          className="bg-white border border-[#cbd5e1] flex flex-col justify-between overflow-hidden h-[280px] sm:h-[320px] md:h-[340px] shadow-2xs select-none"
+          style={{ fontFamily: "Segoe UI, Roboto, Helvetica, Arial, sans-serif" }}
+        >
+          <div className="overflow-y-auto flex-1">
+            {/* Header */}
+            <div className="px-4 py-2 border-b border-[#cbd5e1] flex items-center gap-2 bg-white sticky top-0 z-10">
+              <img
+                src={notificationIcon}
+                alt="Notifications"
+                className="w-[18px] h-[18px] shrink-0 object-contain"
+              />
+              <h2 className="text-[15px] font-normal text-[#2196f3] tracking-normal m-0 p-0">
+                Notifications
+              </h2>
+            </div>
+
+            {/* List */}
+            <div className="px-3 sm:px-4 pt-2 pb-1">
+              {loadingNotifications ? (
+                <div className="py-8 text-center text-xs text-gov-slate">
+                  <div className="inline-block w-6 h-6 border-2 border-[#2196f3] border-t-transparent rounded-full animate-spin mb-2"></div>
+                  <p>Fetching notifications from server…</p>
+                </div>
+              ) : notificationsError || notifications.length === 0 ? (
+                <div className="py-8 text-center text-xs text-gov-slate">
+                  No notifications recorded currently.
+                </div>
+              ) : (
+                <ul className="list-none m-0 p-0">
+                  {notifications.map((n, idx) => (
+                    <li key={n.ID || idx} className="py-1">
+                      <a
+                        href={n.Url || n.link || "/circulars"}
+                        target={n.Url ? "_blank" : "_self"}
+                        rel={n.Url ? "noopener noreferrer" : undefined}
+                        className="flex items-start gap-2 no-underline group"
+                      >
+                        <span className="mt-[3px] shrink-0 inline-flex items-center justify-center">
+                          <img
+                            src={notificationRowIcon}
+                            alt=""
+                            className="w-[20px] h-[15px]"
+                            onError={(e) => {
+                              e.currentTarget.style.display = "none";
+                            }}
+                          />
+                        </span>
+
+                        <div className="text-[12.5px] leading-[22px] font-normal tracking-[0.01em]">
+                          <span className="text-[#222222] font-normal mr-2 inline-block">
+                            {n.NotificationDate
+                              ? new Date(n.NotificationDate)
+                                  .toLocaleDateString("en-GB", {
+                                    day: "2-digit",
+                                    month: "2-digit",
+                                    year: "numeric",
+                                  })
+                                  .replace(/\//g, "-")
+                              : n.date || ""}
+                          </span>
+                          <span className="text-[#0084ff] group-hover:underline font-normal">
+                            {n.Title || n.title}
+                            {isRecentNotification(n) && (
+                              <img
+                                src={newGif || NEW_GIF_URL}
+                                alt="New"
+                                className="inline-block h-[12px] w-auto align-middle ml-1.5"
+                                onError={(e) => {
+                                  if (e.currentTarget.src !== NEW_GIF_URL) {
+                                    e.currentTarget.src = NEW_GIF_URL;
+                                  } else {
+                                    e.currentTarget.style.display = "none";
+                                  }
+                                }}
+                              />
+                            )}
+                          </span>
+                        </div>
+                      </a>
+
+                      {idx < notifications.length - 1 && (
+                        <div className="mt-2 border-b-[1.2px] border-dotted border-[#cbd5e1]" />
+                      )}
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
+          </div>
+
+          {/* View All Button */}
+          <div className="flex justify-end mt-auto border-t border-[#f1f5f9]">
+            <Link
+              to="/circulars"
+              className="bg-[#2196f3] hover:bg-[#1e88e5] text-white text-[14px] font-normal px-6 py-1.5 rounded-none transition-colors"
+            >
+              View All
+            </Link>
+          </div>
+        </div>
       </div>
 
-      {/* 2. Stats Section Header Strip */}
-      <div className="bg-[#35a5f1] py-2.5 px-4 mt-2 shadow-xs">
-        <p className="text-center text-white text-[12px] sm:text-[13px] font-normal tracking-wide m-0">
+      {/* 3. Stats Section Header Strip (Exact match to Images 3 & 4) */}
+      <div className="bg-[#35a5f1] py-2 px-4 mt-2 shadow-2xs">
+        <p className="text-center text-white text-[12.5px] font-normal tracking-wide m-0">
           Current academic year student services statistics
         </p>
       </div>
 
-      {/* 3. Stats Ribbon (Exact Numbers matching Image 2) */}
+      {/* 4. Stats Ribbon: 8 Cards (Exact match to Images 3 & 4) */}
       <StatsRibbon />
 
-      {/* 4. 3-Box Section (Exact Same to Same as Image 2) */}
+      {/* 5. 3-Box Section: Quick Links | SBTET Facebook | Latest News (Exact Same Dimensions to Image 4) */}
       <section className="w-full my-4">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 items-stretch">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-5 items-stretch">
           {/* BOX 1 (LEFT): Quick Links & External Links Tabbed Card */}
           <div
-            className="bg-white border border-[#c8d1db] flex flex-col justify-start overflow-hidden min-h-[280px] sm:min-h-[310px] shadow-xs"
+            className="bg-white border border-[#c8d1db] flex flex-col justify-start overflow-hidden h-[280px] sm:h-[320px] md:h-[330px] shadow-2xs"
             style={{ fontFamily: "Segoe UI, Roboto, Helvetica, Arial, sans-serif" }}
           >
             {/* Tabs Header */}
@@ -550,10 +683,10 @@ export default function HomePage() {
               <button
                 type="button"
                 onClick={() => setActiveLinkTab("quick")}
-                className={`flex-1 py-2.5 px-4 text-[14px] font-medium transition-colors cursor-pointer border-none text-center ${
+                className={`flex-1 py-2 px-4 text-[13.5px] transition-colors cursor-pointer border-none text-center ${
                   activeLinkTab === "quick"
                     ? "bg-[#2196f3] text-white font-semibold"
-                    : "bg-[#e9ecef] text-[#475569] hover:bg-[#dee2e6]"
+                    : "bg-[#e9ecef] text-[#475569] font-medium hover:bg-[#dee2e6]"
                 }`}
               >
                 Quick Links
@@ -561,10 +694,10 @@ export default function HomePage() {
               <button
                 type="button"
                 onClick={() => setActiveLinkTab("external")}
-                className={`flex-1 py-2.5 px-4 text-[14px] font-medium transition-colors cursor-pointer border-none text-center ${
+                className={`flex-1 py-2 px-4 text-[13.5px] transition-colors cursor-pointer border-none text-center ${
                   activeLinkTab === "external"
                     ? "bg-[#2196f3] text-white font-semibold"
-                    : "bg-[#e9ecef] text-[#475569] hover:bg-[#dee2e6]"
+                    : "bg-[#e9ecef] text-[#475569] font-medium hover:bg-[#dee2e6]"
                 }`}
               >
                 External Links
@@ -627,26 +760,26 @@ export default function HomePage() {
 
           {/* BOX 2 (MIDDLE): SBTET Telangana Facebook Social Widget Card */}
           <div
-            className="bg-white border border-[#c8d1db] flex flex-col justify-between overflow-hidden min-h-[280px] sm:min-h-[310px] shadow-xs"
+            className="bg-white border border-[#c8d1db] flex flex-col justify-between overflow-hidden h-[280px] sm:h-[320px] md:h-[330px] shadow-2xs"
             style={{ fontFamily: "Segoe UI, Roboto, Helvetica, Arial, sans-serif" }}
           >
             {/* Facebook Header */}
-            <div className="p-3 sm:p-4 border-b border-[#e2e8f0] flex items-center gap-3 bg-white">
+            <div className="p-3 border-b border-[#e2e8f0] flex items-center gap-3 bg-white">
               <img
                 src={sbLogo}
                 alt="SBTET Emblem"
                 className="w-11 h-11 object-contain rounded-full border border-gray-200 p-0.5 shadow-2xs shrink-0"
               />
               <div className="flex-1 min-w-0">
-                <h3 className="text-[15px] font-bold text-[#1c2b36] tracking-tight leading-tight m-0 truncate">
+                <h3 className="text-[14.5px] font-bold text-[#1c2b36] tracking-tight leading-tight m-0 truncate">
                   SBTET, Telangana
                 </h3>
-                <div className="flex items-center gap-2 mt-1.5 flex-wrap">
+                <div className="flex items-center gap-2 mt-1 flex-wrap">
                   <a
                     href="https://www.facebook.com/sbtettg/"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1.5 bg-[#f0f2f5] hover:bg-[#e4e6eb] text-[#1877f2] font-semibold text-[11px] px-2.5 py-0.5 rounded border border-[#ced0d4] no-underline transition-colors"
+                    className="inline-flex items-center gap-1.5 bg-[#f0f2f5] hover:bg-[#e4e6eb] text-[#1877f2] font-semibold text-[11px] px-2 py-0.5 rounded border border-[#ced0d4] no-underline transition-colors"
                   >
                     <i className="fa-brands fa-facebook text-[#1877f2] text-xs"></i>
                     <span>Follow Page</span>
@@ -659,9 +792,9 @@ export default function HomePage() {
             </div>
 
             {/* Simulated Live Feed Center */}
-            <div className="flex-1 bg-[#f8fafc] flex flex-col items-center justify-center p-6 text-center">
-              <div className="w-7 h-7 border-[2.5px] border-[#cbd5e1] border-t-[#1877f2] rounded-full animate-spin mb-3"></div>
-              <p className="text-[12px] text-gray-500 font-normal m-0 max-w-[220px]">
+            <div className="flex-1 bg-[#f8fafc] flex flex-col items-center justify-center p-4 text-center">
+              <div className="w-6 h-6 border-2 border-[#cbd5e1] border-t-[#1877f2] rounded-full animate-spin mb-2"></div>
+              <p className="text-[11.5px] text-gray-500 font-normal m-0 max-w-[200px]">
                 Connecting to SBTET official social stream...
               </p>
             </div>
@@ -671,7 +804,7 @@ export default function HomePage() {
               href="https://www.facebook.com/sbtettg/"
               target="_blank"
               rel="noopener noreferrer"
-              className="bg-[#f0f2f5] hover:bg-[#e4e6eb] border-t border-[#e2e8f0] py-2.5 px-4 flex items-center justify-between text-[#1c2b36] hover:text-[#1877f2] text-[12.5px] font-medium no-underline transition-colors"
+              className="bg-[#f0f2f5] hover:bg-[#e4e6eb] border-t border-[#e2e8f0] py-2 px-4 flex items-center justify-between text-[#1c2b36] hover:text-[#1877f2] text-[12.5px] font-medium no-underline transition-colors"
             >
               <span className="flex items-center gap-2">
                 <i className="fa-brands fa-facebook text-[#1877f2] text-sm"></i>
@@ -683,12 +816,12 @@ export default function HomePage() {
 
           {/* BOX 3 (RIGHT): Latest News Card with View All Button */}
           <div
-            className="bg-white border border-[#c8d1db] flex flex-col justify-between overflow-hidden min-h-[280px] sm:min-h-[310px] shadow-xs md:col-span-2 lg:col-span-1"
+            className="bg-white border border-[#c8d1db] flex flex-col justify-between overflow-hidden h-[280px] sm:h-[320px] md:h-[330px] shadow-2xs"
             style={{ fontFamily: "Segoe UI, Roboto, Helvetica, Arial, sans-serif" }}
           >
             <div className="overflow-y-auto flex-1">
               {/* Header */}
-              <div className="px-4 py-2.5 border-b border-[#cbd5e1] flex items-center gap-2 bg-white">
+              <div className="px-4 py-2 border-b border-[#cbd5e1] flex items-center gap-2 bg-white sticky top-0 z-10">
                 <img
                   src={notificationIcon}
                   alt="Latest News"
@@ -700,7 +833,7 @@ export default function HomePage() {
               </div>
 
               {/* List */}
-              <div className="px-3 sm:px-4 pt-2 pb-0">
+              <div className="px-3 sm:px-4 pt-2 pb-1">
                 {loadingNotifications ? (
                   <div className="py-8 text-center text-xs text-gov-slate">
                     <div className="inline-block w-6 h-6 border-2 border-[#2196f3] border-t-transparent rounded-full animate-spin mb-2"></div>
@@ -724,7 +857,7 @@ export default function HomePage() {
                             <img
                               src={notificationRowIcon}
                               alt=""
-                              className="w-[22px] h-[16px]"
+                              className="w-[20px] h-[15px]"
                               onError={(e) => {
                                 e.currentTarget.style.display = "none";
                               }}
@@ -764,7 +897,7 @@ export default function HomePage() {
                         </a>
 
                         {idx < notifications.length - 1 && (
-                          <div className="mt-2.5 border-b-[1.2px] border-dotted border-[#cbd5e1]" />
+                          <div className="mt-2 border-b-[1.2px] border-dotted border-[#cbd5e1]" />
                         )}
                       </li>
                     ))}
@@ -777,7 +910,7 @@ export default function HomePage() {
             <div className="flex justify-end mt-auto border-t border-[#f1f5f9]">
               <Link
                 to="/circulars"
-                className="bg-[#2196f3] hover:bg-[#1e88e5] text-white text-[15px] font-normal px-7 py-2 rounded-none transition-colors"
+                className="bg-[#2196f3] hover:bg-[#1e88e5] text-white text-[14px] font-normal px-6 py-1.5 rounded-none transition-colors"
               >
                 View All
               </Link>
@@ -786,7 +919,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* 5. Courses Section */}
+      {/* 6. Courses Section */}
       <section id="our-courses-section" className="w-full my-6">
         <div className="text-center mb-5 sm:mb-7">
           <h2
