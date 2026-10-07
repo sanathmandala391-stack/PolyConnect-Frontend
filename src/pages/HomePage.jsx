@@ -590,7 +590,7 @@ export default function HomePage() {
                                 .replace(/\//g, "-")
                               : n.date || ""}
                           </span>
-                          <span className="text-[#2196f3] group-hover:underline group-hover:text-[#23527c] font-normal">
+                          <span className="text-[#2196f3] font-normal">
                             {n.Title || n.title}
                             {isRecentNotification(n) && (
                               <img
@@ -743,7 +743,7 @@ export default function HomePage() {
                 </h3>
                 <div className="flex items-center gap-2 mt-1 flex-wrap">
                   <a
-                    href="https://www.facebook.com/sbtettg/"
+                    href="https://www.facebook.com/profile.php?id=100076925755314&ref=embed_page#"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex items-center gap-1.5 bg-[#f0f2f5] hover:bg-[#e4e6eb] text-[#1877f2] font-semibold text-[11px] px-2 py-0.5 rounded border border-[#ced0d4] no-underline transition-colors"
@@ -768,7 +768,7 @@ export default function HomePage() {
 
             {/* Facebook Bottom Banner */}
             <a
-              href="https://www.facebook.com/sbtettg/"
+              href="https://www.facebook.com/profile.php?id=100076925755314&ref=embed_page#"
               target="_blank"
               rel="noopener noreferrer"
               className="bg-[#f0f2f5] hover:bg-[#e4e6eb] border-t border-[#e2e8f0] py-2 px-4 flex items-center justify-between text-[#1c2b36] hover:text-[#1877f2] text-[12.5px] font-medium no-underline transition-colors"
@@ -843,7 +843,7 @@ export default function HomePage() {
                                   .replace(/\//g, "-")
                                 : n.date || ""}
                             </span>
-                            <span className="text-[#337ab7] group-hover:underline group-hover:text-[#23527c] font-normal">
+                            <span className="text-[#2196f3] font-normal">
                               {n.Title || n.title}
                               {isRecentNotification(n) && (
                                 <img
