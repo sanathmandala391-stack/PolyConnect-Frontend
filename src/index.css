@@ -29,6 +29,13 @@ body {
   font-family: 'Noto Sans', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
+/* SBTET Exact Navigation Font */
+.sbtet-nav-font {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif !important;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
 /* Card and Container Styles */
 .gov-card {
   @apply bg-white border border-gov-border rounded-sm shadow-gov transition-shadow duration-200;
