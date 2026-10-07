@@ -280,7 +280,7 @@ export default function GovHeader() {
               className="px-2.5 xl:px-3 py-2 flex items-center justify-center text-white hover:bg-[#1a93cc] transition-colors shrink-0"
               aria-label="Home"
             >
-              <i className="fa-solid fa-house text-[13.5px] text-white" />
+              <i className="fa-solid fa-house text-[17px] text-white" />
             </NavLink>
 
             {/* 1. STUDENT SERVICES MEGA MENU */}
@@ -288,10 +288,10 @@ export default function GovHeader() {
               <button
                 type="button"
                 className="px-2 xl:px-2.5 py-2 text-[12px] xl:text-[12.5px] uppercase font-bold tracking-[0.01em] flex items-center gap-1.5 whitespace-nowrap text-white transition-colors shrink-0 cursor-pointer sbtet-nav-font"
-                style={{ fontFamily: "'Mulish', 'Muli', sans-serif" }}
+                style={{ fontFamily: "'Mulish', sans-serif" }}
               >
-                <i className="fa-solid fa-gear text-[14px] shrink-0 text-white" />
-                <span>STUDENT SERVICES</span>
+                <i className="fa-solid fa-gear text-[17px] shrink-0 text-white" />
+                <span style={{ fontFamily: "'Mulish', sans-serif", fontSize: "12.5px", fontWeight: "normal" }}>STUDENT SERVICES</span>
                 <i className="fa-solid fa-angle-down text-[10px] ml-0.5 shrink-0 text-white/90" />
               </button>
 
@@ -348,8 +348,8 @@ export default function GovHeader() {
                 className="px-2 xl:px-2.5 py-2 text-[12px] xl:text-[12.5px] uppercase font-bold tracking-[0.01em] flex items-center gap-1.5 whitespace-nowrap text-white transition-colors shrink-0 cursor-pointer sbtet-nav-font"
                 style={{ fontFamily: "'Mulish', 'Muli', sans-serif" }}
               >
-                <i className="fa-solid fa-gear text-[14px] shrink-0 text-white" />
-                <span>COLLEGE SERVICES</span>
+                <i className="fa-solid fa-gear text-[17px] shrink-0 text-white" />
+                <span style={{ fontFamily: "'Mulish', sans-serif", fontSize: "12.5px", fontWeight: "normal" }}>COLLEGE SERVICES</span>
                 <i className="fa-solid fa-angle-down text-[10px] ml-0.5 shrink-0 text-white/90" />
               </button>
 
@@ -388,8 +388,8 @@ export default function GovHeader() {
                 className="px-2 xl:px-2.5 py-2 text-[12px] xl:text-[12.5px] uppercase font-bold tracking-[0.01em] flex items-center gap-1.5 whitespace-nowrap text-white transition-colors shrink-0 cursor-pointer sbtet-nav-font"
                 style={{ fontFamily: "'Mulish', 'Muli', sans-serif" }}
               >
-                <i className="fa-solid fa-gear text-[14px] shrink-0 text-white" />
-                <span>OTHERS SERVICES</span>
+                <i className="fa-solid fa-gear text-[17px] shrink-0 text-white" />
+                <span style={{ fontFamily: "'Mulish', sans-serif", fontSize: "12.5px", fontWeight: "normal" }}>OTHERS SERVICES</span>
                 <i className="fa-solid fa-angle-down text-[10px] ml-0.5 shrink-0 text-white/90" />
               </button>
 
@@ -426,8 +426,8 @@ export default function GovHeader() {
                 className="px-2 xl:px-2.5 py-2 text-[12px] xl:text-[12.5px] uppercase font-bold tracking-[0.01em] flex items-center gap-1.5 whitespace-nowrap text-white transition-colors shrink-0 cursor-pointer sbtet-nav-font"
                 style={{ fontFamily: "'Mulish', 'Muli', sans-serif" }}
               >
-                <i className="fa-solid fa-gear text-[14px] shrink-0 text-white" />
-                <span>AFFILIATED COLLEGES</span>
+                <i className="fa-solid fa-gear text-[17px] shrink-0 text-white" />
+                <span style={{ fontFamily: "'Mulish', sans-serif", fontSize: "12.5px", fontWeight: "normal" }}>AFFILIATED COLLEGES</span>
                 <i className="fa-solid fa-angle-down text-[10px] ml-0.5 shrink-0 text-white/90" />
               </button>
 
@@ -463,8 +463,8 @@ export default function GovHeader() {
                 className="px-2 xl:px-2.5 py-2 text-[12px] xl:text-[12.5px] uppercase font-bold tracking-[0.01em] flex items-center gap-1.5 whitespace-nowrap text-white transition-colors shrink-0 cursor-pointer sbtet-nav-font"
                 style={{ fontFamily: "'Mulish', 'Muli', sans-serif" }}
               >
-                <i className="fa-solid fa-gear text-[14px] shrink-0 text-white" />
-                <span>COURSES</span>
+                <i className="fa-solid fa-gear text-[17px] shrink-0 text-white" />
+                <span style={{ fontFamily: "'Mulish', sans-serif", fontSize: "12.5px", fontWeight: "normal" }}>COURSES</span>
                 <i className="fa-solid fa-angle-down text-[10px] ml-0.5 shrink-0 text-white/90" />
               </button>
 
@@ -498,8 +498,8 @@ export default function GovHeader() {
               className="px-2 xl:px-2.5 py-2 text-[12px] xl:text-[12.5px] uppercase font-bold tracking-[0.01em] flex items-center gap-1.5 whitespace-nowrap text-white transition-colors shrink-0 cursor-pointer sbtet-nav-font"
               style={{ fontFamily: "'Mulish', 'Muli', sans-serif" }}
             >
-              <i className="fa-solid fa-square-phone text-[14px] shrink-0 text-white" />
-              <span>CONTACT-US</span>
+              <i className="fa-solid fa-square-phone text-[19px] shrink-0 text-white" />
+              <span style={{ fontFamily: "'Mulish', sans-serif", fontSize: "12.5px", fontWeight: "normal" }}>CONTACT-US</span>
             </a>
 
             {/* 6. MORE MEGA MENU */}
@@ -509,8 +509,8 @@ export default function GovHeader() {
                 className="px-2 xl:px-2.5 py-2 text-[12px] xl:text-[12.5px] uppercase font-bold tracking-[0.01em] flex items-center gap-1.5 whitespace-nowrap text-white transition-colors shrink-0 cursor-pointer sbtet-nav-font"
                 style={{ fontFamily: "'Mulish', 'Muli', sans-serif" }}
               >
-                <i className="fa-solid fa-circle-info text-[14px] shrink-0 text-white" />
-                <span>MORE</span>
+                <i className="fa-solid fa-circle-info text-[19px] shrink-0 text-white" />
+                <span style={{ fontFamily: "'Mulish', sans-serif", fontSize: "12.5px", fontWeight: "normal" }}>MORE</span>
                 <i className="fa-solid fa-angle-down text-[10px] ml-0.5 shrink-0 text-white/90" />
               </button>
 
@@ -595,8 +595,8 @@ export default function GovHeader() {
                 className="px-3 xl:px-4 py-2 text-[12px] xl:text-[12.5px] uppercase font-bold tracking-[0.01em] flex items-center gap-1.5 whitespace-nowrap text-white bg-[#1a82b8] hover:bg-[#156e9c] transition-colors shrink-0 cursor-pointer sbtet-nav-font"
                 style={{ fontFamily: "'Mulish', 'Muli', sans-serif" }}
               >
-                <i className="fa-solid fa-user text-[13px] shrink-0 text-white" />
-                <span>LOGIN</span>
+                <i className="fa-solid fa-user text-[17px] shrink-0 text-white" />
+                <span style={{ fontFamily: "'Mulish', sans-serif", fontSize: "12.5px", fontWeight: "normal" }}>LOGIN</span>
               </Link>
             )}
           </div>

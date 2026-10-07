@@ -38,9 +38,9 @@ export default function WhatsNew() {
                 className="flex items-center gap-1.5 mx-5 shrink-0"
               >
                 <img
-                  src={newGif}
+                  src={"https://www.sbtet.telangana.gov.in/contents/img/gif.gif"}
                   alt="new"
-                  className="w-4 h-4 shrink-0 object-contain inline-block"
+                  className="w-8 h-8 shrink-0 object-contain inline-block"
                   onError={(e) => {
                     e.currentTarget.src = "https://www.sbtet.telangana.gov.in/contents/img/gif.gif";
                   }}
