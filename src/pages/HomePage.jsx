@@ -686,20 +686,20 @@ export default function HomePage() {
                       {link.internal ? (
                         <Link
                           to={link.url}
-                          className="flex items-center text-[15px] text-[#337ab7] hover:text-[#23527c] hover:underline font-normal no-underline"
+                          className="flex items-center text-[16px] text-[#337ab7] hover:text-[#23527c] no-underline group cursor-pointer"
                         >
-                          <i className="fa fa-arrow-circle-right text-[#337ab7] text-[17px] shrink-0 leading-none mr-2.5">&nbsp;</i>
-                          <span>{link.label}</span>
+                          <i className="fa fa-arrow-circle-right text-[#286090] group-hover:text-[#23527c] text-[18px] shrink-0 leading-none mr-2.5">&nbsp;</i>
+                          <span className="group-hover:underline leading-normal">{link.label}</span>
                         </Link>
                       ) : (
                         <a
                           href={link.url}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="flex items-center text-[15px] text-[#337ab7] hover:text-[#23527c] hover:underline font-normal no-underline"
+                          className="flex items-center text-[16px] text-[#337ab7] hover:text-[#23527c] no-underline group cursor-pointer"
                         >
-                          <i className="fa fa-arrow-circle-right text-[#337ab7] text-[17px] shrink-0 leading-none mr-2.5">&nbsp;</i>
-                          <span>{link.label}</span>
+                          <i className="fa fa-arrow-circle-right text-[#286090] group-hover:text-[#23527c] text-[18px] shrink-0 leading-none mr-2.5">&nbsp;</i>
+                          <span className="group-hover:underline leading-normal">{link.label}</span>
                         </a>
                       )}
                     </li>
@@ -713,10 +713,10 @@ export default function HomePage() {
                         href={link.url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="flex items-center text-[14px] text-[#337ab7] hover:text-[#23527c] hover:underline font-normal no-underline"
+                        className="flex items-center text-[15px] text-[#337ab7] hover:text-[#23527c] no-underline group cursor-pointer"
                       >
-                        <i className="fa fa-arrow-circle-right text-[#337ab7] text-[17px] shrink-0 leading-none mr-2.5">&nbsp;</i>
-                        <span className="leading-snug">{link.label}</span>
+                        <i className="fa fa-arrow-circle-right text-[#286090] group-hover:text-[#23527c] text-[18px] shrink-0 leading-none mr-2.5">&nbsp;</i>
+                        <span className="group-hover:underline leading-snug">{link.label}</span>
                       </a>
                     </li>
                   ))}
