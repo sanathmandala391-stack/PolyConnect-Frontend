@@ -282,17 +282,15 @@ const QUICK_LINKS = [
   { label: "Diploma Results", url: "/student/results", internal: true },
   { label: "POLYCET- Results", url: "https://tgpolycet.nic.in/", internal: false },
   { label: "Polycet", url: "https://polycet.sbtet.telangana.gov.in/", internal: false },
-  { label: "College Websites", url: "https://www.sbtet.telangana.gov.in/", internal: false },
-  { label: "Exams Portal", url: "https://sbtet.telangana.gov.in/index.html#!/index/DiplomaStudentExams", internal: false },
+  { label: "College Websites", url: "https://dtets.cgg.gov.in/", internal: false },
+  { label: "Exams Portal", url: "https://exams.sbtet.telangana.gov.in/", internal: false },
 ];
 
 const EXTERNAL_LINKS = [
-  { label: "State Board of Technical Education & Training (SBTET)", url: "https://sbtet.telangana.gov.in/", internal: false },
-  { label: "Department of Technical Education (DTE Telangana)", url: "https://dtets.cgg.gov.in/", internal: false },
-  { label: "Telangana State Council of Higher Education (TSCHE)", url: "https://tsche.ac.in/", internal: false },
-  { label: "All India Council for Technical Education (AICTE)", url: "https://www.aicte-india.org/", internal: false },
-  { label: "National Board of Accreditation (NBA)", url: "https://www.nbaind.org/", internal: false },
-  { label: "Ministry of Education, Govt. of India", url: "https://www.education.gov.in/", internal: false },
+  { label: "http://www.nitttrc.ac.in/", url: "http://www.nitttrc.ac.in/", internal: false },
+  { label: "https://dtets.cgg.gov.in/", url: "https://dtets.cgg.gov.in/", internal: false },
+  { label: "http://mhrdnats.gov.in/", url: "http://mhrdnats.gov.in/", internal: false },
+  { label: "https://www.aicte-india.org/", url: "https://www.aicte-india.org/", internal: false },
 ];
 
 function parseNotificationDate(val) {
@@ -658,8 +656,8 @@ export default function HomePage() {
                 type="button"
                 onClick={() => setActiveLinkTab("quick")}
                 className={`flex-1 py-2 px-4 text-[13.5px] transition-colors cursor-pointer border-none text-center ${activeLinkTab === "quick"
-                    ? "bg-[#2196f3] text-white font-semibold"
-                    : "bg-[#e9ecef] text-[#475569] font-medium hover:bg-[#dee2e6]"
+                  ? "bg-[#2196f3] text-white font-semibold"
+                  : "bg-[#e9ecef] text-[#475569] font-medium hover:bg-[#dee2e6]"
                   }`}
               >
                 Quick Links
@@ -668,8 +666,8 @@ export default function HomePage() {
                 type="button"
                 onClick={() => setActiveLinkTab("external")}
                 className={`flex-1 py-2 px-4 text-[13.5px] transition-colors cursor-pointer border-none text-center ${activeLinkTab === "external"
-                    ? "bg-[#2196f3] text-white font-semibold"
-                    : "bg-[#e9ecef] text-[#475569] font-medium hover:bg-[#dee2e6]"
+                  ? "bg-[#2196f3] text-white font-semibold"
+                  : "bg-[#e9ecef] text-[#475569] font-medium hover:bg-[#dee2e6]"
                   }`}
               >
                 External Links
