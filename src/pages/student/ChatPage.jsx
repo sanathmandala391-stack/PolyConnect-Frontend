@@ -28,6 +28,7 @@ import api, { apiErrorMessage } from "../../api/client";
 import GovLoader from "../../components/GovLoader";
 import { useAuth } from "../../context/AuthContext";
 import { usePresence } from "../../context/PresenceContext";
+import usePolling from "../../hooks/usePolling";
 
 const WS_BASE_URL = (import.meta.env.VITE_API_BASE_URL || "http://localhost:8080/api").replace(/\/api\/?$/, "");
 
@@ -136,7 +137,22 @@ export default function ChatPage() {
             } else if (incoming.type === "EMAIL_ALERT_SENT") {
               setSystemAlerts((prev) => [...prev, incoming.alert]);
             } else {
-              setMessages((prev) => (prev ? [...prev, incoming] : [incoming]));
+              setMessages((prev) => {
+                if (!prev) return [incoming];
+                // Check if incoming matches pending optimistic message
+                const pendingIdx = prev.findIndex(
+                  (m) => m.pending && m.content === incoming.content && m.sender?.id === incoming.sender?.id
+                );
+                if (pendingIdx !== -1) {
+                  const copy = [...prev];
+                  copy[pendingIdx] = incoming;
+                  return copy;
+                }
+                if (prev.some((m) => m.id === incoming.id)) {
+                  return prev;
+                }
+                return [...prev, incoming];
+              });
               setIsTyping(false);
               // If incoming message is from the other person, notify backend to mark read
               if (incoming.sender?.id !== user?.id) {
@@ -175,6 +191,28 @@ export default function ChatPage() {
     };
   }, [roomId, user?.id]);
 
+  // Fast background polling fallback (every 3 seconds) ensuring 0ms message loss
+  usePolling(
+    async () => {
+      if (!roomId || document.hidden) return;
+      try {
+        const res = await api.get(`/seniors/chat/rooms/${roomId}/messages`);
+        if (Array.isArray(res.data)) {
+          setMessages((prev) => {
+            if (!prev) return res.data;
+            const serverIds = new Set(res.data.map((m) => m.id));
+            const pending = prev.filter((m) => m.pending && !serverIds.has(m.id));
+            return [...res.data, ...pending];
+          });
+        }
+      } catch {
+        // non-fatal
+      }
+    },
+    3000,
+    [roomId]
+  );
+
   // Scroll to bottom when messages or typing updates
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -201,7 +239,7 @@ export default function ChatPage() {
     );
   }, [room, user, roomId]);
 
-  // Send message
+  // Send message with Instant 0ms Optimistic UI Delivery
   async function sendMessage(e) {
     if (e) e.preventDefault();
     if (!draft.trim()) return;
@@ -211,8 +249,32 @@ export default function ChatPage() {
     setShowEmojiPicker(false);
     setShowAttachMenu(false);
 
+    const tempId = `temp-${Date.now()}`;
+    const optimisticMsg = {
+      id: tempId,
+      content: contentToSend,
+      sentAt: new Date().toISOString(),
+      createdAt: new Date().toISOString(),
+      sender: {
+        id: user?.id,
+        fullName: user?.fullName || user?.username || "You",
+        username: user?.username || "You",
+        role: user?.role || "STUDENT",
+      },
+      isRead: false,
+      pending: true,
+    };
+
+    // Instant UI update in 0ms (fraction of a second)
+    setMessages((prev) => (prev ? [...prev, optimisticMsg] : [optimisticMsg]));
+
     try {
-      await api.post(`/seniors/chat/rooms/${roomId}/messages`, { content: contentToSend });
+      const res = await api.post(`/seniors/chat/rooms/${roomId}/messages`, { content: contentToSend });
+      if (res?.data) {
+        setMessages((prev) =>
+          prev ? prev.map((m) => (m.id === tempId ? { ...res.data, pending: false } : m)) : [res.data]
+        );
+      }
 
       // If mentor is offline, provide helpful contextual tip
       if (!mentorOnline && systemAlerts.length === 0) {
@@ -227,7 +289,8 @@ export default function ChatPage() {
         ]);
       }
     } catch (err) {
-      setError(apiErrorMessage(err, "Could not send message."));
+      setMessages((prev) => prev?.filter((m) => m.id !== tempId));
+      setError(apiErrorMessage(err, "Could not send message. Please retry."));
     }
   }
 
@@ -576,7 +639,12 @@ export default function ChatPage() {
                         {formattedTime}
                       </span>
                       {isMine && (
-                        (m.isRead || m.read) ? (
+                        m.pending ? (
+                          <Clock
+                            className="w-3 h-3 text-slate-400 animate-pulse shrink-0"
+                            title="Sending..."
+                          />
+                        ) : (m.isRead || m.read) ? (
                           <CheckCheck
                             className="w-3.5 h-3.5 text-[#53bdeb] shrink-0"
                             title="Read (Seen by receiver)"

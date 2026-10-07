@@ -1,29 +1,44 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import api, { apiErrorMessage } from "../../api/client";
 import GovLoader from "../../components/GovLoader";
+import usePolling from "../../hooks/usePolling";
 
 export default function NotificationsPage() {
   const [items, setItems] = useState(null);
   const [error, setError] = useState("");
   const [marking, setMarking] = useState(false);
 
-  async function load() {
+  const load = useCallback(async (isBackground = false) => {
     try {
       const res = await api.get("/notifications");
       setItems(Array.isArray(res.data) ? res.data : []);
     } catch (err) {
-      setError(apiErrorMessage(err, "Could not load student notifications."));
+      if (!isBackground) {
+        setError(apiErrorMessage(err, "Could not load student notifications."));
+      }
     }
-  }
-
-  useEffect(() => {
-    load();
   }, []);
 
+  useEffect(() => {
+    load(false);
+  }, [load]);
+
+  // Fast 4-second live background polling
+  usePolling(
+    () => {
+      if (!document.hidden) {
+        load(true);
+      }
+    },
+    4000,
+    [load]
+  );
+
   async function markRead(id) {
+    // Instant optimistic UI update (0ms)
+    setItems((list) => list ? list.map((n) => (n.id === id ? { ...n, read: true } : n)) : list);
     try {
       await api.patch(`/notifications/${id}/read`);
-      setItems((list) => list.map((n) => (n.id === id ? { ...n, read: true } : n)));
     } catch {
       // non-fatal
     }
@@ -31,9 +46,10 @@ export default function NotificationsPage() {
 
   async function markAllRead() {
     setMarking(true);
+    // Instant optimistic UI update (0ms)
+    setItems((list) => list ? list.map((n) => ({ ...n, read: true })) : list);
     try {
       await api.post("/notifications/mark-all-read");
-      setItems((list) => list.map((n) => ({ ...n, read: true })));
     } catch (err) {
       setError(apiErrorMessage(err, "Could not mark all notifications as read."));
     } finally {

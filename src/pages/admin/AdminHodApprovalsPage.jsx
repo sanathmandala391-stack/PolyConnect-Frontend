@@ -1,6 +1,7 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import api, { apiErrorMessage } from "../../api/client";
 import GovLoader from "../../components/GovLoader";
+import usePolling from "../../hooks/usePolling";
 
 export default function AdminHodApprovalsPage() {
   const [approvals, setApprovals] = useState(null);
@@ -8,25 +9,47 @@ export default function AdminHodApprovalsPage() {
   const [processingId, setProcessingId] = useState(null);
   const [reasonDrafts, setReasonDrafts] = useState({});
 
-  function load() {
-    api
-      .get("/admin/approvals/hod/pending")
-      .then((res) => setApprovals(Array.isArray(res.data) ? res.data : []))
-      .catch((err) => setError(apiErrorMessage(err, "Could not load pending HOD approval requests.")));
-  }
+  const load = useCallback(async (isBackground = false) => {
+    try {
+      const res = await api.get("/admin/approvals/hod/pending");
+      setApprovals(Array.isArray(res.data) ? res.data : []);
+    } catch (err) {
+      if (!isBackground) {
+        setError(apiErrorMessage(err, "Could not load pending HOD approval requests."));
+      }
+    }
+  }, []);
 
-  useEffect(load, []);
+  useEffect(() => {
+    load(false);
+  }, [load]);
+
+  // Fast 4-second live background polling
+  usePolling(
+    () => {
+      if (!document.hidden) {
+        load(true);
+      }
+    },
+    4000,
+    [load]
+  );
 
   async function decide(id, approve) {
     setError("");
+    const reason = reasonDrafts[id] || "";
+    const previous = approvals;
+
+    // Instant Optimistic UI update (0ms)
+    setApprovals((list) => (list ? list.filter((a) => a.id !== id) : []));
     setProcessingId(id);
+
     try {
-      const reason = reasonDrafts[id] || "";
       await api.post(
         `/admin/approvals/hod/${id}/decision?approve=${approve}&reason=${encodeURIComponent(reason)}`
       );
-      setApprovals((list) => list.filter((a) => a.id !== id));
     } catch (err) {
+      setApprovals(previous);
       setError(
         apiErrorMessage(
           err,

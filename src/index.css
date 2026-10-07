@@ -266,3 +266,49 @@ body { font-family: var(--font-sans); }
   animation: typing-bounce 1.2s infinite ease-in-out;
   animation-delay: 0.4s;
 }
+
+/* Smooth Scrolling & Hardware Accelerated Performance */
+html {
+  scroll-behavior: smooth;
+}
+
+.gpu-accelerated {
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+  will-change: transform, opacity;
+}
+
+/* Instant Optimistic UI Animations (Fraction-of-a-second feedback) */
+@keyframes optimistic-pop {
+  0% {
+    opacity: 0;
+    transform: translateY(-6px) scale(0.985);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.animate-optimistic {
+  animation: optimistic-pop 0.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes fast-pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.35;
+  }
+}
+
+.animate-fast-pulse {
+  animation: fast-pulse 1s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Fast button tap feedback */
+button:active:not(:disabled) {
+  transform: scale(0.97);
+  transition: transform 0.08s ease-out;
+}

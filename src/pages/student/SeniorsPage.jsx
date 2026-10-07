@@ -25,6 +25,7 @@ import api, { apiErrorMessage } from "../../api/client";
 import GovLoader from "../../components/GovLoader";
 import { useAuth } from "../../context/AuthContext";
 import { usePresence } from "../../context/PresenceContext";
+import usePolling from "../../hooks/usePolling";
 
 // Diverse cheerful avatar background palettes for WhatsApp style
 const AVATAR_BG_COLORS = [
@@ -75,6 +76,24 @@ export default function SeniorsPage() {
       isMounted = false;
     };
   }, []);
+
+  // Live real-time polling every 4 seconds for instant messages & room state
+  usePolling(
+    async () => {
+      if (document.hidden) return;
+      try {
+        const [mentorsRes, roomsRes] = await Promise.all([
+          api.get("/seniors/mentors"),
+          api.get("/seniors/chat/rooms"),
+        ]);
+        if (Array.isArray(mentorsRes.data)) setMentors(mentorsRes.data);
+        if (Array.isArray(roomsRes.data)) setRooms(roomsRes.data);
+      } catch {
+        // silent fail on background poll
+      }
+    },
+    4000
+  );
 
   // Initiate or Open Chat Room
   async function handleOpenChat(mentorUserId, existingRoomId = null) {

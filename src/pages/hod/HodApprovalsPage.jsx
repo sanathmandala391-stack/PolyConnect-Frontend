@@ -1,156 +1,8 @@
-// import { useEffect, useState } from "react";
-// import api, { apiErrorMessage } from "../../api/client";
-// import GovLoader from "../../components/GovLoader";
-
-// export default function HodApprovalsPage() {
-//   const [approvals, setApprovals] = useState(null);
-//   const [error, setError] = useState("");
-//   const [processingId, setProcessingId] = useState(null);
-//   const [reasonDrafts, setReasonDrafts] = useState({});
-
-//   function load() {
-//     api
-//       .get("/hod/approvals/pending")
-//       .then((res) => setApprovals(Array.isArray(res.data) ? res.data : []))
-//       .catch((err) => setError(apiErrorMessage(err, "Could not load pending student registration requests.")));
-//   }
-
-//   useEffect(() => {
-//     load();
-//   }, []);
-
-//   async function decide(id, approve) {
-//     setError("");
-//     setProcessingId(id);
-//     try {
-//       const reason = reasonDrafts[id] || "";
-//       await api.post(
-//         `/hod/approvals/${id}/decision?approve=${approve}&reason=${encodeURIComponent(reason)}`
-//       );
-//       setApprovals((list) => list.filter((a) => a.id !== id));
-//     } catch (err) {
-//       setError(
-//         apiErrorMessage(
-//           err,
-//           `Could not ${approve ? "approve" : "reject"} this student registration. Please try again.`
-//         )
-//       );
-//     } finally {
-//       setProcessingId(null);
-//     }
-//   }
-
-//   if (error && !approvals) {
-//     return (
-//       <div className="space-y-4">
-//         <h1 className="font-display text-2xl font-bold text-gov-navy">Student Approvals Queue</h1>
-//         <div className="bg-red-50 border border-red-200 text-red-800 text-sm px-4 py-3 rounded-sm">
-//           {error}
-//         </div>
-//       </div>
-//     );
-//   }
-
-//   if (!approvals) {
-//     return <GovLoader label="Loading pending student registration queue…" />;
-//   }
-
-//   return (
-//     <div className="space-y-6">
-//       {/* Header */}
-//       <div className="border-b border-gov-border pb-3">
-//         <div className="flex items-center gap-2">
-//           <h1 className="font-display text-2xl md:text-3xl font-bold text-gov-navy">
-//             Student Registration Approvals
-//           </h1>
-//           <span className="bg-amber-100 text-amber-900 text-xs font-bold px-2.5 py-0.5 rounded-full">
-//             {approvals.length} Pending
-//           </span>
-//         </div>
-//         <p className="text-xs md:text-sm text-gov-slate mt-0.5">
-//           Verify student enrollment credentials, PIN format, and branch allocation before granting portal access.
-//         </p>
-//       </div>
-
-//       {error && (
-//         <div className="bg-red-50 border border-red-200 text-red-800 text-xs px-3.5 py-2.5 rounded-sm">
-//           {error}
-//         </div>
-//       )}
-
-//       {approvals.length === 0 ? (
-//         <div className="gov-card p-12 text-center text-sm text-gov-slate">
-//           <p className="font-semibold text-gov-navy mb-1">No Pending Approvals</p>
-//           <p className="text-xs">All student registration requests for your department have been reviewed.</p>
-//         </div>
-//       ) : (
-//         <div className="space-y-3">
-//           {approvals.map((a) => (
-//             <div key={a.id} className="gov-card p-5 flex flex-col md:flex-row md:items-center justify-between gap-4">
-//               <div className="space-y-1">
-//                 <div className="flex items-center gap-2">
-//                   <h3 className="font-display font-bold text-base text-gov-navy">
-//                     {a.student?.fullName || "Student"}
-//                   </h3>
-//                   <span className="font-mono font-bold text-xs bg-slate-100 px-2 py-0.5 rounded text-gov-slate">
-//                     PIN: {a.student?.pin || "N/A"}
-//                   </span>
-//                 </div>
-//                 <p className="text-xs text-gov-slate">
-//                   Email: <span className="font-mono text-gov-ink">{a.student?.email}</span> &bull; Branch:{" "}
-//                   <strong>{a.branch?.name || a.student?.branchCode || "Department"}</strong>
-//                 </p>
-//                 <p className="text-[11px] text-gov-muted">
-//                   College: {a.college?.name || a.student?.collegeCode}
-//                 </p>
-//               </div>
-
-//               <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 shrink-0">
-//                 <input
-//                   className="gov-input text-xs sm:w-48"
-//                   placeholder="Decision reason (optional)"
-//                   value={reasonDrafts[a.id] || ""}
-//                   onChange={(e) =>
-//                     setReasonDrafts((d) => ({ ...d, [a.id]: e.target.value }))
-//                   }
-//                 />
-//                 <div className="flex gap-2">
-//                   <button
-//                     className="gov-btn bg-gov-sage hover:bg-green-800 text-white text-xs font-bold px-4 py-2"
-//                     disabled={processingId === a.id}
-//                     onClick={() => decide(a.id, true)}
-//                   >
-//                     {processingId === a.id ? "…" : "Approve"}
-//                   </button>
-//                   <button
-//                     className="gov-btn-danger text-xs font-bold px-3 py-2"
-//                     disabled={processingId === a.id}
-//                     onClick={() => decide(a.id, false)}
-//                   >
-//                     {processingId === a.id ? "…" : "Reject"}
-//                   </button>
-//                 </div>
-//               </div>
-//             </div>
-//           ))}
-//         </div>
-//       )}
-//     </div>
-//   );
-// }
-
-
-
-
-
-
-
-
-
-import { useEffect, useState, useMemo } from "react";
+import { useEffect, useState, useMemo, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import api, { apiErrorMessage } from "../../api/client";
 import GovLoader from "../../components/GovLoader";
+import usePolling from "../../hooks/usePolling";
 
 // Official Government Arrow Back Button
 function OfficialBackButton({ to, label = "Go Back" }) {
@@ -199,29 +51,48 @@ export default function HodApprovalsPage() {
     year: "numeric",
   });
 
-  function load() {
-    api
-      .get("/hod/approvals/pending")
-      .then((res) => setApprovals(Array.isArray(res.data) ? res.data : []))
-      .catch((err) =>
-        setError(apiErrorMessage(err, "Could not load pending student registration requests."))
-      );
-  }
+  const load = useCallback(async (isBackground = false) => {
+    try {
+      const res = await api.get("/hod/approvals/pending");
+      setApprovals(Array.isArray(res.data) ? res.data : []);
+    } catch (err) {
+      if (!isBackground) {
+        setError(apiErrorMessage(err, "Could not load pending student registration requests."));
+      }
+    }
+  }, []);
 
   useEffect(() => {
-    load();
-  }, []);
+    load(false);
+  }, [load]);
+
+  // Fast 4-second live background polling so new student registrations appear in fractions of a second
+  usePolling(
+    () => {
+      if (!document.hidden) {
+        load(true);
+      }
+    },
+    4000,
+    [load]
+  );
 
   async function decide(id, approve) {
     setError("");
+    const reason = reasonDrafts[id] || "";
+    const previousApprovals = approvals;
+
+    // Instant Optimistic UI Update (0ms delay)
+    setApprovals((list) => (list ? list.filter((a) => a.id !== id) : []));
     setProcessingId(id);
+
     try {
-      const reason = reasonDrafts[id] || "";
       await api.post(
         `/hod/approvals/${id}/decision?approve=${approve}&reason=${encodeURIComponent(reason)}`
       );
-      setApprovals((list) => list.filter((a) => a.id !== id));
     } catch (err) {
+      // Revert if API failed
+      setApprovals(previousApprovals);
       setError(
         apiErrorMessage(
           err,
@@ -286,6 +157,10 @@ export default function HodApprovalsPage() {
             <div>
               <div className="flex flex-wrap items-center gap-2 mb-1.5">
                 <span className="text-[11px] text-sky-200 font-medium">{currentDate}</span>
+                <span className="hidden sm:inline-flex items-center gap-1.5 bg-emerald-500/20 border border-emerald-400/30 text-emerald-200 text-[10px] font-semibold px-2 py-0.2 rounded-full">
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping" />
+                  Live Sync
+                </span>
               </div>
               <h1 className="font-serif text-xl sm:text-2xl lg:text-3xl font-extrabold tracking-tight text-white drop-shadow-sm">
                 Student Registration Approvals
@@ -297,7 +172,7 @@ export default function HodApprovalsPage() {
           </div>
 
           <div className="flex items-center gap-2">
-            <span className="bg-[#FF9933] text-[#092240]  font-bold text-xs px-3.5 py-1.5 rounded-md shadow-sm border border-amber-400/50">
+            <span className="bg-[#FF9933] text-[#092240] font-bold text-xs px-3.5 py-1.5 rounded-md shadow-sm border border-amber-400/50">
               {approvals.length} Pending Approvals
             </span>
           </div>
@@ -380,7 +255,7 @@ export default function HodApprovalsPage() {
                 />
                 <div className="flex items-center gap-2">
                   <button
-                    className="flex-1 sm:flex-initial inline-flex items-center justify-center gap-1.5 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold px-4 py-2 rounded-md shadow-sm transition-colors disabled:opacity-50"
+                    className="flex-1 sm:flex-initial inline-flex items-center justify-center gap-1.5 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold px-4 py-2 rounded-md shadow-sm transition-all duration-100 cursor-pointer active:scale-95 disabled:opacity-50"
                     disabled={processingId === a.id}
                     onClick={() => decide(a.id, true)}
                   >
@@ -396,7 +271,7 @@ export default function HodApprovalsPage() {
                     )}
                   </button>
                   <button
-                    className="flex-1 sm:flex-initial inline-flex items-center justify-center gap-1.5 bg-rose-600 hover:bg-rose-700 text-white text-xs font-bold px-3.5 py-2 rounded-md shadow-sm transition-colors disabled:opacity-50"
+                    className="flex-1 sm:flex-initial inline-flex items-center justify-center gap-1.5 bg-rose-600 hover:bg-rose-700 text-white text-xs font-bold px-3.5 py-2 rounded-md shadow-sm transition-all duration-100 cursor-pointer active:scale-95 disabled:opacity-50"
                     disabled={processingId === a.id}
                     onClick={() => decide(a.id, false)}
                   >
