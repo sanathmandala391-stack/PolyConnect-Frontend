@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { ExternalLink, ChevronRight, X, Clock, GraduationCap, CheckCircle } from "lucide-react";
 import api from "../api/client";
+import WhatsNew from "../WhatsNew";
 import notificationIcon from "../images/ic.png";
 import notificationRowIcon from "../images/row.png";
 import sbLogo from "../images/sb.png";
@@ -473,37 +474,11 @@ export default function HomePage() {
   }
 
   return (
-    <div className="space-y-4 sm:space-y-5 mt-0 sm:-mt-2">
-      {/* 1. What's New Ticker Bar (Exact match to Image 3) */}
-      {/* <div className="bg-white border border-[#cbd5e1] flex items-center overflow-hidden h-[34px] shadow-2xs">
-        <div className="bg-[#5cb85c] text-white text-[12px] font-bold px-3 py-1.5 uppercase shrink-0 flex items-center h-full tracking-wide">
-          WHAT'S NEW
-        </div>
-        <div className="flex-1 overflow-hidden whitespace-nowrap relative px-4 text-[12.5px] text-[#222]">
-          <div className="marquee-track inline-block flex items-center gap-10">
-            {notifications.length > 0 ? (
-              notifications.map((n, idx) => (
-                <a
-                  key={n.ID || idx}
-                  href={n.Url || n.link || "/circulars"}
-                  target={n.Url ? "_blank" : "_self"}
-                  rel={n.Url ? "noopener noreferrer" : undefined}
-                  className="text-[#0084ff] hover:underline font-normal inline-flex items-center gap-1.5 no-underline"
-                >
-                  <span>{n.Title || n.title}</span>
-                  <img src={newGif || NEW_GIF_URL} alt="New" className="h-[11px] w-auto inline-block" />
-                </a>
-              ))
-            ) : (
-              <span className="text-gray-600 font-normal">
-                C-24 and C-26 Attendance Updated &nbsp;&bull;&nbsp; Attendance 31-Day Sheet updated &nbsp;&bull;&nbsp; Diploma Notifications &nbsp;&bull;&nbsp; Diploma Circulars
-              </span>
-            )}
-          </div>
-        </div>
-      </div> */}
+    <div className="space-y-2 sm:space-y-2.5">
+      {/* 1. What's New Ticker (Exact match to Image 2) */}
+      <WhatsNew />
 
-      {/* 2. Top Hero Section: Split 50% Banner + 50% Notifications (Exact match to Image 3) */}
+      {/* 2. Top Hero Section: Split 50% Banner + 50% Notifications (Exact match to Image 2) */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-5 items-stretch">
         {/* Left: Carousel Slider */}
         <div
