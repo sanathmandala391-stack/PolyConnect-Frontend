@@ -100,7 +100,7 @@ export default function GovHeader() {
     <header
       className="z-50 no-print w-full bg-white sbtet-nav-font"
       style={{
-        fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif",
+        fontFamily: "'Mulish', 'Muli', sans-serif",
         boxShadow: "0 2px 4px rgba(0,0,0,0.08)",
       }}
     >
@@ -257,7 +257,7 @@ export default function GovHeader() {
       {/* 2. Main Blue Navigation Bar */}
       <nav
         className="bg-[#24a2dc] text-white shadow-xs relative w-full border-b-2 border-[#1ca0d8] sbtet-nav-font"
-        style={{ fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif", fontSize: "12.5px" }}
+        style={{ fontFamily: "'Mulish', 'Muli', sans-serif", fontSize: "12.5px" }}
       >
         <div className="max-w-7xl mx-auto px-2 sm:px-4 flex items-center justify-start min-h-[38px]">
 
@@ -273,7 +273,7 @@ export default function GovHeader() {
           {/* Desktop Nav Items */}
           <div
             className="hidden xl:flex items-center flex-nowrap text-[12px] xl:text-[12.5px] sbtet-nav-font"
-            style={{ fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" }}
+            style={{ fontFamily: "'Mulish', 'Muli', sans-serif" }}
           >
             <NavLink
               to="/"
@@ -288,7 +288,7 @@ export default function GovHeader() {
               <button
                 type="button"
                 className="px-2 xl:px-2.5 py-2 text-[12px] xl:text-[12.5px] uppercase font-bold tracking-[0.01em] flex items-center gap-1.5 whitespace-nowrap text-white hover:bg-[#1a93cc] transition-colors shrink-0 cursor-pointer sbtet-nav-font"
-                style={{ fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" }}
+                style={{ fontFamily: "'Mulish', 'Muli', sans-serif" }}
               >
                 <i className="fa-solid fa-gear text-[11.5px] shrink-0 text-white" />
                 <span>STUDENT SERVICES</span>
@@ -296,9 +296,9 @@ export default function GovHeader() {
               </button>
 
               <div className="hidden group-hover:block absolute top-full left-0 right-0 w-full bg-white text-slate-800 shadow-2xl border-t border-gray-200 z-50 p-6 sbtet-nav-font">
-                <div className="max-w-7xl mx-auto grid grid-cols-4 gap-6 text-[12px]" style={{ fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" }}>
+                <div className="max-w-7xl mx-auto grid grid-cols-4 gap-6 text-[12px]" style={{ fontFamily: "'Mulish', 'Muli', sans-serif" }}>
                   <div>
-                    <div className="bg-[#24a2dc] text-white font-bold px-3 py-1.5 uppercase text-[11px] mb-2 tracking-wide" style={{ fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" }}>DIPLOMA</div>
+                    <div className="bg-[#24a2dc] text-white font-bold px-3 py-1.5 uppercase text-[11px] mb-2 tracking-wide" style={{ fontFamily: "'Mulish', 'Muli', sans-serif" }}>DIPLOMA</div>
                     <ul className="divide-y divide-dotted divide-[#cbd5e1]">
                       <li><Link to="/courses" className="block py-2 px-1 hover:bg-slate-50 hover:text-[#24a2dc] font-normal text-[13px] text-[#444444] transition-colors">View Syllabus</Link></li>
                       <li><Link to="/student/attendance" className="block py-2 px-1 hover:bg-slate-50 hover:text-[#24a2dc] font-normal text-[13px] text-[#444444] transition-colors">View Attendance</Link></li>
@@ -314,7 +314,7 @@ export default function GovHeader() {
                     </ul>
                   </div>
                   <div>
-                    <div className="bg-[#24a2dc] text-white font-bold px-3 py-1.5 uppercase text-[11px] mb-2 tracking-wide" style={{ fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" }}>TW & SH</div>
+                    <div className="bg-[#24a2dc] text-white font-bold px-3 py-1.5 uppercase text-[11px] mb-2 tracking-wide" style={{ fontFamily: "'Mulish', 'Muli', sans-serif" }}>TW & SH</div>
                     <ul className="divide-y divide-dotted divide-[#cbd5e1]">
                       <li><a href="#" className="block py-2 px-1 hover:bg-slate-50 hover:text-[#24a2dc] font-normal text-[13px] text-[#444444] transition-colors">Apply for CBT\ Offilne Exam</a></li>
                       <li><Link to="/Fee/exam" className="block py-2 px-1 hover:bg-slate-50 hover:text-[#24a2dc] font-normal text-[13px] text-[#444444] transition-colors">Fee Payment</Link></li>
@@ -325,14 +325,14 @@ export default function GovHeader() {
                     </ul>
                   </div>
                   <div>
-                    <div className="bg-[#24a2dc] text-white font-bold px-3 py-1.5 uppercase text-[11px] mb-2 tracking-wide" style={{ fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" }}>CCIC</div>
+                    <div className="bg-[#24a2dc] text-white font-bold px-3 py-1.5 uppercase text-[11px] mb-2 tracking-wide" style={{ fontFamily: "'Mulish', 'Muli', sans-serif" }}>CCIC</div>
                     <ul className="divide-y divide-dotted divide-[#cbd5e1]">
                       <li><a href="#" className="block py-2 px-1 hover:bg-slate-50 hover:text-[#24a2dc] font-normal text-[13px] text-[#444444] transition-colors">CCIC Results</a></li>
                       <li><a href="#" className="block py-2 px-1 hover:bg-slate-50 hover:text-[#24a2dc] font-normal text-[13px] text-[#444444] transition-colors">Photo Copy & Revaluation</a></li>
                     </ul>
                   </div>
                   <div>
-                    <div className="bg-[#24a2dc] text-white font-bold px-3 py-1.5 uppercase text-[11px] mb-2 tracking-wide" style={{ fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" }}>ISB ONLINE SKILLING PROGRAMMES</div>
+                    <div className="bg-[#24a2dc] text-white font-bold px-3 py-1.5 uppercase text-[11px] mb-2 tracking-wide" style={{ fontFamily: "'Mulish', 'Muli', sans-serif" }}>ISB ONLINE SKILLING PROGRAMMES</div>
                     <ul className="divide-y divide-dotted divide-[#cbd5e1]">
                       <li><a href="#" className="block py-2 px-1 hover:bg-slate-50 hover:text-[#24a2dc] font-normal text-[13px] text-[#444444] transition-colors">Student Enrolment</a></li>
                     </ul>
@@ -346,7 +346,7 @@ export default function GovHeader() {
               <button
                 type="button"
                 className="px-2 xl:px-2.5 py-2 text-[12px] xl:text-[12.5px] uppercase font-bold tracking-[0.01em] flex items-center gap-1.5 whitespace-nowrap text-white hover:bg-[#1a93cc] transition-colors shrink-0 cursor-pointer sbtet-nav-font"
-                style={{ fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" }}
+                style={{ fontFamily: "'Mulish', 'Muli', sans-serif" }}
               >
                 <i className="fa-solid fa-gear text-[11.5px] shrink-0 text-white" />
                 <span>COLLEGE SERVICES</span>
@@ -354,9 +354,9 @@ export default function GovHeader() {
               </button>
 
               <div className="hidden group-hover:block absolute top-full left-0 right-0 w-full bg-white text-slate-800 shadow-2xl border-t border-gray-200 z-50 p-6 sbtet-nav-font">
-                <div className="max-w-7xl mx-auto grid grid-cols-3 gap-6 text-[12px]" style={{ fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" }}>
+                <div className="max-w-7xl mx-auto grid grid-cols-3 gap-6 text-[12px]" style={{ fontFamily: "'Mulish', 'Muli', sans-serif" }}>
                   <div>
-                    <div className="bg-[#24a2dc] text-white font-bold px-3 py-1.5 uppercase text-[11px] mb-2 tracking-wide" style={{ fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" }}>DIPLOMA</div>
+                    <div className="bg-[#24a2dc] text-white font-bold px-3 py-1.5 uppercase text-[11px] mb-2 tracking-wide" style={{ fontFamily: "'Mulish', 'Muli', sans-serif" }}>DIPLOMA</div>
                     <ul className="divide-y divide-dotted divide-[#cbd5e1]">
                       <li><Link to="/hod/dashboard" className="block py-2 px-1 hover:bg-slate-50 hover:text-[#24a2dc] font-normal text-[13px] text-[#444444] transition-colors">Department HOD Dashboard</Link></li>
                       <li><Link to="/hod/approvals" className="block py-2 px-1 hover:bg-slate-50 hover:text-[#24a2dc] font-normal text-[13px] text-[#444444] transition-colors">Student Registration Approvals</Link></li>
@@ -365,13 +365,13 @@ export default function GovHeader() {
                     </ul>
                   </div>
                   <div>
-                    <div className="bg-[#24a2dc] text-white font-bold px-3 py-1.5 uppercase text-[11px] mb-2 tracking-wide" style={{ fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" }}>TW & SH</div>
+                    <div className="bg-[#24a2dc] text-white font-bold px-3 py-1.5 uppercase text-[11px] mb-2 tracking-wide" style={{ fontFamily: "'Mulish', 'Muli', sans-serif" }}>TW & SH</div>
                     <ul className="divide-y divide-dotted divide-[#cbd5e1]">
                       <li><Link to="/login" className="block py-2 px-1 hover:bg-slate-50 hover:text-[#24a2dc] font-normal text-[13px] text-[#444444] transition-colors">College/ Institute Login</Link></li>
                     </ul>
                   </div>
                   <div>
-                    <div className="bg-[#24a2dc] text-white font-bold px-3 py-1.5 uppercase text-[11px] mb-2 tracking-wide" style={{ fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" }}>CCIC</div>
+                    <div className="bg-[#24a2dc] text-white font-bold px-3 py-1.5 uppercase text-[11px] mb-2 tracking-wide" style={{ fontFamily: "'Mulish', 'Muli', sans-serif" }}>CCIC</div>
                     <ul className="divide-y divide-dotted divide-[#cbd5e1]">
                       <li><a href="#" className="block py-2 px-1 hover:bg-slate-50 hover:text-[#24a2dc] font-normal text-[13px] text-[#444444] transition-colors">CCIC Exams Portal</a></li>
                       <li><a href="#" className="block py-2 px-1 hover:bg-slate-50 hover:text-[#24a2dc] font-normal text-[13px] text-[#444444] transition-colors">CCIC Affiliation Portal</a></li>
@@ -386,7 +386,7 @@ export default function GovHeader() {
               <button
                 type="button"
                 className="px-2 xl:px-2.5 py-2 text-[12px] xl:text-[12.5px] uppercase font-bold tracking-[0.01em] flex items-center gap-1.5 whitespace-nowrap text-white hover:bg-[#1a93cc] transition-colors shrink-0 cursor-pointer sbtet-nav-font"
-                style={{ fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" }}
+                style={{ fontFamily: "'Mulish', 'Muli', sans-serif" }}
               >
                 <i className="fa-solid fa-gear text-[11.5px] shrink-0 text-white" />
                 <span>OTHERS SERVICES</span>
@@ -394,22 +394,22 @@ export default function GovHeader() {
               </button>
 
               <div className="hidden group-hover:block absolute top-full left-0 right-0 w-full bg-white text-slate-800 shadow-2xl border-t border-gray-200 z-50 p-6 sbtet-nav-font">
-                <div className="max-w-7xl mx-auto grid grid-cols-3 gap-6 text-[12px]" style={{ fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" }}>
+                <div className="max-w-7xl mx-auto grid grid-cols-3 gap-6 text-[12px]" style={{ fontFamily: "'Mulish', 'Muli', sans-serif" }}>
                   <div>
-                    <div className="bg-[#24a2dc] text-white font-bold px-3 py-1.5 uppercase text-[11px] mb-2 tracking-wide" style={{ fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" }}>INSTITUTIONS</div>
+                    <div className="bg-[#24a2dc] text-white font-bold px-3 py-1.5 uppercase text-[11px] mb-2 tracking-wide" style={{ fontFamily: "'Mulish', 'Muli', sans-serif" }}>INSTITUTIONS</div>
                     <ul className="divide-y divide-dotted divide-[#cbd5e1]">
                       <li><Link to="/circulars" className="block py-2 px-1 hover:bg-slate-50 hover:text-[#24a2dc] font-normal text-[13px] text-[#444444] transition-colors">Official Circulars & Timetables</Link></li>
                       <li><Link to="/admin/dashboard" className="block py-2 px-1 hover:bg-slate-50 hover:text-[#24a2dc] font-normal text-[13px] text-[#444444] transition-colors">System Administration Panel</Link></li>
                     </ul>
                   </div>
                   <div>
-                    <div className="bg-[#24a2dc] text-white font-bold px-3 py-1.5 uppercase text-[11px] mb-2 tracking-wide" style={{ fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" }}>STAFF</div>
+                    <div className="bg-[#24a2dc] text-white font-bold px-3 py-1.5 uppercase text-[11px] mb-2 tracking-wide" style={{ fontFamily: "'Mulish', 'Muli', sans-serif" }}>STAFF</div>
                     <ul className="divide-y divide-dotted divide-[#cbd5e1]">
                       <li><a href="#" className="block py-2 px-1 hover:bg-slate-50 hover:text-[#24a2dc] font-normal text-[13px] text-[#444444] transition-colors">Digital Evaluation</a></li>
                     </ul>
                   </div>
                   <div>
-                    <div className="bg-[#24a2dc] text-white font-bold px-3 py-1.5 uppercase text-[11px] mb-2 tracking-wide" style={{ fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" }}>POLYCET</div>
+                    <div className="bg-[#24a2dc] text-white font-bold px-3 py-1.5 uppercase text-[11px] mb-2 tracking-wide" style={{ fontFamily: "'Mulish', 'Muli', sans-serif" }}>POLYCET</div>
                     <ul className="divide-y divide-dotted divide-[#cbd5e1]">
                       <li><Link to="/student/doubts" className="block py-2 px-1 hover:bg-slate-50 hover:text-[#24a2dc] font-normal text-[13px] text-[#444444] transition-colors">AI Doubt Solver Assistant</Link></li>
                       <li><a href="#" className="block py-2 px-1 hover:bg-slate-50 hover:text-[#24a2dc] font-normal text-[13px] text-[#444444] transition-colors">Apply for Polycet</a></li>
@@ -424,7 +424,7 @@ export default function GovHeader() {
               <button
                 type="button"
                 className="px-2 xl:px-2.5 py-2 text-[12px] xl:text-[12.5px] uppercase font-bold tracking-[0.01em] flex items-center gap-1.5 whitespace-nowrap text-white hover:bg-[#1a93cc] transition-colors shrink-0 cursor-pointer sbtet-nav-font"
-                style={{ fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" }}
+                style={{ fontFamily: "'Mulish', 'Muli', sans-serif" }}
               >
                 <i className="fa-solid fa-gear text-[11.5px] shrink-0 text-white" />
                 <span>AFFILIATED COLLEGES</span>
@@ -432,21 +432,21 @@ export default function GovHeader() {
               </button>
 
               <div className="hidden group-hover:block absolute top-full left-0 right-0 w-full bg-white text-slate-800 shadow-2xl border-t border-gray-200 z-50 p-6 sbtet-nav-font">
-                <div className="max-w-7xl mx-auto grid grid-cols-3 gap-6 text-[12px]" style={{ fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" }}>
+                <div className="max-w-7xl mx-auto grid grid-cols-3 gap-6 text-[12px]" style={{ fontFamily: "'Mulish', 'Muli', sans-serif" }}>
                   <div>
-                    <div className="bg-[#24a2dc] text-white font-bold px-3 py-1.5 uppercase text-[11px] mb-2 tracking-wide" style={{ fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" }}>DIPLOMA</div>
+                    <div className="bg-[#24a2dc] text-white font-bold px-3 py-1.5 uppercase text-[11px] mb-2 tracking-wide" style={{ fontFamily: "'Mulish', 'Muli', sans-serif" }}>DIPLOMA</div>
                     <ul className="divide-y divide-dotted divide-[#cbd5e1]">
                       <li><Link to="/admin/colleges" className="block py-2 px-1 hover:bg-slate-50 hover:text-[#24a2dc] font-normal text-[13px] text-[#444444] transition-colors">All Affiliated Polytechnic Colleges</Link></li>
                     </ul>
                   </div>
                   <div>
-                    <div className="bg-[#24a2dc] text-white font-bold px-3 py-1.5 uppercase text-[11px] mb-2 tracking-wide" style={{ fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" }}>TW & SH</div>
+                    <div className="bg-[#24a2dc] text-white font-bold px-3 py-1.5 uppercase text-[11px] mb-2 tracking-wide" style={{ fontFamily: "'Mulish', 'Muli', sans-serif" }}>TW & SH</div>
                     <ul className="divide-y divide-dotted divide-[#cbd5e1]">
                       <li><a href="#" className="block py-2 px-1 hover:bg-slate-50 hover:text-[#24a2dc] font-normal text-[13px] text-[#444444] transition-colors">Typewriting & Shorthand Institutions</a></li>
                     </ul>
                   </div>
                   <div>
-                    <div className="bg-[#24a2dc] text-white font-bold px-3 py-1.5 uppercase text-[11px] mb-2 tracking-wide" style={{ fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" }}>CCIC</div>
+                    <div className="bg-[#24a2dc] text-white font-bold px-3 py-1.5 uppercase text-[11px] mb-2 tracking-wide" style={{ fontFamily: "'Mulish', 'Muli', sans-serif" }}>CCIC</div>
                     <ul className="divide-y divide-dotted divide-[#cbd5e1]">
                       <li><a href="#" className="block py-2 px-1 hover:bg-slate-50 hover:text-[#24a2dc] font-normal text-[13px] text-[#444444] transition-colors">CCIC Portal</a></li>
                       <li><a href="#" className="block py-2 px-1 hover:bg-slate-50 hover:text-[#24a2dc] font-normal text-[13px] text-[#444444] transition-colors">CCIC Affiliated Colleges</a></li>
@@ -461,7 +461,7 @@ export default function GovHeader() {
               <button
                 type="button"
                 className="px-2 xl:px-2.5 py-2 text-[12px] xl:text-[12.5px] uppercase font-bold tracking-[0.01em] flex items-center gap-1.5 whitespace-nowrap text-white hover:bg-[#1a93cc] transition-colors shrink-0 cursor-pointer sbtet-nav-font"
-                style={{ fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" }}
+                style={{ fontFamily: "'Mulish', 'Muli', sans-serif" }}
               >
                 <i className="fa-solid fa-gear text-[11.5px] shrink-0 text-white" />
                 <span>COURSES</span>
@@ -469,21 +469,21 @@ export default function GovHeader() {
               </button>
 
               <div className="hidden group-hover:block absolute top-full left-0 right-0 w-full bg-white text-slate-800 shadow-2xl border-t border-gray-200 z-50 p-6 sbtet-nav-font">
-                <div className="max-w-7xl mx-auto grid grid-cols-3 gap-6 text-[12px]" style={{ fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" }}>
+                <div className="max-w-7xl mx-auto grid grid-cols-3 gap-6 text-[12px]" style={{ fontFamily: "'Mulish', 'Muli', sans-serif" }}>
                   <div>
-                    <div className="bg-[#24a2dc] text-white font-bold px-3 py-1.5 uppercase text-[11px] mb-2 tracking-wide" style={{ fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" }}>DIPLOMA</div>
+                    <div className="bg-[#24a2dc] text-white font-bold px-3 py-1.5 uppercase text-[11px] mb-2 tracking-wide" style={{ fontFamily: "'Mulish', 'Muli', sans-serif" }}>DIPLOMA</div>
                     <ul className="divide-y divide-dotted divide-[#cbd5e1]">
                       <li><Link to="/courses" className="block py-2 px-1 hover:bg-slate-50 hover:text-[#24a2dc] font-normal text-[13px] text-[#444444] transition-colors">Diploma Courses List</Link></li>
                     </ul>
                   </div>
                   <div>
-                    <div className="bg-[#24a2dc] text-white font-bold px-3 py-1.5 uppercase text-[11px] mb-2 tracking-wide" style={{ fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" }}>TW & SH</div>
+                    <div className="bg-[#24a2dc] text-white font-bold px-3 py-1.5 uppercase text-[11px] mb-2 tracking-wide" style={{ fontFamily: "'Mulish', 'Muli', sans-serif" }}>TW & SH</div>
                     <ul className="divide-y divide-dotted divide-[#cbd5e1]">
                       <li><Link to="/courses" className="block py-2 px-1 hover:bg-slate-50 hover:text-[#24a2dc] font-normal text-[13px] text-[#444444] transition-colors">Typewriting & Shorthand</Link></li>
                     </ul>
                   </div>
                   <div>
-                    <div className="bg-[#24a2dc] text-white font-bold px-3 py-1.5 uppercase text-[11px] mb-2 tracking-wide" style={{ fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" }}>CCIC</div>
+                    <div className="bg-[#24a2dc] text-white font-bold px-3 py-1.5 uppercase text-[11px] mb-2 tracking-wide" style={{ fontFamily: "'Mulish', 'Muli', sans-serif" }}>CCIC</div>
                     <ul className="divide-y divide-dotted divide-[#cbd5e1]">
                       <li><Link to="/courses" className="block py-2 px-1 hover:bg-slate-50 hover:text-[#24a2dc] font-normal text-[13px] text-[#444444] transition-colors">CCIC Courses</Link></li>
                     </ul>
@@ -496,7 +496,7 @@ export default function GovHeader() {
             <a
               href="#contact-us"
               className="px-2 xl:px-2.5 py-2 text-[12px] xl:text-[12.5px] uppercase font-bold tracking-[0.01em] flex items-center gap-1.5 whitespace-nowrap text-white hover:bg-[#1a93cc] transition-colors shrink-0 cursor-pointer sbtet-nav-font"
-              style={{ fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" }}
+              style={{ fontFamily: "'Mulish', 'Muli', sans-serif" }}
             >
               <i className="fa-solid fa-square-phone text-[12.5px] shrink-0 text-white" />
               <span>CONTACT-US</span>
@@ -507,7 +507,7 @@ export default function GovHeader() {
               <button
                 type="button"
                 className="px-2 xl:px-2.5 py-2 text-[12px] xl:text-[12.5px] uppercase font-bold tracking-[0.01em] flex items-center gap-1.5 whitespace-nowrap text-white hover:bg-[#1a93cc] transition-colors shrink-0 cursor-pointer sbtet-nav-font"
-                style={{ fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" }}
+                style={{ fontFamily: "'Mulish', 'Muli', sans-serif" }}
               >
                 <i className="fa-solid fa-circle-info text-[12.5px] shrink-0 text-white" />
                 <span>MORE</span>
@@ -515,9 +515,9 @@ export default function GovHeader() {
               </button>
 
               <div className="hidden group-hover:block absolute top-full left-0 right-0 w-full bg-white text-slate-800 shadow-2xl border-t border-gray-200 z-50 p-6 sbtet-nav-font">
-                <div className="max-w-7xl mx-auto grid grid-cols-3 gap-6 text-[12px]" style={{ fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" }}>
+                <div className="max-w-7xl mx-auto grid grid-cols-3 gap-6 text-[12px]" style={{ fontFamily: "'Mulish', 'Muli', sans-serif" }}>
                   <div>
-                    <div className="bg-[#24a2dc] text-white font-bold px-3 py-1.5 uppercase text-[11px] mb-2 tracking-wide" style={{ fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" }}>MORE</div>
+                    <div className="bg-[#24a2dc] text-white font-bold px-3 py-1.5 uppercase text-[11px] mb-2 tracking-wide" style={{ fontFamily: "'Mulish', 'Muli', sans-serif" }}>MORE</div>
                     <ul className="divide-y divide-dotted divide-[#cbd5e1]">
                       <li><Link to="/student/community" className="block py-2 px-1 hover:bg-slate-50 hover:text-[#24a2dc] font-normal text-[13px] text-[#444444] transition-colors">Statewide Polytechnic Community</Link></li>
                       <li><Link to="/register/student" className="block py-2 px-1 hover:bg-slate-50 hover:text-[#24a2dc] font-normal text-[13px] text-[#444444] transition-colors">Student Registration</Link></li>
@@ -525,7 +525,7 @@ export default function GovHeader() {
                     </ul>
                   </div>
                   <div>
-                    <div className="bg-[#24a2dc] text-white font-bold px-3 py-1.5 uppercase text-[11px] mb-2 tracking-wide" style={{ fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" }}>PORTAL</div>
+                    <div className="bg-[#24a2dc] text-white font-bold px-3 py-1.5 uppercase text-[11px] mb-2 tracking-wide" style={{ fontFamily: "'Mulish', 'Muli', sans-serif" }}>PORTAL</div>
                     <ul className="divide-y divide-dotted divide-[#cbd5e1]">
                       <li><a href="#" className="block py-2 px-1 hover:bg-slate-50 hover:text-[#24a2dc] font-normal text-[13px] text-[#444444] transition-colors">Site Map</a></li>
                       <li><a href="#" className="block py-2 px-1 hover:bg-slate-50 hover:text-[#24a2dc] font-normal text-[13px] text-[#444444] transition-colors">Tenders & Downloads</a></li>
@@ -533,7 +533,7 @@ export default function GovHeader() {
                     </ul>
                   </div>
                   <div>
-                    <div className="bg-[#24a2dc] text-white font-bold px-3 py-1.5 uppercase text-[11px] mb-2 tracking-wide" style={{ fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" }}>RTI</div>
+                    <div className="bg-[#24a2dc] text-white font-bold px-3 py-1.5 uppercase text-[11px] mb-2 tracking-wide" style={{ fontFamily: "'Mulish', 'Muli', sans-serif" }}>RTI</div>
                     <ul className="divide-y divide-dotted divide-[#cbd5e1]">
                       <li><a href="#" className="block py-2 px-1 hover:bg-slate-50 hover:text-[#24a2dc] font-normal text-[13px] text-[#444444] transition-colors">Full details of Right to Information Act</a></li>
                       <li><a href="#" className="block py-2 px-1 hover:bg-slate-50 hover:text-[#24a2dc] font-normal text-[13px] text-[#444444] transition-colors">About Right to Information</a></li>
@@ -552,7 +552,7 @@ export default function GovHeader() {
                   onClick={() => setProfileOpen((prev) => !prev)}
                   title={user.fullName || user.username}
                   className="px-3 xl:px-4 py-2 text-[12px] xl:text-[12.5px] uppercase font-bold tracking-[0.01em] flex items-center gap-1.5 whitespace-nowrap text-white bg-[#1a82b8] hover:bg-[#156e9c] transition-colors shrink-0 cursor-pointer sbtet-nav-font"
-                  style={{ fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" }}
+                  style={{ fontFamily: "'Mulish', 'Muli', sans-serif" }}
                 >
                   <i className="fa-solid fa-user text-[12.5px] shrink-0 text-white" />
                   <span className="truncate max-w-[120px]">
@@ -593,7 +593,7 @@ export default function GovHeader() {
               <Link
                 to="/login"
                 className="px-3 xl:px-4 py-2 text-[12px] xl:text-[12.5px] uppercase font-bold tracking-[0.01em] flex items-center gap-1.5 whitespace-nowrap text-white bg-[#1a82b8] hover:bg-[#156e9c] transition-colors shrink-0 cursor-pointer sbtet-nav-font"
-                style={{ fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" }}
+                style={{ fontFamily: "'Mulish', 'Muli', sans-serif" }}
               >
                 <i className="fa-solid fa-user text-[12.5px] shrink-0 text-white" />
                 <span>LOGIN</span>
