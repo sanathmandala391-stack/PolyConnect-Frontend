@@ -475,7 +475,7 @@ export default function HomePage() {
   return (
     <div className="space-y-4 sm:space-y-5 mt-0 sm:-mt-2">
       {/* 1. What's New Ticker Bar (Exact match to Image 3) */}
-      <div className="bg-white border border-[#cbd5e1] flex items-center overflow-hidden h-[34px] shadow-2xs">
+      {/* <div className="bg-white border border-[#cbd5e1] flex items-center overflow-hidden h-[34px] shadow-2xs">
         <div className="bg-[#5cb85c] text-white text-[12px] font-bold px-3 py-1.5 uppercase shrink-0 flex items-center h-full tracking-wide">
           WHAT'S NEW
         </div>
@@ -501,7 +501,7 @@ export default function HomePage() {
             )}
           </div>
         </div>
-      </div>
+      </div> */}
 
       {/* 2. Top Hero Section: Split 50% Banner + 50% Notifications (Exact match to Image 3) */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-5 items-stretch">
@@ -534,9 +534,8 @@ export default function HomePage() {
           {/* Viewport */}
           <div className="relative w-full h-full overflow-hidden">
             <div
-              className={`flex w-full h-full ${
-                isTransitioning ? "transition-transform duration-700 ease-in-out" : ""
-              }`}
+              className={`flex w-full h-full ${isTransitioning ? "transition-transform duration-700 ease-in-out" : ""
+                }`}
               style={{
                 transform: `translate3d(-${Math.min(currentIndex, BANNER_SLIDES.length) * 100}%, 0, 0)`,
               }}
@@ -610,12 +609,12 @@ export default function HomePage() {
                           <span className="text-[#222222] font-normal mr-2 inline-block">
                             {n.NotificationDate
                               ? new Date(n.NotificationDate)
-                                  .toLocaleDateString("en-GB", {
-                                    day: "2-digit",
-                                    month: "2-digit",
-                                    year: "numeric",
-                                  })
-                                  .replace(/\//g, "-")
+                                .toLocaleDateString("en-GB", {
+                                  day: "2-digit",
+                                  month: "2-digit",
+                                  year: "numeric",
+                                })
+                                .replace(/\//g, "-")
                               : n.date || ""}
                           </span>
                           <span className="text-[#0084ff] group-hover:underline font-normal">
@@ -683,22 +682,20 @@ export default function HomePage() {
               <button
                 type="button"
                 onClick={() => setActiveLinkTab("quick")}
-                className={`flex-1 py-2 px-4 text-[13.5px] transition-colors cursor-pointer border-none text-center ${
-                  activeLinkTab === "quick"
+                className={`flex-1 py-2 px-4 text-[13.5px] transition-colors cursor-pointer border-none text-center ${activeLinkTab === "quick"
                     ? "bg-[#2196f3] text-white font-semibold"
                     : "bg-[#e9ecef] text-[#475569] font-medium hover:bg-[#dee2e6]"
-                }`}
+                  }`}
               >
                 Quick Links
               </button>
               <button
                 type="button"
                 onClick={() => setActiveLinkTab("external")}
-                className={`flex-1 py-2 px-4 text-[13.5px] transition-colors cursor-pointer border-none text-center ${
-                  activeLinkTab === "external"
+                className={`flex-1 py-2 px-4 text-[13.5px] transition-colors cursor-pointer border-none text-center ${activeLinkTab === "external"
                     ? "bg-[#2196f3] text-white font-semibold"
                     : "bg-[#e9ecef] text-[#475569] font-medium hover:bg-[#dee2e6]"
-                }`}
+                  }`}
               >
                 External Links
               </button>
@@ -868,12 +865,12 @@ export default function HomePage() {
                             <span className="text-[#222222] font-normal mr-2 inline-block">
                               {n.NotificationDate
                                 ? new Date(n.NotificationDate)
-                                    .toLocaleDateString("en-GB", {
-                                      day: "2-digit",
-                                      month: "2-digit",
-                                      year: "numeric",
-                                    })
-                                    .replace(/\//g, "-")
+                                  .toLocaleDateString("en-GB", {
+                                    day: "2-digit",
+                                    month: "2-digit",
+                                    year: "numeric",
+                                  })
+                                  .replace(/\//g, "-")
                                 : n.date || ""}
                             </span>
                             <span className="text-[#0084ff] group-hover:underline font-normal">
