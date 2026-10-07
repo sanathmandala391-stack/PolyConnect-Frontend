@@ -590,7 +590,7 @@ export default function HomePage() {
                                 .replace(/\//g, "-")
                               : n.date || ""}
                           </span>
-                          <span className="text-[#337ab7] group-hover:underline group-hover:text-[#23527c] font-normal">
+                          <span className="text-[#2196f3] group-hover:underline group-hover:text-[#23527c] font-normal">
                             {n.Title || n.title}
                             {isRecentNotification(n) && (
                               <img
