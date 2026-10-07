@@ -300,41 +300,45 @@ export default function GovHeader() {
               </button>
 
               <div className="hidden group-hover:block absolute top-full left-0 right-0 w-full bg-white text-slate-800 shadow-2xl border-t border-gray-200 z-50 p-6">
-                <div className="max-w-7xl mx-auto grid grid-cols-4 gap-6 text-[12px]">
+                <div className="max-w-7xl mx-auto grid grid-cols-4 gap-6 text-[12px]" style={{ fontFamily: "'Mulish', sans-serif" }}>
                   <div>
-                    <div className="bg-[#35a5f1] text-white font-semibold px-3 py-1.5 uppercase text-xs mb-2">DIPLOMA</div>
-                    <ul className="space-y-1 divide-y divide-gray-100 font-sans">
-                      <li><Link to="/halltickets" className="block py-1.5 px-2 hover:bg-slate-100 hover:text-[#35a5f1] font-medium text-slate-900">Halltickets</Link></li>
-                      <li><Link to="/Results/consolidatedResults" className="block py-1.5 px-2 hover:bg-slate-100 hover:text-[#35a5f1] font-medium text-slate-900">Consolidated Results</Link></li>
-                      <li><Link to="/student/results" className="block py-1.5 px-2 hover:bg-slate-100 hover:text-[#35a5f1] font-medium text-slate-900">Results</Link></li>
-                      <li><Link to="/student/attendance" className="block py-1.5 px-2 hover:bg-slate-100 hover:text-[#35a5f1] font-medium text-slate-900">Attendance Summary & 31-Day Sheet</Link></li>
-                      <li><Link to="/student/doubts" className="block py-1.5 px-2 hover:bg-slate-100 hover:text-[#35a5f1] font-medium text-slate-900">Doubt Solver AI (ChatBot)</Link></li>
-                      <li><Link to="/student/seniors" className="block py-1.5 px-2 hover:bg-slate-100 hover:text-[#35a5f1] font-medium text-slate-900">Senior Connect (1-on-1 Mentorship)</Link></li>
-                      <li><Link to="/student/community" className="block py-1.5 px-2 hover:bg-slate-100 hover:text-[#35a5f1] font-medium text-slate-900">Polytechnic Community Forums</Link></li>
-                      <li><Link to="/Fee/exam" className="block py-1.5 px-2 hover:bg-slate-100 hover:text-[#35a5f1] font-medium text-slate-900">Fee Payment & Download Receipt</Link></li>
+                    <div className="bg-[#35a5f1] text-white font-bold px-3 py-1.5 uppercase text-[11px] mb-2 tracking-wide">DIPLOMA</div>
+                    <ul className="divide-y divide-dotted divide-[#cbd5e1]">
+                      <li><Link to="/courses" className="block py-2 px-1 hover:bg-slate-50 hover:text-[#35a5f1] font-normal text-[13px] text-[#444444] transition-colors">View Syllabus</Link></li>
+                      <li><Link to="/student/attendance" className="block py-2 px-1 hover:bg-slate-50 hover:text-[#35a5f1] font-normal text-[13px] text-[#444444] transition-colors">View Attendance</Link></li>
+                      <li><Link to="/student/community" className="block py-2 px-1 hover:bg-slate-50 hover:text-[#35a5f1] font-normal text-[13px] text-[#444444] transition-colors">Submit Feedback</Link></li>
+                      <li><Link to="/circulars" className="block py-2 px-1 hover:bg-slate-50 hover:text-[#35a5f1] font-normal text-[13px] text-[#444444] transition-colors">Time Table</Link></li>
+                      <li><Link to="/Fee/exam" className="block py-2 px-1 hover:bg-slate-50 hover:text-[#35a5f1] font-normal text-[13px] text-[#444444] transition-colors">Exam fee payment</Link></li>
+                      <li><Link to="/halltickets" className="block py-2 px-1 hover:bg-slate-50 hover:text-[#35a5f1] font-normal text-[13px] text-[#444444] transition-colors">Hall Ticket download & Condonation Fee</Link></li>
+                      <li><Link to="/Results/consolidatedResults" className="block py-2 px-1 hover:bg-slate-50 hover:text-[#35a5f1] font-normal text-[13px] text-[#444444] transition-colors">Consolidated Results</Link></li>
+                      <li><Link to="/student/results" className="block py-2 px-1 hover:bg-slate-50 hover:text-[#35a5f1] font-normal text-[13px] text-[#444444] transition-colors">Results</Link></li>
+                      <li><Link to="/student/doubts" className="block py-2 px-1 hover:bg-slate-50 hover:text-[#35a5f1] font-normal text-[13px] text-[#444444] transition-colors">Doubt Solver AI (ChatBot)</Link></li>
+                      <li><Link to="/student/seniors" className="block py-2 px-1 hover:bg-slate-50 hover:text-[#35a5f1] font-normal text-[13px] text-[#444444] transition-colors">Senior Connect (1-on-1 Mentorship)</Link></li>
+                      <li><Link to="/student/community" className="block py-2 px-1 hover:bg-slate-50 hover:text-[#35a5f1] font-normal text-[13px] text-[#444444] transition-colors">Polytechnic Community Forums</Link></li>
                     </ul>
                   </div>
                   <div>
-                    <div className="bg-[#35a5f1] text-white font-semibold px-3 py-1.5 uppercase text-xs mb-2">TW & SH</div>
-                    <ul className="space-y-1 divide-y divide-gray-100 font-sans">
-                      <li><a href="#" className="block py-1.5 px-2 hover:bg-slate-100 text-slate-700">Apply for CBT / Offline Exam</a></li>
-                      <li><Link to="/Fee/exam" className="block py-1.5 px-2 hover:bg-slate-100 text-slate-700">Fee Payment</Link></li>
-                      <li><a href="#" className="block py-1.5 px-2 hover:bg-slate-100 text-slate-700">Reschedule CBT Exam / View Application</a></li>
-                      <li><Link to="/halltickets" className="block py-1.5 px-2 hover:bg-slate-100 text-slate-700">Hallticket Download</Link></li>
-                      <li><a href="#" className="x">CBT Practice</a></li>
+                    <div className="bg-[#35a5f1] text-white font-bold px-3 py-1.5 uppercase text-[11px] mb-2 tracking-wide">TW & SH</div>
+                    <ul className="divide-y divide-dotted divide-[#cbd5e1]">
+                      <li><a href="#" className="block py-2 px-1 hover:bg-slate-50 hover:text-[#35a5f1] font-normal text-[13px] text-[#444444] transition-colors">Apply for CBT\ Offilne Exam</a></li>
+                      <li><Link to="/Fee/exam" className="block py-2 px-1 hover:bg-slate-50 hover:text-[#35a5f1] font-normal text-[13px] text-[#444444] transition-colors">Fee Payment</Link></li>
+                      <li><a href="#" className="block py-2 px-1 hover:bg-slate-50 hover:text-[#35a5f1] font-normal text-[13px] text-[#444444] transition-colors">Reschedule CBT Exam\ View Application</a></li>
+                      <li><Link to="/halltickets" className="block py-2 px-1 hover:bg-slate-50 hover:text-[#35a5f1] font-normal text-[13px] text-[#444444] transition-colors">Hallticket Download</Link></li>
+                      <li><a href="#" className="block py-2 px-1 hover:bg-slate-50 hover:text-[#35a5f1] font-normal text-[13px] text-[#444444] transition-colors">CBT Practice</a></li>
+                      <li><a href="#" className="block py-2 px-1 hover:bg-slate-50 hover:text-[#35a5f1] font-normal text-[13px] text-[#444444] transition-colors">CBT Instructions</a></li>
                     </ul>
                   </div>
                   <div>
-                    <div className="bg-[#35a5f1] text-white font-semibold px-3 py-1.5 uppercase text-xs mb-2">CCIC</div>
-                    <ul className="space-y-1 divide-y divide-gray-100 font-sans">
-                      <li><a href="#" className="block py-1.5 px-2 hover:bg-slate-100 text-slate-700">CCIC Results</a></li>
-                      <li><a href="#" className="block py-1.5 px-2 hover:bg-slate-100 text-slate-700">Photo Copy & Revaluation</a></li>
+                    <div className="bg-[#35a5f1] text-white font-bold px-3 py-1.5 uppercase text-[11px] mb-2 tracking-wide">CCIC</div>
+                    <ul className="divide-y divide-dotted divide-[#cbd5e1]">
+                      <li><a href="#" className="block py-2 px-1 hover:bg-slate-50 hover:text-[#35a5f1] font-normal text-[13px] text-[#444444] transition-colors">CCIC Results</a></li>
+                      <li><a href="#" className="block py-2 px-1 hover:bg-slate-50 hover:text-[#35a5f1] font-normal text-[13px] text-[#444444] transition-colors">Photo Copy & Revaluation</a></li>
                     </ul>
                   </div>
                   <div>
-                    <div className="bg-[#35a5f1] text-white font-semibold px-3 py-1.5 uppercase text-xs mb-2">ISB ONLINE SKILLING PROGRAMMES</div>
-                    <ul className="space-y-1 divide-y divide-gray-100 font-sans">
-                      <li><a href="#" className="block py-1.5 px-2 hover:bg-slate-100 text-slate-700">Student Enrolment</a></li>
+                    <div className="bg-[#35a5f1] text-white font-bold px-3 py-1.5 uppercase text-[11px] mb-2 tracking-wide">ISB ONLINE SKILLING PROGRAMMES</div>
+                    <ul className="divide-y divide-dotted divide-[#cbd5e1]">
+                      <li><a href="#" className="block py-2 px-1 hover:bg-slate-50 hover:text-[#35a5f1] font-normal text-[13px] text-[#444444] transition-colors">Student Enrolment</a></li>
                     </ul>
                   </div>
                 </div>
@@ -354,27 +358,27 @@ export default function GovHeader() {
               </button>
 
               <div className="hidden group-hover:block absolute top-full left-0 right-0 w-full bg-white text-slate-800 shadow-2xl border-t border-gray-200 z-50 p-6">
-                <div className="max-w-7xl mx-auto grid grid-cols-3 gap-6 text-[12px]">
+                <div className="max-w-7xl mx-auto grid grid-cols-3 gap-6 text-[12px]" style={{ fontFamily: "'Mulish', sans-serif" }}>
                   <div>
-                    <div className="bg-[#35a5f1] text-white font-semibold px-3 py-1.5 uppercase text-xs mb-2">DIPLOMA</div>
-                    <ul className="space-y-1 divide-y divide-gray-100 font-sans">
-                      <li><Link to="/hod/dashboard" className="block py-1.5 px-2 hover:bg-slate-100 hover:text-[#35a5f1] font-medium text-slate-900">Department HOD Dashboard</Link></li>
-                      <li><Link to="/hod/approvals" className="block py-1.5 px-2 hover:bg-slate-100 hover:text-[#35a5f1] font-medium text-slate-900">Student Registration Approvals</Link></li>
-                      <li><Link to="/hod/students" className="block py-1.5 px-2 hover:bg-slate-100 hover:text-[#35a5f1] font-medium text-slate-900">Department Students Roster</Link></li>
-                      <li><Link to="/hod/attendance" className="block py-1.5 px-2 hover:bg-slate-100 hover:text-[#35a5f1] font-medium text-slate-900">Department Attendance Register</Link></li>
+                    <div className="bg-[#35a5f1] text-white font-bold px-3 py-1.5 uppercase text-[11px] mb-2 tracking-wide">DIPLOMA</div>
+                    <ul className="divide-y divide-dotted divide-[#cbd5e1]">
+                      <li><Link to="/hod/dashboard" className="block py-2 px-1 hover:bg-slate-50 hover:text-[#35a5f1] font-normal text-[13px] text-[#444444] transition-colors">Department HOD Dashboard</Link></li>
+                      <li><Link to="/hod/approvals" className="block py-2 px-1 hover:bg-slate-50 hover:text-[#35a5f1] font-normal text-[13px] text-[#444444] transition-colors">Student Registration Approvals</Link></li>
+                      <li><Link to="/hod/students" className="block py-2 px-1 hover:bg-slate-50 hover:text-[#35a5f1] font-normal text-[13px] text-[#444444] transition-colors">Department Students Roster</Link></li>
+                      <li><Link to="/hod/attendance" className="block py-2 px-1 hover:bg-slate-50 hover:text-[#35a5f1] font-normal text-[13px] text-[#444444] transition-colors">Department Attendance Register</Link></li>
                     </ul>
                   </div>
                   <div>
-                    <div className="bg-[#35a5f1] text-white font-semibold px-3 py-1.5 uppercase text-xs mb-2">TW & SH</div>
-                    <ul className="space-y-1 divide-y divide-gray-100 font-sans">
-                      <li><Link to="/login" className="block py-1.5 px-2 hover:bg-slate-100 text-slate-700">College/ Institute Login</Link></li>
+                    <div className="bg-[#35a5f1] text-white font-bold px-3 py-1.5 uppercase text-[11px] mb-2 tracking-wide">TW & SH</div>
+                    <ul className="divide-y divide-dotted divide-[#cbd5e1]">
+                      <li><Link to="/login" className="block py-2 px-1 hover:bg-slate-50 hover:text-[#35a5f1] font-normal text-[13px] text-[#444444] transition-colors">College/ Institute Login</Link></li>
                     </ul>
                   </div>
                   <div>
-                    <div className="bg-[#35a5f1] text-white font-semibold px-3 py-1.5 uppercase text-xs mb-2">CCIC</div>
-                    <ul className="space-y-1 divide-y divide-gray-100 font-sans">
-                      <li><a href="#" className="block py-1.5 px-2 hover:bg-slate-100 text-slate-700">CCIC Exams Portal</a></li>
-                      <li><a href="#" className="block py-1.5 px-2 hover:bg-slate-100 text-slate-700">CCIC Affiliation Portal</a></li>
+                    <div className="bg-[#35a5f1] text-white font-bold px-3 py-1.5 uppercase text-[11px] mb-2 tracking-wide">CCIC</div>
+                    <ul className="divide-y divide-dotted divide-[#cbd5e1]">
+                      <li><a href="#" className="block py-2 px-1 hover:bg-slate-50 hover:text-[#35a5f1] font-normal text-[13px] text-[#444444] transition-colors">CCIC Exams Portal</a></li>
+                      <li><a href="#" className="block py-2 px-1 hover:bg-slate-50 hover:text-[#35a5f1] font-normal text-[13px] text-[#444444] transition-colors">CCIC Affiliation Portal</a></li>
                     </ul>
                   </div>
                 </div>
@@ -394,25 +398,25 @@ export default function GovHeader() {
               </button>
 
               <div className="hidden group-hover:block absolute top-full left-0 right-0 w-full bg-white text-slate-800 shadow-2xl border-t border-gray-200 z-50 p-6">
-                <div className="max-w-7xl mx-auto grid grid-cols-3 gap-6 text-[12px]">
+                <div className="max-w-7xl mx-auto grid grid-cols-3 gap-6 text-[12px]" style={{ fontFamily: "'Mulish', sans-serif" }}>
                   <div>
-                    <div className="bg-[#35a5f1] text-white font-semibold px-3 py-1.5 uppercase text-xs mb-2">INSTITUTIONS</div>
-                    <ul className="space-y-1 divide-y divide-gray-100 font-sans">
-                      <li><Link to="/circulars" className="block py-1.5 px-2 hover:bg-slate-100 hover:text-[#35a5f1] font-medium text-slate-900">Official Circulars & Timetables</Link></li>
-                      <li><Link to="/admin/dashboard" className="block py-1.5 px-2 hover:bg-slate-100 hover:text-[#35a5f1] font-medium text-slate-900">System Administration Panel</Link></li>
+                    <div className="bg-[#35a5f1] text-white font-bold px-3 py-1.5 uppercase text-[11px] mb-2 tracking-wide">INSTITUTIONS</div>
+                    <ul className="divide-y divide-dotted divide-[#cbd5e1]">
+                      <li><Link to="/circulars" className="block py-2 px-1 hover:bg-slate-50 hover:text-[#35a5f1] font-normal text-[13px] text-[#444444] transition-colors">Official Circulars & Timetables</Link></li>
+                      <li><Link to="/admin/dashboard" className="block py-2 px-1 hover:bg-slate-50 hover:text-[#35a5f1] font-normal text-[13px] text-[#444444] transition-colors">System Administration Panel</Link></li>
                     </ul>
                   </div>
                   <div>
-                    <div className="bg-[#35a5f1] text-white font-semibold px-3 py-1.5 uppercase text-xs mb-2">STAFF</div>
-                    <ul className="space-y-1 divide-y divide-gray-100 font-sans">
-                      <li><a href="#" className="block py-1.5 px-2 hover:bg-slate-100 text-slate-700">Digital Evaluation</a></li>
+                    <div className="bg-[#35a5f1] text-white font-bold px-3 py-1.5 uppercase text-[11px] mb-2 tracking-wide">STAFF</div>
+                    <ul className="divide-y divide-dotted divide-[#cbd5e1]">
+                      <li><a href="#" className="block py-2 px-1 hover:bg-slate-50 hover:text-[#35a5f1] font-normal text-[13px] text-[#444444] transition-colors">Digital Evaluation</a></li>
                     </ul>
                   </div>
                   <div>
-                    <div className="bg-[#35a5f1] text-white font-semibold px-3 py-1.5 uppercase text-xs mb-2">POLYCET</div>
-                    <ul className="space-y-1 divide-y divide-gray-100 font-sans">
-                      <li><Link to="/student/doubts" className="block py-1.5 px-2 hover:bg-slate-100 font-medium text-slate-900">AI Doubt Solver Assistant</Link></li>
-                      <li><a href="#" className="block py-1.5 px-2 hover:bg-slate-100 text-slate-700">Apply for Polycet</a></li>
+                    <div className="bg-[#35a5f1] text-white font-bold px-3 py-1.5 uppercase text-[11px] mb-2 tracking-wide">POLYCET</div>
+                    <ul className="divide-y divide-dotted divide-[#cbd5e1]">
+                      <li><Link to="/student/doubts" className="block py-2 px-1 hover:bg-slate-50 hover:text-[#35a5f1] font-normal text-[13px] text-[#444444] transition-colors">AI Doubt Solver Assistant</Link></li>
+                      <li><a href="#" className="block py-2 px-1 hover:bg-slate-50 hover:text-[#35a5f1] font-normal text-[13px] text-[#444444] transition-colors">Apply for Polycet</a></li>
                     </ul>
                   </div>
                 </div>
@@ -432,24 +436,24 @@ export default function GovHeader() {
               </button>
 
               <div className="hidden group-hover:block absolute top-full left-0 right-0 w-full bg-white text-slate-800 shadow-2xl border-t border-gray-200 z-50 p-6">
-                <div className="max-w-7xl mx-auto grid grid-cols-3 gap-6 text-[12px]">
+                <div className="max-w-7xl mx-auto grid grid-cols-3 gap-6 text-[12px]" style={{ fontFamily: "'Mulish', sans-serif" }}>
                   <div>
-                    <div className="bg-[#35a5f1] text-white font-semibold px-3 py-1.5 uppercase text-xs mb-2">DIPLOMA</div>
-                    <ul className="space-y-1 divide-y divide-gray-100 font-sans">
-                      <li><Link to="/admin/colleges" className="block py-1.5 px-2 hover:bg-slate-100 hover:text-[#35a5f1] font-medium text-slate-900">All Affiliated Polytechnic Colleges</Link></li>
+                    <div className="bg-[#35a5f1] text-white font-bold px-3 py-1.5 uppercase text-[11px] mb-2 tracking-wide">DIPLOMA</div>
+                    <ul className="divide-y divide-dotted divide-[#cbd5e1]">
+                      <li><Link to="/admin/colleges" className="block py-2 px-1 hover:bg-slate-50 hover:text-[#35a5f1] font-normal text-[13px] text-[#444444] transition-colors">All Affiliated Polytechnic Colleges</Link></li>
                     </ul>
                   </div>
                   <div>
-                    <div className="bg-[#35a5f1] text-white font-semibold px-3 py-1.5 uppercase text-xs mb-2">TW & SH</div>
-                    <ul className="space-y-1 divide-y divide-gray-100">
-                      <li><a href="#" className="block py-1.5 px-2 hover:bg-slate-100 text-slate-700">Typewriting & Shorthand Institutions</a></li>
+                    <div className="bg-[#35a5f1] text-white font-bold px-3 py-1.5 uppercase text-[11px] mb-2 tracking-wide">TW & SH</div>
+                    <ul className="divide-y divide-dotted divide-[#cbd5e1]">
+                      <li><a href="#" className="block py-2 px-1 hover:bg-slate-50 hover:text-[#35a5f1] font-normal text-[13px] text-[#444444] transition-colors">Typewriting & Shorthand Institutions</a></li>
                     </ul>
                   </div>
                   <div>
-                    <div className="bg-[#35a5f1] text-white font-semibold px-3 py-1.5 uppercase text-xs mb-2">CCIC</div>
-                    <ul className="space-y-1 divide-y divide-gray-100 font-sans">
-                      <li><a href="#" className="block py-1.5 px-2 hover:bg-slate-100 text-slate-700">CCIC Portal</a></li>
-                      <li><a href="#" className="block py-1.5 px-2 hover:bg-slate-100 text-slate-700">CCIC Affiliated Colleges</a></li>
+                    <div className="bg-[#35a5f1] text-white font-bold px-3 py-1.5 uppercase text-[11px] mb-2 tracking-wide">CCIC</div>
+                    <ul className="divide-y divide-dotted divide-[#cbd5e1]">
+                      <li><a href="#" className="block py-2 px-1 hover:bg-slate-50 hover:text-[#35a5f1] font-normal text-[13px] text-[#444444] transition-colors">CCIC Portal</a></li>
+                      <li><a href="#" className="block py-2 px-1 hover:bg-slate-50 hover:text-[#35a5f1] font-normal text-[13px] text-[#444444] transition-colors">CCIC Affiliated Colleges</a></li>
                     </ul>
                   </div>
                 </div>
@@ -469,23 +473,23 @@ export default function GovHeader() {
               </button>
 
               <div className="hidden group-hover:block absolute top-full left-0 right-0 w-full bg-white text-slate-800 shadow-2xl border-t border-gray-200 z-50 p-6">
-                <div className="max-w-7xl mx-auto grid grid-cols-3 gap-6 text-[12px]">
+                <div className="max-w-7xl mx-auto grid grid-cols-3 gap-6 text-[12px]" style={{ fontFamily: "'Mulish', sans-serif" }}>
                   <div>
-                    <div className="bg-[#35a5f1] text-white font-semibold px-3 py-1.5 uppercase text-xs mb-2">DIPLOMA</div>
-                    <ul className="space-y-1 divide-y divide-gray-100 font-sans">
-                      <li><Link to="/courses" className="block py-1.5 px-2 hover:bg-slate-100 hover:text-[#35a5f1] font-medium text-slate-900">Diploma Courses List</Link></li>
+                    <div className="bg-[#35a5f1] text-white font-bold px-3 py-1.5 uppercase text-[11px] mb-2 tracking-wide">DIPLOMA</div>
+                    <ul className="divide-y divide-dotted divide-[#cbd5e1]">
+                      <li><Link to="/courses" className="block py-2 px-1 hover:bg-slate-50 hover:text-[#35a5f1] font-normal text-[13px] text-[#444444] transition-colors">Diploma Courses List</Link></li>
                     </ul>
                   </div>
                   <div>
-                    <div className="bg-[#35a5f1] text-white font-semibold px-3 py-1.5 uppercase text-xs mb-2">TW & SH</div>
-                    <ul className="space-y-1 divide-y divide-gray-100 font-sans">
-                      <li><Link to="/courses" className="block py-1.5 px-2 hover:bg-slate-100 text-slate-700">Typewriting & Shorthand</Link></li>
+                    <div className="bg-[#35a5f1] text-white font-bold px-3 py-1.5 uppercase text-[11px] mb-2 tracking-wide">TW & SH</div>
+                    <ul className="divide-y divide-dotted divide-[#cbd5e1]">
+                      <li><Link to="/courses" className="block py-2 px-1 hover:bg-slate-50 hover:text-[#35a5f1] font-normal text-[13px] text-[#444444] transition-colors">Typewriting & Shorthand</Link></li>
                     </ul>
                   </div>
                   <div>
-                    <div className="bg-[#35a5f1] text-white font-semibold px-3 py-1.5 uppercase text-xs mb-2">CCIC</div>
-                    <ul className="space-y-1 divide-y divide-gray-100 font-sans">
-                      <li><Link to="/courses" className="block py-1.5 px-2 hover:bg-slate-100 text-slate-700">CCIC Courses</Link></li>
+                    <div className="bg-[#35a5f1] text-white font-bold px-3 py-1.5 uppercase text-[11px] mb-2 tracking-wide">CCIC</div>
+                    <ul className="divide-y divide-dotted divide-[#cbd5e1]">
+                      <li><Link to="/courses" className="block py-2 px-1 hover:bg-slate-50 hover:text-[#35a5f1] font-normal text-[13px] text-[#444444] transition-colors">CCIC Courses</Link></li>
                     </ul>
                   </div>
                 </div>
@@ -515,29 +519,29 @@ export default function GovHeader() {
               </button>
 
               <div className="hidden group-hover:block absolute top-full left-0 right-0 w-full bg-white text-slate-800 shadow-2xl border-t border-gray-200 z-50 p-6">
-                <div className="max-w-7xl mx-auto grid grid-cols-3 gap-6 text-[12px]">
+                <div className="max-w-7xl mx-auto grid grid-cols-3 gap-6 text-[12px]" style={{ fontFamily: "'Mulish', sans-serif" }}>
                   <div>
-                    <div className="bg-[#35a5f1] text-white font-semibold px-3 py-1.5 uppercase text-xs mb-2">MORE</div>
-                    <ul className="space-y-1 divide-y divide-gray-100 font-sans">
-                      <li><Link to="/student/community" className="block py-1.5 px-2 hover:bg-slate-100 hover:text-[#35a5f1] font-medium text-slate-900">Statewide Polytechnic Community</Link></li>
-                      <li><Link to="/register/student" className="block py-1.5 px-2 hover:bg-slate-100 hover:text-[#35a5f1] font-medium text-slate-900">Student Registration</Link></li>
-                      <li><Link to="/register/hod" className="block py-1.5 px-2 hover:bg-slate-100 hover:text-[#35a5f1] font-medium text-slate-900">HOD Registration</Link></li>
+                    <div className="bg-[#35a5f1] text-white font-bold px-3 py-1.5 uppercase text-[11px] mb-2 tracking-wide">MORE</div>
+                    <ul className="divide-y divide-dotted divide-[#cbd5e1]">
+                      <li><Link to="/student/community" className="block py-2 px-1 hover:bg-slate-50 hover:text-[#35a5f1] font-normal text-[13px] text-[#444444] transition-colors">Statewide Polytechnic Community</Link></li>
+                      <li><Link to="/register/student" className="block py-2 px-1 hover:bg-slate-50 hover:text-[#35a5f1] font-normal text-[13px] text-[#444444] transition-colors">Student Registration</Link></li>
+                      <li><Link to="/register/hod" className="block py-2 px-1 hover:bg-slate-50 hover:text-[#35a5f1] font-normal text-[13px] text-[#444444] transition-colors">HOD Registration</Link></li>
                     </ul>
                   </div>
                   <div>
-                    <div className="bg-[#35a5f1] text-white font-semibold px-3 py-1.5 uppercase text-xs mb-2">PORTAL</div>
-                    <ul className="space-y-1 divide-y divide-gray-100 font-sans">
-                      <li><a href="#" className="block py-1.5 px-2 hover:bg-slate-100 text-slate-700">Site Map</a></li>
-                      <li><a href="#" className="block py-1.5 px-2 hover:bg-slate-100 text-slate-700">Tenders & Downloads</a></li>
-                      <li><Link to="/circulars" className="block py-1.5 px-2 hover:bg-slate-100 text-slate-700">Latest News Notifications</Link></li>
+                    <div className="bg-[#35a5f1] text-white font-bold px-3 py-1.5 uppercase text-[11px] mb-2 tracking-wide">PORTAL</div>
+                    <ul className="divide-y divide-dotted divide-[#cbd5e1]">
+                      <li><a href="#" className="block py-2 px-1 hover:bg-slate-50 hover:text-[#35a5f1] font-normal text-[13px] text-[#444444] transition-colors">Site Map</a></li>
+                      <li><a href="#" className="block py-2 px-1 hover:bg-slate-50 hover:text-[#35a5f1] font-normal text-[13px] text-[#444444] transition-colors">Tenders & Downloads</a></li>
+                      <li><Link to="/circulars" className="block py-2 px-1 hover:bg-slate-50 hover:text-[#35a5f1] font-normal text-[13px] text-[#444444] transition-colors">Latest News Notifications</Link></li>
                     </ul>
                   </div>
                   <div>
-                    <div className="bg-[#35a5f1] text-white font-semibold px-3 py-1.5 uppercase text-xs mb-2">RTI</div>
-                    <ul className="space-y-1 divide-y divide-gray-100 font-sans">
-                      <li><a href="#" className="block py-1.5 px-2 hover:bg-slate-100 text-slate-700">Full details of Right to Information Act</a></li>
-                      <li><a href="#" className="block py-1.5 px-2 hover:bg-slate-100 text-slate-700">About Right to Information</a></li>
-                      <li><a href="#" className="block py-1.5 px-2 hover:bg-slate-100 text-slate-700">Obligations of Public Authority</a></li>
+                    <div className="bg-[#35a5f1] text-white font-bold px-3 py-1.5 uppercase text-[11px] mb-2 tracking-wide">RTI</div>
+                    <ul className="divide-y divide-dotted divide-[#cbd5e1]">
+                      <li><a href="#" className="block py-2 px-1 hover:bg-slate-50 hover:text-[#35a5f1] font-normal text-[13px] text-[#444444] transition-colors">Full details of Right to Information Act</a></li>
+                      <li><a href="#" className="block py-2 px-1 hover:bg-slate-50 hover:text-[#35a5f1] font-normal text-[13px] text-[#444444] transition-colors">About Right to Information</a></li>
+                      <li><a href="#" className="block py-2 px-1 hover:bg-slate-50 hover:text-[#35a5f1] font-normal text-[13px] text-[#444444] transition-colors">Obligations of Public Authority</a></li>
                     </ul>
                   </div>
                 </div>
@@ -676,46 +680,49 @@ export default function GovHeader() {
                 </button>
 
                 {openSubMenu === "student" && (
-                  <div className="bg-white border-t border-gray-100">
+                  <div className="bg-white border-t border-gray-100" style={{ fontFamily: "'Mulish', sans-serif" }}>
                     <div className="bg-[#35a5f1] text-white font-bold uppercase text-[11px] px-4 py-1.5 tracking-wider">
                       DIPLOMA
                     </div>
-                    <div className="divide-y divide-gray-100 text-xs">
-                      <Link to="/student/attendance" onClick={() => setMobileMenuOpen(false)} className="block px-5 py-2 text-slate-700 hover:text-[#35a5f1] hover:bg-sky-50 transition-colors">View Attendance</Link>
-                      <Link to="/circulars" onClick={() => setMobileMenuOpen(false)} className="block px-5 py-2 text-slate-700 hover:text-[#35a5f1] hover:bg-sky-50 transition-colors">Time Table</Link>
-                      <Link to="/Fee/exam" onClick={() => setMobileMenuOpen(false)} className="block px-5 py-2 text-slate-700 hover:text-[#35a5f1] hover:bg-sky-50 transition-colors">Exam fee payment</Link>
-                      <Link to="/halltickets" onClick={() => setMobileMenuOpen(false)} className="block px-5 py-2 text-slate-700 hover:text-[#35a5f1] hover:bg-sky-50 transition-colors">Hall Ticket download</Link>
-                      <Link to="/student/results" onClick={() => setMobileMenuOpen(false)} className="block px-5 py-2 text-slate-700 hover:text-[#35a5f1] hover:bg-sky-50 transition-colors">Results</Link>
-                      <Link to="/Results/consolidatedResults" onClick={() => setMobileMenuOpen(false)} className="block px-5 py-2 text-slate-700 hover:text-[#35a5f1] hover:bg-sky-50 transition-colors">Consolidated Result</Link>
-                      <Link to="/Fee/exam" onClick={() => setMobileMenuOpen(false)} className="block px-5 py-2 text-slate-700 hover:text-[#35a5f1] hover:bg-sky-50 transition-colors font-medium">Download Fee Receipt</Link>
-                      <Link to="/student/doubts" onClick={() => setMobileMenuOpen(false)} className="block px-5 py-2 text-slate-700 hover:text-[#35a5f1] hover:bg-sky-50 transition-colors">Doubt Solver AI (ChatBot)</Link>
-                      <Link to="/student/seniors" onClick={() => setMobileMenuOpen(false)} className="block px-5 py-2 text-slate-700 hover:text-[#35a5f1] hover:bg-sky-50 transition-colors">Senior Connect (Mentorship)</Link>
+                    <div className="divide-y divide-dotted divide-[#cbd5e1]">
+                      <Link to="/courses" onClick={() => setMobileMenuOpen(false)} className="block px-5 py-2 hover:bg-slate-50 hover:text-[#35a5f1] font-normal text-[13px] text-[#444444] transition-colors">View Syllabus</Link>
+                      <Link to="/student/attendance" onClick={() => setMobileMenuOpen(false)} className="block px-5 py-2 hover:bg-slate-50 hover:text-[#35a5f1] font-normal text-[13px] text-[#444444] transition-colors">View Attendance</Link>
+                      <Link to="/student/community" onClick={() => setMobileMenuOpen(false)} className="block px-5 py-2 hover:bg-slate-50 hover:text-[#35a5f1] font-normal text-[13px] text-[#444444] transition-colors">Submit Feedback</Link>
+                      <Link to="/circulars" onClick={() => setMobileMenuOpen(false)} className="block px-5 py-2 hover:bg-slate-50 hover:text-[#35a5f1] font-normal text-[13px] text-[#444444] transition-colors">Time Table</Link>
+                      <Link to="/Fee/exam" onClick={() => setMobileMenuOpen(false)} className="block px-5 py-2 hover:bg-slate-50 hover:text-[#35a5f1] font-normal text-[13px] text-[#444444] transition-colors">Exam fee payment</Link>
+                      <Link to="/halltickets" onClick={() => setMobileMenuOpen(false)} className="block px-5 py-2 hover:bg-slate-50 hover:text-[#35a5f1] font-normal text-[13px] text-[#444444] transition-colors">Hall Ticket download & Condonation Fee</Link>
+                      <Link to="/Results/consolidatedResults" onClick={() => setMobileMenuOpen(false)} className="block px-5 py-2 hover:bg-slate-50 hover:text-[#35a5f1] font-normal text-[13px] text-[#444444] transition-colors">Consolidated Results</Link>
+                      <Link to="/student/results" onClick={() => setMobileMenuOpen(false)} className="block px-5 py-2 hover:bg-slate-50 hover:text-[#35a5f1] font-normal text-[13px] text-[#444444] transition-colors">Results</Link>
+                      <Link to="/student/doubts" onClick={() => setMobileMenuOpen(false)} className="block px-5 py-2 hover:bg-slate-50 hover:text-[#35a5f1] font-normal text-[13px] text-[#444444] transition-colors">Doubt Solver AI (ChatBot)</Link>
+                      <Link to="/student/seniors" onClick={() => setMobileMenuOpen(false)} className="block px-5 py-2 hover:bg-slate-50 hover:text-[#35a5f1] font-normal text-[13px] text-[#444444] transition-colors">Senior Connect (1-on-1 Mentorship)</Link>
+                      <Link to="/student/community" onClick={() => setMobileMenuOpen(false)} className="block px-5 py-2 hover:bg-slate-50 hover:text-[#35a5f1] font-normal text-[13px] text-[#444444] transition-colors">Polytechnic Community Forums</Link>
                     </div>
 
                     <div className="bg-[#35a5f1] text-white font-bold uppercase text-[11px] px-4 py-1.5 tracking-wider mt-1">
                       TW &amp; SH
                     </div>
-                    <div className="divide-y divide-gray-100 text-xs">
-                      <a href="#" onClick={() => setMobileMenuOpen(false)} className="block px-5 py-2 text-slate-700 hover:text-[#35a5f1] hover:bg-sky-50 transition-colors">Apply for CBT / Offline Exam</a>
-                      <Link to="/Fee/exam" onClick={() => setMobileMenuOpen(false)} className="block px-5 py-2 text-slate-700 hover:text-[#35a5f1] hover:bg-sky-50 transition-colors">Fee Payment</Link>
-                      <a href="#" onClick={() => setMobileMenuOpen(false)} className="block px-5 py-2 text-slate-700 hover:text-[#35a5f1] hover:bg-sky-50 transition-colors">Reschedule CBT Exam / View Application</a>
-                      <Link to="/halltickets" onClick={() => setMobileMenuOpen(false)} className="block px-5 py-2 text-slate-700 hover:text-[#35a5f1] hover:bg-sky-50 transition-colors">Hallticket Download</Link>
-                      <a href="#" onClick={() => setMobileMenuOpen(false)} className="block px-5 py-2 text-slate-700 hover:text-[#35a5f1] hover:bg-sky-50 transition-colors">CBT Practice</a>
+                    <div className="divide-y divide-dotted divide-[#cbd5e1]">
+                      <a href="#" onClick={() => setMobileMenuOpen(false)} className="block px-5 py-2 hover:bg-slate-50 hover:text-[#35a5f1] font-normal text-[13px] text-[#444444] transition-colors">Apply for CBT\ Offilne Exam</a>
+                      <Link to="/Fee/exam" onClick={() => setMobileMenuOpen(false)} className="block px-5 py-2 hover:bg-slate-50 hover:text-[#35a5f1] font-normal text-[13px] text-[#444444] transition-colors">Fee Payment</Link>
+                      <a href="#" onClick={() => setMobileMenuOpen(false)} className="block px-5 py-2 hover:bg-slate-50 hover:text-[#35a5f1] font-normal text-[13px] text-[#444444] transition-colors">Reschedule CBT Exam\ View Application</a>
+                      <Link to="/halltickets" onClick={() => setMobileMenuOpen(false)} className="block px-5 py-2 hover:bg-slate-50 hover:text-[#35a5f1] font-normal text-[13px] text-[#444444] transition-colors">Hallticket Download</Link>
+                      <a href="#" onClick={() => setMobileMenuOpen(false)} className="block px-5 py-2 hover:bg-slate-50 hover:text-[#35a5f1] font-normal text-[13px] text-[#444444] transition-colors">CBT Practice</a>
+                      <a href="#" onClick={() => setMobileMenuOpen(false)} className="block px-5 py-2 hover:bg-slate-50 hover:text-[#35a5f1] font-normal text-[13px] text-[#444444] transition-colors">CBT Instructions</a>
                     </div>
 
                     <div className="bg-[#35a5f1] text-white font-bold uppercase text-[11px] px-4 py-1.5 tracking-wider mt-1">
                       CCIC
                     </div>
-                    <div className="divide-y divide-gray-100 text-xs">
-                      <a href="#" onClick={() => setMobileMenuOpen(false)} className="block px-5 py-2 text-slate-700 hover:text-[#35a5f1] hover:bg-sky-50 transition-colors">CCIC Results</a>
-                      <a href="#" onClick={() => setMobileMenuOpen(false)} className="block px-5 py-2 text-slate-700 hover:text-[#35a5f1] hover:bg-sky-50 transition-colors">Photo Copy &amp; Revaluation</a>
+                    <div className="divide-y divide-dotted divide-[#cbd5e1]">
+                      <a href="#" onClick={() => setMobileMenuOpen(false)} className="block px-5 py-2 hover:bg-slate-50 hover:text-[#35a5f1] font-normal text-[13px] text-[#444444] transition-colors">CCIC Results</a>
+                      <a href="#" onClick={() => setMobileMenuOpen(false)} className="block px-5 py-2 hover:bg-slate-50 hover:text-[#35a5f1] font-normal text-[13px] text-[#444444] transition-colors">Photo Copy &amp; Revaluation</a>
                     </div>
 
                     <div className="bg-[#35a5f1] text-white font-bold uppercase text-[11px] px-4 py-1.5 tracking-wider mt-1">
                       ISB ONLINE SKILLING PROGRAMMES
                     </div>
-                    <div className="divide-y divide-gray-100 text-xs">
-                      <a href="#" onClick={() => setMobileMenuOpen(false)} className="block px-5 py-2 text-slate-700 hover:text-[#35a5f1] hover:bg-sky-50 transition-colors">Student Enrolment</a>
+                    <div className="divide-y divide-dotted divide-[#cbd5e1]">
+                      <a href="#" onClick={() => setMobileMenuOpen(false)} className="block px-5 py-2 hover:bg-slate-50 hover:text-[#35a5f1] font-normal text-[13px] text-[#444444] transition-colors">Student Enrolment</a>
                     </div>
                   </div>
                 )}
@@ -741,34 +748,30 @@ export default function GovHeader() {
                 </button>
 
                 {openSubMenu === "college" && (
-                  <div className="bg-white border-t border-gray-100">
+                  <div className="bg-white border-t border-gray-100" style={{ fontFamily: "'Mulish', sans-serif" }}>
                     <div className="bg-[#35a5f1] text-white font-bold uppercase text-[11px] px-4 py-1.5 tracking-wider">
                       DIPLOMA
                     </div>
-                    <div className="divide-y divide-gray-100 text-xs">
-                      <Link to="/login" onClick={() => setMobileMenuOpen(false)} className="block px-5 py-2 text-slate-700 hover:text-[#35a5f1] hover:bg-sky-50 transition-colors">Affiliation Login</Link>
-                      <Link to="/login" onClick={() => setMobileMenuOpen(false)} className="block px-5 py-2 text-slate-700 hover:text-[#35a5f1] hover:bg-sky-50 transition-colors">College Login</Link>
-                      <a href="#" onClick={() => setMobileMenuOpen(false)} className="block px-5 py-2 text-slate-700 hover:text-[#35a5f1] hover:bg-sky-50 transition-colors">Polycet Portal</a>
-                      <a href="#" onClick={() => setMobileMenuOpen(false)} className="block px-5 py-2 text-slate-700 hover:text-[#35a5f1] hover:bg-sky-50 transition-colors">QPGD Portal</a>
-                      <Link to="/hod/dashboard" onClick={() => setMobileMenuOpen(false)} className="block px-5 py-2 text-slate-700 hover:text-[#35a5f1] hover:bg-sky-50 transition-colors font-medium">Department HOD Dashboard</Link>
-                      <Link to="/hod/approvals" onClick={() => setMobileMenuOpen(false)} className="block px-5 py-2 text-slate-700 hover:text-[#35a5f1] hover:bg-sky-50 transition-colors font-medium">Student Registration Approvals</Link>
-                      <Link to="/hod/students" onClick={() => setMobileMenuOpen(false)} className="block px-5 py-2 text-slate-700 hover:text-[#35a5f1] hover:bg-sky-50 transition-colors font-medium">Department Students Roster</Link>
-                      <Link to="/hod/attendance" onClick={() => setMobileMenuOpen(false)} className="block px-5 py-2 text-slate-700 hover:text-[#35a5f1] hover:bg-sky-50 transition-colors font-medium">Department Attendance Register</Link>
+                    <div className="divide-y divide-dotted divide-[#cbd5e1]">
+                      <Link to="/hod/dashboard" onClick={() => setMobileMenuOpen(false)} className="block px-5 py-2 hover:bg-slate-50 hover:text-[#35a5f1] font-normal text-[13px] text-[#444444] transition-colors">Department HOD Dashboard</Link>
+                      <Link to="/hod/approvals" onClick={() => setMobileMenuOpen(false)} className="block px-5 py-2 hover:bg-slate-50 hover:text-[#35a5f1] font-normal text-[13px] text-[#444444] transition-colors">Student Registration Approvals</Link>
+                      <Link to="/hod/students" onClick={() => setMobileMenuOpen(false)} className="block px-5 py-2 hover:bg-slate-50 hover:text-[#35a5f1] font-normal text-[13px] text-[#444444] transition-colors">Department Students Roster</Link>
+                      <Link to="/hod/attendance" onClick={() => setMobileMenuOpen(false)} className="block px-5 py-2 hover:bg-slate-50 hover:text-[#35a5f1] font-normal text-[13px] text-[#444444] transition-colors">Department Attendance Register</Link>
                     </div>
 
                     <div className="bg-[#35a5f1] text-white font-bold uppercase text-[11px] px-4 py-1.5 tracking-wider mt-1">
                       TW &amp; SH
                     </div>
-                    <div className="divide-y divide-gray-100 text-xs">
-                      <Link to="/login" onClick={() => setMobileMenuOpen(false)} className="block px-5 py-2 text-slate-700 hover:text-[#35a5f1] hover:bg-sky-50 transition-colors">College/ Institute Login</Link>
+                    <div className="divide-y divide-dotted divide-[#cbd5e1]">
+                      <Link to="/login" onClick={() => setMobileMenuOpen(false)} className="block px-5 py-2 hover:bg-slate-50 hover:text-[#35a5f1] font-normal text-[13px] text-[#444444] transition-colors">College/ Institute Login</Link>
                     </div>
 
                     <div className="bg-[#35a5f1] text-white font-bold uppercase text-[11px] px-4 py-1.5 tracking-wider mt-1">
                       CCIC
                     </div>
-                    <div className="divide-y divide-gray-100 text-xs">
-                      <a href="#" onClick={() => setMobileMenuOpen(false)} className="block px-5 py-2 text-slate-700 hover:text-[#35a5f1] hover:bg-sky-50 transition-colors">CCIC Exams Portal</a>
-                      <a href="#" onClick={() => setMobileMenuOpen(false)} className="block px-5 py-2 text-slate-700 hover:text-[#35a5f1] hover:bg-sky-50 transition-colors">CCIC Affiliation Portal</a>
+                    <div className="divide-y divide-dotted divide-[#cbd5e1]">
+                      <a href="#" onClick={() => setMobileMenuOpen(false)} className="block px-5 py-2 hover:bg-slate-50 hover:text-[#35a5f1] font-normal text-[13px] text-[#444444] transition-colors">CCIC Exams Portal</a>
+                      <a href="#" onClick={() => setMobileMenuOpen(false)} className="block px-5 py-2 hover:bg-slate-50 hover:text-[#35a5f1] font-normal text-[13px] text-[#444444] transition-colors">CCIC Affiliation Portal</a>
                     </div>
                   </div>
                 )}
@@ -794,28 +797,28 @@ export default function GovHeader() {
                 </button>
 
                 {openSubMenu === "others" && (
-                  <div className="bg-white border-t border-gray-100">
+                  <div className="bg-white border-t border-gray-100" style={{ fontFamily: "'Mulish', sans-serif" }}>
                     <div className="bg-[#35a5f1] text-white font-bold uppercase text-[11px] px-4 py-1.5 tracking-wider">
                       INSTITUTIONS
                     </div>
-                    <div className="divide-y divide-gray-100 text-xs">
-                      <Link to="/circulars" onClick={() => setMobileMenuOpen(false)} className="block px-5 py-2 text-slate-700 hover:text-[#35a5f1] hover:bg-sky-50 transition-colors">Official Circulars &amp; Timetables</Link>
-                      <Link to="/admin/dashboard" onClick={() => setMobileMenuOpen(false)} className="block px-5 py-2 text-slate-700 hover:text-[#35a5f1] hover:bg-sky-50 transition-colors">System Administration Panel</Link>
+                    <div className="divide-y divide-dotted divide-[#cbd5e1]">
+                      <Link to="/circulars" onClick={() => setMobileMenuOpen(false)} className="block px-5 py-2 hover:bg-slate-50 hover:text-[#35a5f1] font-normal text-[13px] text-[#444444] transition-colors">Official Circulars &amp; Timetables</Link>
+                      <Link to="/admin/dashboard" onClick={() => setMobileMenuOpen(false)} className="block px-5 py-2 hover:bg-slate-50 hover:text-[#35a5f1] font-normal text-[13px] text-[#444444] transition-colors">System Administration Panel</Link>
                     </div>
 
                     <div className="bg-[#35a5f1] text-white font-bold uppercase text-[11px] px-4 py-1.5 tracking-wider mt-1">
                       STAFF
                     </div>
-                    <div className="divide-y divide-gray-100 text-xs">
-                      <a href="#" onClick={() => setMobileMenuOpen(false)} className="block px-5 py-2 text-slate-700 hover:text-[#35a5f1] hover:bg-sky-50 transition-colors">Digital Evaluation</a>
+                    <div className="divide-y divide-dotted divide-[#cbd5e1]">
+                      <a href="#" onClick={() => setMobileMenuOpen(false)} className="block px-5 py-2 hover:bg-slate-50 hover:text-[#35a5f1] font-normal text-[13px] text-[#444444] transition-colors">Digital Evaluation</a>
                     </div>
 
                     <div className="bg-[#35a5f1] text-white font-bold uppercase text-[11px] px-4 py-1.5 tracking-wider mt-1">
                       POLYCET
                     </div>
-                    <div className="divide-y divide-gray-100 text-xs">
-                      <Link to="/student/doubts" onClick={() => setMobileMenuOpen(false)} className="block px-5 py-2 text-slate-700 hover:text-[#35a5f1] hover:bg-sky-50 transition-colors">AI Doubt Solver Assistant</Link>
-                      <a href="#" onClick={() => setMobileMenuOpen(false)} className="block px-5 py-2 text-slate-700 hover:text-[#35a5f1] hover:bg-sky-50 transition-colors">Apply for Polycet</a>
+                    <div className="divide-y divide-dotted divide-[#cbd5e1]">
+                      <Link to="/student/doubts" onClick={() => setMobileMenuOpen(false)} className="block px-5 py-2 hover:bg-slate-50 hover:text-[#35a5f1] font-normal text-[13px] text-[#444444] transition-colors">AI Doubt Solver Assistant</Link>
+                      <a href="#" onClick={() => setMobileMenuOpen(false)} className="block px-5 py-2 hover:bg-slate-50 hover:text-[#35a5f1] font-normal text-[13px] text-[#444444] transition-colors">Apply for Polycet</a>
                     </div>
                   </div>
                 )}
@@ -841,27 +844,27 @@ export default function GovHeader() {
                 </button>
 
                 {openSubMenu === "colleges" && (
-                  <div className="bg-white border-t border-gray-100">
+                  <div className="bg-white border-t border-gray-100" style={{ fontFamily: "'Mulish', sans-serif" }}>
                     <div className="bg-[#35a5f1] text-white font-bold uppercase text-[11px] px-4 py-1.5 tracking-wider">
                       DIPLOMA
                     </div>
-                    <div className="divide-y divide-gray-100 text-xs">
-                      <Link to="/admin/colleges" onClick={() => setMobileMenuOpen(false)} className="block px-5 py-2 text-slate-700 hover:text-[#35a5f1] hover:bg-sky-50 transition-colors">All Affiliated Polytechnic Colleges</Link>
+                    <div className="divide-y divide-dotted divide-[#cbd5e1]">
+                      <Link to="/admin/colleges" onClick={() => setMobileMenuOpen(false)} className="block px-5 py-2 hover:bg-slate-50 hover:text-[#35a5f1] font-normal text-[13px] text-[#444444] transition-colors">All Affiliated Polytechnic Colleges</Link>
                     </div>
 
                     <div className="bg-[#35a5f1] text-white font-bold uppercase text-[11px] px-4 py-1.5 tracking-wider mt-1">
                       TW &amp; SH
                     </div>
-                    <div className="divide-y divide-gray-100 text-xs">
-                      <a href="#" onClick={() => setMobileMenuOpen(false)} className="block px-5 py-2 text-slate-700 hover:text-[#35a5f1] hover:bg-sky-50 transition-colors">Typewriting &amp; Shorthand Institutions</a>
+                    <div className="divide-y divide-dotted divide-[#cbd5e1]">
+                      <a href="#" onClick={() => setMobileMenuOpen(false)} className="block px-5 py-2 hover:bg-slate-50 hover:text-[#35a5f1] font-normal text-[13px] text-[#444444] transition-colors">Typewriting &amp; Shorthand Institutions</a>
                     </div>
 
                     <div className="bg-[#35a5f1] text-white font-bold uppercase text-[11px] px-4 py-1.5 tracking-wider mt-1">
                       CCIC
                     </div>
-                    <div className="divide-y divide-gray-100 text-xs">
-                      <a href="#" onClick={() => setMobileMenuOpen(false)} className="block px-5 py-2 text-slate-700 hover:text-[#35a5f1] hover:bg-sky-50 transition-colors">CCIC Portal</a>
-                      <a href="#" onClick={() => setMobileMenuOpen(false)} className="block px-5 py-2 text-slate-700 hover:text-[#35a5f1] hover:bg-sky-50 transition-colors">CCIC Affiliated Colleges</a>
+                    <div className="divide-y divide-dotted divide-[#cbd5e1]">
+                      <a href="#" onClick={() => setMobileMenuOpen(false)} className="block px-5 py-2 hover:bg-slate-50 hover:text-[#35a5f1] font-normal text-[13px] text-[#444444] transition-colors">CCIC Portal</a>
+                      <a href="#" onClick={() => setMobileMenuOpen(false)} className="block px-5 py-2 hover:bg-slate-50 hover:text-[#35a5f1] font-normal text-[13px] text-[#444444] transition-colors">CCIC Affiliated Colleges</a>
                     </div>
                   </div>
                 )}
@@ -887,26 +890,26 @@ export default function GovHeader() {
                 </button>
 
                 {openSubMenu === "courses" && (
-                  <div className="bg-white border-t border-gray-100">
+                  <div className="bg-white border-t border-gray-100" style={{ fontFamily: "'Mulish', sans-serif" }}>
                     <div className="bg-[#35a5f1] text-white font-bold uppercase text-[11px] px-4 py-1.5 tracking-wider">
                       DIPLOMA
                     </div>
-                    <div className="divide-y divide-gray-100 text-xs">
-                      <Link to="/courses" onClick={() => setMobileMenuOpen(false)} className="block px-5 py-2 text-slate-700 hover:text-[#35a5f1] hover:bg-sky-50 transition-colors">Diploma Courses List</Link>
+                    <div className="divide-y divide-dotted divide-[#cbd5e1]">
+                      <Link to="/courses" onClick={() => setMobileMenuOpen(false)} className="block px-5 py-2 hover:bg-slate-50 hover:text-[#35a5f1] font-normal text-[13px] text-[#444444] transition-colors">Diploma Courses List</Link>
                     </div>
 
                     <div className="bg-[#35a5f1] text-white font-bold uppercase text-[11px] px-4 py-1.5 tracking-wider mt-1">
                       TW &amp; SH
                     </div>
-                    <div className="divide-y divide-gray-100 text-xs">
-                      <Link to="/courses" onClick={() => setMobileMenuOpen(false)} className="block px-5 py-2 text-slate-700 hover:text-[#35a5f1] hover:bg-sky-50 transition-colors">Typewriting &amp; Shorthand</Link>
+                    <div className="divide-y divide-dotted divide-[#cbd5e1]">
+                      <Link to="/courses" onClick={() => setMobileMenuOpen(false)} className="block px-5 py-2 hover:bg-slate-50 hover:text-[#35a5f1] font-normal text-[13px] text-[#444444] transition-colors">Typewriting &amp; Shorthand</Link>
                     </div>
 
                     <div className="bg-[#35a5f1] text-white font-bold uppercase text-[11px] px-4 py-1.5 tracking-wider mt-1">
                       CCIC
                     </div>
-                    <div className="divide-y divide-gray-100 text-xs">
-                      <Link to="/courses" onClick={() => setMobileMenuOpen(false)} className="block px-5 py-2 text-slate-700 hover:text-[#35a5f1] hover:bg-sky-50 transition-colors">CCIC Courses</Link>
+                    <div className="divide-y divide-dotted divide-[#cbd5e1]">
+                      <Link to="/courses" onClick={() => setMobileMenuOpen(false)} className="block px-5 py-2 hover:bg-slate-50 hover:text-[#35a5f1] font-normal text-[13px] text-[#444444] transition-colors">CCIC Courses</Link>
                     </div>
                   </div>
                 )}
@@ -944,32 +947,32 @@ export default function GovHeader() {
                 </button>
 
                 {openSubMenu === "more" && (
-                  <div className="bg-white border-t border-gray-100">
+                  <div className="bg-white border-t border-gray-100" style={{ fontFamily: "'Mulish', sans-serif" }}>
                     <div className="bg-[#35a5f1] text-white font-bold uppercase text-[11px] px-4 py-1.5 tracking-wider">
                       MORE
                     </div>
-                    <div className="divide-y divide-gray-100 text-xs">
-                      <Link to="/student/community" onClick={() => setMobileMenuOpen(false)} className="block px-5 py-2 text-slate-700 hover:text-[#35a5f1] hover:bg-sky-50 transition-colors">Statewide Polytechnic Community</Link>
-                      <Link to="/register/student" onClick={() => setMobileMenuOpen(false)} className="block px-5 py-2 text-slate-700 hover:text-[#35a5f1] hover:bg-sky-50 transition-colors">Student Registration</Link>
-                      <Link to="/register/hod" onClick={() => setMobileMenuOpen(false)} className="block px-5 py-2 text-slate-700 hover:text-[#35a5f1] hover:bg-sky-50 transition-colors">HOD Registration</Link>
+                    <div className="divide-y divide-dotted divide-[#cbd5e1]">
+                      <Link to="/student/community" onClick={() => setMobileMenuOpen(false)} className="block px-5 py-2 hover:bg-slate-50 hover:text-[#35a5f1] font-normal text-[13px] text-[#444444] transition-colors">Statewide Polytechnic Community</Link>
+                      <Link to="/register/student" onClick={() => setMobileMenuOpen(false)} className="block px-5 py-2 hover:bg-slate-50 hover:text-[#35a5f1] font-normal text-[13px] text-[#444444] transition-colors">Student Registration</Link>
+                      <Link to="/register/hod" onClick={() => setMobileMenuOpen(false)} className="block px-5 py-2 hover:bg-slate-50 hover:text-[#35a5f1] font-normal text-[13px] text-[#444444] transition-colors">HOD Registration</Link>
                     </div>
 
                     <div className="bg-[#35a5f1] text-white font-bold uppercase text-[11px] px-4 py-1.5 tracking-wider mt-1">
                       PORTAL
                     </div>
-                    <div className="divide-y divide-gray-100 text-xs">
-                      <a href="#" onClick={() => setMobileMenuOpen(false)} className="block px-5 py-2 text-slate-700 hover:text-[#35a5f1] hover:bg-sky-50 transition-colors">Site Map</a>
-                      <a href="#" onClick={() => setMobileMenuOpen(false)} className="block px-5 py-2 text-slate-700 hover:text-[#35a5f1] hover:bg-sky-50 transition-colors">Tenders &amp; Downloads</a>
-                      <Link to="/circulars" onClick={() => setMobileMenuOpen(false)} className="block px-5 py-2 text-slate-700 hover:text-[#35a5f1] hover:bg-sky-50 transition-colors">Latest News Notifications</Link>
+                    <div className="divide-y divide-dotted divide-[#cbd5e1]">
+                      <a href="#" onClick={() => setMobileMenuOpen(false)} className="block px-5 py-2 hover:bg-slate-50 hover:text-[#35a5f1] font-normal text-[13px] text-[#444444] transition-colors">Site Map</a>
+                      <a href="#" onClick={() => setMobileMenuOpen(false)} className="block px-5 py-2 hover:bg-slate-50 hover:text-[#35a5f1] font-normal text-[13px] text-[#444444] transition-colors">Tenders &amp; Downloads</a>
+                      <Link to="/circulars" onClick={() => setMobileMenuOpen(false)} className="block px-5 py-2 hover:bg-slate-50 hover:text-[#35a5f1] font-normal text-[13px] text-[#444444] transition-colors">Latest News Notifications</Link>
                     </div>
 
                     <div className="bg-[#35a5f1] text-white font-bold uppercase text-[11px] px-4 py-1.5 tracking-wider mt-1">
                       RTI
                     </div>
-                    <div className="divide-y divide-gray-100 text-xs">
-                      <a href="#" onClick={() => setMobileMenuOpen(false)} className="block px-5 py-2 text-slate-700 hover:text-[#35a5f1] hover:bg-sky-50 transition-colors">Full details of Right to Information Act</a>
-                      <a href="#" onClick={() => setMobileMenuOpen(false)} className="block px-5 py-2 text-slate-700 hover:text-[#35a5f1] hover:bg-sky-50 transition-colors">About Right to Information</a>
-                      <a href="#" onClick={() => setMobileMenuOpen(false)} className="block px-5 py-2 text-slate-700 hover:text-[#35a5f1] hover:bg-sky-50 transition-colors">Obligations of Public Authority</a>
+                    <div className="divide-y divide-dotted divide-[#cbd5e1]">
+                      <a href="#" onClick={() => setMobileMenuOpen(false)} className="block px-5 py-2 hover:bg-slate-50 hover:text-[#35a5f1] font-normal text-[13px] text-[#444444] transition-colors">Full details of Right to Information Act</a>
+                      <a href="#" onClick={() => setMobileMenuOpen(false)} className="block px-5 py-2 hover:bg-slate-50 hover:text-[#35a5f1] font-normal text-[13px] text-[#444444] transition-colors">About Right to Information</a>
+                      <a href="#" onClick={() => setMobileMenuOpen(false)} className="block px-5 py-2 hover:bg-slate-50 hover:text-[#35a5f1] font-normal text-[13px] text-[#444444] transition-colors">Obligations of Public Authority</a>
                     </div>
                   </div>
                 )}
