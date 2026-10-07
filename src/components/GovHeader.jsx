@@ -290,7 +290,7 @@ export default function GovHeader() {
                 className="px-2 xl:px-2.5 py-2 text-[12px] xl:text-[12.5px] uppercase font-bold tracking-[0.01em] flex items-center gap-1.5 whitespace-nowrap text-white transition-colors shrink-0 cursor-pointer sbtet-nav-font"
                 style={{ fontFamily: "'Mulish', 'Muli', sans-serif" }}
               >
-                <i className="fa-solid fa-gear text-[13px] shrink-0 text-white" />
+                <i className="fa-solid fa-gear text-[14px] shrink-0 text-white" />
                 <span>STUDENT SERVICES</span>
                 <i className="fa-solid fa-chevron-down text-[8.5px] ml-0.5 shrink-0 text-white/90" />
               </button>
