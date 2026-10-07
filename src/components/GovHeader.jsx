@@ -272,15 +272,14 @@ export default function GovHeader() {
           </NavLink>
 
           {/* Desktop Nav Items */}
-          {/* Desktop Nav Items */}
           <div
-            className="hidden xl:flex items-center flex-nowrap text-[13px]"
+            className="hidden xl:flex items-center flex-nowrap text-[12px]"
             style={{ fontFamily: "'Mulish', sans-serif" }}
           >
             <NavLink
               to="/"
               className={({ isActive }) =>
-                `px-3.5 py-3 flex items-center justify-center text-white hover:bg-[#2888c9] transition-colors shrink-0 ${isActive ? "bg-[#2888c9]" : ""
+                `px-3 py-3 flex items-center justify-center text-white hover:bg-[#2888c9] transition-colors shrink-0 ${isActive ? "bg-[#2888c9]" : ""
                 }`
               }
               aria-label="Home"
@@ -292,9 +291,10 @@ export default function GovHeader() {
             <div className="group static">
               <button
                 type="button"
-                className="px-3.5 py-3 text-[13px] uppercase font-semibold tracking-normal flex items-center gap-1.5 whitespace-nowrap text-white hover:bg-[#2888c9] transition-colors shrink-0 cursor-pointer"
+                className="px-2.5 xl:px-3 py-3 text-[12px] sm:text-[12.5px] uppercase font-semibold tracking-wider flex items-center gap-1.5 whitespace-nowrap text-white hover:bg-[#2888c9] transition-colors shrink-0 cursor-pointer"
                 style={{ fontFamily: "'Mulish', sans-serif" }}
               >
+                <i className="fa-solid fa-gear text-[13px] shrink-0" />
                 <span>STUDENT SERVICES</span>
                 <i className="fa-solid fa-chevron-down text-[10px] ml-0.5 shrink-0" />
               </button>
@@ -349,9 +349,10 @@ export default function GovHeader() {
             <div className="group static">
               <button
                 type="button"
-                className="px-3.5 py-3 text-[13px] uppercase font-semibold tracking-normal flex items-center gap-1.5 whitespace-nowrap text-white hover:bg-[#2888c9] transition-colors shrink-0 cursor-pointer"
+                className="px-2.5 xl:px-3 py-3 text-[12px] sm:text-[12.5px] uppercase font-semibold tracking-wider flex items-center gap-1.5 whitespace-nowrap text-white hover:bg-[#2888c9] transition-colors shrink-0 cursor-pointer"
                 style={{ fontFamily: "'Mulish', sans-serif" }}
               >
+                <i className="fa-solid fa-gear text-[13px] shrink-0" />
                 <span>COLLEGE SERVICES</span>
                 <i className="fa-solid fa-chevron-down text-[10px] ml-0.5 shrink-0" />
               </button>
@@ -388,9 +389,10 @@ export default function GovHeader() {
             <div className="group static">
               <button
                 type="button"
-                className="px-3.5 py-3 text-[13px] uppercase font-semibold tracking-normal flex items-center gap-1.5 whitespace-nowrap text-white hover:bg-[#2888c9] transition-colors shrink-0 cursor-pointer"
+                className="px-2.5 xl:px-3 py-3 text-[12px] sm:text-[12.5px] uppercase font-semibold tracking-wider flex items-center gap-1.5 whitespace-nowrap text-white hover:bg-[#2888c9] transition-colors shrink-0 cursor-pointer"
                 style={{ fontFamily: "'Mulish', sans-serif" }}
               >
+                <i className="fa-solid fa-gear text-[13px] shrink-0" />
                 <span>OTHERS SERVICES</span>
                 <i className="fa-solid fa-chevron-down text-[10px] ml-0.5 shrink-0" />
               </button>
@@ -425,9 +427,10 @@ export default function GovHeader() {
             <div className="group static">
               <button
                 type="button"
-                className="px-3.5 py-3 text-[13px] uppercase font-semibold tracking-normal flex items-center gap-1.5 whitespace-nowrap text-white hover:bg-[#2888c9] transition-colors shrink-0 cursor-pointer"
+                className="px-2.5 xl:px-3 py-3 text-[12px] sm:text-[12.5px] uppercase font-semibold tracking-wider flex items-center gap-1.5 whitespace-nowrap text-white hover:bg-[#2888c9] transition-colors shrink-0 cursor-pointer"
                 style={{ fontFamily: "'Mulish', sans-serif" }}
               >
+                <i className="fa-solid fa-gear text-[13px] shrink-0" />
                 <span>AFFILIATED COLLEGES</span>
                 <i className="fa-solid fa-chevron-down text-[10px] ml-0.5 shrink-0" />
               </button>
@@ -461,9 +464,10 @@ export default function GovHeader() {
             <div className="group static">
               <button
                 type="button"
-                className="px-3.5 py-3 text-[13px] uppercase font-semibold tracking-normal flex items-center gap-1.5 whitespace-nowrap text-white hover:bg-[#2888c9] transition-colors shrink-0 cursor-pointer"
+                className="px-2.5 xl:px-3 py-3 text-[12px] sm:text-[12.5px] uppercase font-semibold tracking-wider flex items-center gap-1.5 whitespace-nowrap text-white hover:bg-[#2888c9] transition-colors shrink-0 cursor-pointer"
                 style={{ fontFamily: "'Mulish', sans-serif" }}
               >
+                <i className="fa-solid fa-gear text-[13px] shrink-0" />
                 <span>COURSES</span>
                 <i className="fa-solid fa-chevron-down text-[10px] ml-0.5 shrink-0" />
               </button>
@@ -495,9 +499,10 @@ export default function GovHeader() {
             {/* CONTACT-US */}
             <a
               href="#contact-us"
-              className="px-3.5 py-3 text-[13px] uppercase font-semibold tracking-normal flex items-center gap-1.5 whitespace-nowrap text-white hover:bg-[#2888c9] transition-colors shrink-0 cursor-pointer"
+              className="px-2.5 xl:px-3 py-3 text-[12px] sm:text-[12.5px] uppercase font-semibold tracking-wider flex items-center gap-1.5 whitespace-nowrap text-white hover:bg-[#2888c9] transition-colors shrink-0 cursor-pointer"
               style={{ fontFamily: "'Mulish', sans-serif" }}
             >
+              <i className="fa-solid fa-square-phone text-[14px] shrink-0" />
               <span>CONTACT-US</span>
             </a>
 
@@ -505,9 +510,10 @@ export default function GovHeader() {
             <div className="group static">
               <button
                 type="button"
-                className="px-3.5 py-3 text-[13px] uppercase font-semibold tracking-normal flex items-center gap-1.5 whitespace-nowrap text-white hover:bg-[#2888c9] transition-colors shrink-0 cursor-pointer"
+                className="px-2.5 xl:px-3 py-3 text-[12px] sm:text-[12.5px] uppercase font-semibold tracking-wider flex items-center gap-1.5 whitespace-nowrap text-white hover:bg-[#2888c9] transition-colors shrink-0 cursor-pointer"
                 style={{ fontFamily: "'Mulish', sans-serif" }}
               >
+                <i className="fa-solid fa-circle-info text-[14px] shrink-0" />
                 <span>MORE</span>
                 <i className="fa-solid fa-chevron-down text-[10px] ml-0.5 shrink-0" />
               </button>
@@ -549,7 +555,7 @@ export default function GovHeader() {
                   type="button"
                   onClick={() => setProfileOpen((prev) => !prev)}
                   title={user.fullName || user.username}
-                  className="bg-[#2888c9] hover:bg-[#1e78c2] text-white text-[13px] uppercase font-semibold tracking-normal px-4 py-3 flex items-center gap-1.5 whitespace-nowrap transition-colors cursor-pointer"
+                  className="bg-[#2888c9] hover:bg-[#1e78c2] text-white text-[12px] sm:text-[12.5px] uppercase font-semibold tracking-wider px-3.5 py-3 flex items-center gap-1.5 whitespace-nowrap transition-colors cursor-pointer"
                   style={{ fontFamily: "'Mulish', sans-serif" }}
                 >
                   <i className="fa-solid fa-user text-[13px] shrink-0" />
@@ -590,7 +596,7 @@ export default function GovHeader() {
             ) : (
               <Link
                 to="/login"
-                className="bg-[#2888c9] hover:bg-[#1e78c2] text-white text-[13px] uppercase font-semibold tracking-normal px-4 py-3 flex items-center gap-1.5 whitespace-nowrap transition-colors shrink-0 cursor-pointer"
+                className="bg-[#2888c9] hover:bg-[#1e78c2] text-white text-[12px] sm:text-[12.5px] uppercase font-semibold tracking-wider px-3.5 py-3 flex items-center gap-1.5 whitespace-nowrap transition-colors shrink-0 cursor-pointer"
                 style={{ fontFamily: "'Mulish', sans-serif" }}
               >
                 <i className="fa-solid fa-user text-[13px] shrink-0" />
