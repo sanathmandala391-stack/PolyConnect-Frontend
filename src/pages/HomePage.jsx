@@ -136,72 +136,72 @@ export function CcicIcon({ className = "w-14 h-14 text-white shrink-0" }) {
 }
 
 // --- Courses Data ---
-const COURSES_DATA = [
-  {
-    id: "diploma",
-    title: "Diploma",
-    subtitle: "3-Year Polytechnic Engineering Programs",
-    badge: "Polytechnic / Technical",
-    bgColor: "bg-[#2370db]",
-    hoverColor: "hover:bg-[#1d63c4]",
-    icon: DiplomaIcon,
-    bgImage: sbtetDip,
-    description:
-      "Comprehensive 3-year technical diploma engineering programs designed to build high-level practical engineering expertise across cutting-edge technical disciplines.",
-    duration: "3 Years (6 Semesters / Industrial Training)",
-    eligibility: "SSC (10th Class) Pass with POLYCET Rank",
-    programs: [
-      "Computer Engineering & Artificial Intelligence",
-      "Electronics & Communication Engineering (ECE)",
-      "Electrical & Electronics Engineering (EEE)",
-      "Mechanical & Automobile Engineering",
-      "Civil & Architectural Engineering",
-      "Information Technology (IT) & Cloud Systems",
-    ],
-  },
-  {
-    id: "twsh",
-    title: "Type Writing & Shorthand",
-    subtitle: "TWSH Technical Examinations & Certifications",
-    badge: "Commercial & Secretarial",
-    bgColor: "bg-[#00b4d8]",
-    hoverColor: "hover:bg-[#009ec0]",
-    icon: TypeWritingIcon,
-    bgImage: SbtetType,
-    description:
-      "State Board recognized Typewriting (English, Telugu, Hindi, Urdu) and Shorthand examinations certifying typing speeds, secretarial accuracy, and government job qualification standards.",
-    duration: "Graded Certification (Lower, Higher, High Speed)",
-    eligibility: "Matriculation (10th) or equivalent",
-    programs: [
-      "Typewriting English (Junior, Lower 30 WPM, Higher 45 WPM, High Speed)",
-      "Typewriting Telugu / Hindi / Urdu",
-      "Shorthand English (80 WPM, 100 WPM, 120 WPM, 150 WPM, 180 WPM)",
-      "Shorthand Telugu & Regional Languages",
-      "Secretarial Practice & Office Automation",
-    ],
-  },
-  {
-    id: "ccic",
-    title: "CCIC",
-    subtitle: "Certificate Courses In Computers & IT",
-    badge: "IT & Skill Development",
-    bgColor: "bg-[#00c853]",
-    hoverColor: "hover:bg-[#2EA893]",
-    icon: CcicIcon,
-    bgImage: null,
-    description:
-      "Craft Courses and Certificate Courses in Computers & IT (CCIC) empowering students and professionals with hands-on software development, hardware networking, and modern digital competencies.",
-    duration: "3 Months to 1 Year Modular Diplomas",
-    eligibility: "Intermediate (10+2) or SSC (10th)",
-    programs: [
-      "Certificate Course in Computer Applications (CCCA)",
-      "Hardware, Networking & Cybersecurity Maintenance",
-      "Full-Stack Web Technologies & Python Programming",
-      "Financial Accounting with Tally & GST Automation",
-      "AutoCAD & 3D Industrial Modeling",
-    ],
-  },
-];
+// const COURSES_DATA = [
+//   {
+//     id: "diploma",
+//     title: "Diploma",
+//     subtitle: "3-Year Polytechnic Engineering Programs",
+//     badge: "Polytechnic / Technical",
+//     bgColor: "bg-[#2370db]",
+//     hoverColor: "hover:bg-[#1d63c4]",
+//     icon: DiplomaIcon,
+//     bgImage: sbtetDip,
+//     description:
+//       "Comprehensive 3-year technical diploma engineering programs designed to build high-level practical engineering expertise across cutting-edge technical disciplines.",
+//     duration: "3 Years (6 Semesters / Industrial Training)",
+//     eligibility: "SSC (10th Class) Pass with POLYCET Rank",
+//     programs: [
+//       "Computer Engineering & Artificial Intelligence",
+//       "Electronics & Communication Engineering (ECE)",
+//       "Electrical & Electronics Engineering (EEE)",
+//       "Mechanical & Automobile Engineering",
+//       "Civil & Architectural Engineering",
+//       "Information Technology (IT) & Cloud Systems",
+//     ],
+//   },
+//   {
+//     id: "twsh",
+//     title: "Type Writing & Shorthand",
+//     subtitle: "TWSH Technical Examinations & Certifications",
+//     badge: "Commercial & Secretarial",
+//     bgColor: "bg-[#00b4d8]",
+//     hoverColor: "hover:bg-[#009ec0]",
+//     icon: TypeWritingIcon,
+//     bgImage: SbtetType,
+//     description:
+//       "State Board recognized Typewriting (English, Telugu, Hindi, Urdu) and Shorthand examinations certifying typing speeds, secretarial accuracy, and government job qualification standards.",
+//     duration: "Graded Certification (Lower, Higher, High Speed)",
+//     eligibility: "Matriculation (10th) or equivalent",
+//     programs: [
+//       "Typewriting English (Junior, Lower 30 WPM, Higher 45 WPM, High Speed)",
+//       "Typewriting Telugu / Hindi / Urdu",
+//       "Shorthand English (80 WPM, 100 WPM, 120 WPM, 150 WPM, 180 WPM)",
+//       "Shorthand Telugu & Regional Languages",
+//       "Secretarial Practice & Office Automation",
+//     ],
+//   },
+//   {
+//     id: "ccic",
+//     title: "CCIC",
+//     subtitle: "Certificate Courses In Computers & IT",
+//     badge: "IT & Skill Development",
+//     bgColor: "bg-[#00c853]",
+//     hoverColor: "hover:bg-[#2EA893]",
+//     icon: CcicIcon,
+//     bgImage: null,
+//     description:
+//       "Craft Courses and Certificate Courses in Computers & IT (CCIC) empowering students and professionals with hands-on software development, hardware networking, and modern digital competencies.",
+//     duration: "3 Months to 1 Year Modular Diplomas",
+//     eligibility: "Intermediate (10+2) or SSC (10th)",
+//     programs: [
+//       "Certificate Course in Computer Applications (CCCA)",
+//       "Hardware, Networking & Cybersecurity Maintenance",
+//       "Full-Stack Web Technologies & Python Programming",
+//       "Financial Accounting with Tally & GST Automation",
+//       "AutoCAD & 3D Industrial Modeling",
+//     ],
+//   },
+// ];
 
 // --- Stats Items matching Images 3 & 4 ---
 const STAT_ITEMS = [
