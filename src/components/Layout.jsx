@@ -13,3 +13,5 @@ export default function Layout() {
     </div>
   );
 }
+
+// This is th code of the Layout //
