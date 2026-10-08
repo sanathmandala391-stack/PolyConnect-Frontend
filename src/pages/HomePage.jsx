@@ -356,7 +356,7 @@ export default function HomePage() {
       if (cached) {
         const parsed = JSON.parse(cached);
         if (Array.isArray(parsed) && parsed.length > 0) {
-          return parsed.slice(0, 6);
+          return parsed.slice(0, 5);
         }
       }
     } catch {
@@ -402,7 +402,7 @@ export default function HomePage() {
           } catch {
             // storage full
           }
-          setNotifications(sorted.slice(0, 6));
+          setNotifications(sorted.slice(0, 5));
         }
       })
       .catch(() => {
@@ -530,12 +530,12 @@ export default function HomePage() {
 
         {/* Right: Top Notifications Card (Exact match to Image 3) */}
         <div
-          className="bg-white border border-[#cbd5e1] flex flex-col justify-between overflow-hidden h-[280px] sm:h-[320px] md:h-[340px] shadow-2xs select-none"
+          className="bg-white border border-[#cbd5e1] flex flex-col justify-between overflow-hidden shadow-2xs select-none"
           style={{ fontFamily: "Segoe UI, Roboto, Helvetica, Arial, sans-serif" }}
         >
-          <div className="overflow-y-auto no-scrollbar flex-1">
+          <div>
             {/* Header */}
-            <div className="px-4 py-2 border-b border-[#cbd5e1] flex items-center gap-2 bg-white sticky top-0 z-10">
+            <div className="px-4 py-2 border-b border-[#cbd5e1] flex items-center gap-2 bg-white">
               <img
                 src={notificationIcon}
                 alt="Notifications"
@@ -559,7 +559,7 @@ export default function HomePage() {
                 </div>
               ) : (
                 <ul className="list-none m-0 p-0">
-                  {notifications.map((n, idx) => (
+                  {notifications.slice(0, 5).map((n, idx) => (
                     <li key={n.ID || idx} className="py-1">
                       <a
                         href={n.Url || n.link || "/circulars"}
@@ -610,8 +610,8 @@ export default function HomePage() {
                         </div>
                       </a>
 
-                      {idx < notifications.length - 1 && (
-                        <div className="mt-2 border-b-[1.2px] border-dotted border-[#cbd5e1]" />
+                      {idx < Math.min(notifications.length, 5) - 1 && (
+                        <div className="mt-1.5 border-b-[1.2px] border-dotted border-[#cbd5e1]" />
                       )}
                     </li>
                   ))}
@@ -783,12 +783,12 @@ export default function HomePage() {
 
           {/* BOX 3 (RIGHT): Latest News Card with View All Button */}
           <div
-            className="bg-white border border-[#c8d1db] flex flex-col justify-between overflow-hidden h-[280px] sm:h-[320px] md:h-[330px] shadow-2xs"
+            className="bg-white border border-[#c8d1db] flex flex-col justify-between overflow-hidden shadow-2xs"
             style={{ fontFamily: "Segoe UI, Roboto, Helvetica, Arial, sans-serif" }}
           >
-            <div className="overflow-y-auto no-scrollbar flex-1">
+            <div>
               {/* Header */}
-              <div className="px-4 py-2 border-b border-[#cbd5e1] flex items-center gap-2 bg-white sticky top-0 z-10">
+              <div className="px-4 py-2 border-b border-[#cbd5e1] flex items-center gap-2 bg-white">
                 <img
                   src={notificationIcon}
                   alt="Latest News"
@@ -812,7 +812,7 @@ export default function HomePage() {
                   </div>
                 ) : (
                   <ul className="list-none m-0 p-0">
-                    {notifications.map((n, idx) => (
+                    {notifications.slice(0, 5).map((n, idx) => (
                       <li key={n.ID || idx} className="py-1">
                         <a
                           href={n.Url || n.link || "/circulars"}
@@ -863,8 +863,8 @@ export default function HomePage() {
                           </div>
                         </a>
 
-                        {idx < notifications.length - 1 && (
-                          <div className="mt-2 border-b-[1.2px] border-dotted border-[#cbd5e1]" />
+                        {idx < Math.min(notifications.length, 5) - 1 && (
+                          <div className="mt-1.5 border-b-[1.2px] border-dotted border-[#cbd5e1]" />
                         )}
                       </li>
                     ))}
