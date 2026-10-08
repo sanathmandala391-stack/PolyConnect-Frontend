@@ -547,7 +547,7 @@ export default function HomePage() {
             </div>
 
             {/* List */}
-            <div className="px-3 sm:px-4 pt-2 pb-1">
+            <div className="px-3 sm:px-4 pt-2 pb-1" style={{ marginLeft: "7px", marginTop: "15px" }} >
               {loadingNotifications ? (
                 <div className="py-8 text-center text-xs text-gov-slate">
                   <div className="inline-block w-6 h-6 border-2 border-[#2196f3] border-t-transparent rounded-full animate-spin mb-2"></div>
@@ -579,7 +579,7 @@ export default function HomePage() {
                         </span>
 
                         <div className="text-[12.5px] leading-[22px] font-normal tracking-[0.01em]">
-                          <span className="text-[#222222] font-normal mr-2 inline-block">
+                          <span className="text-[#222222] font-normal mr-2 inline-block" style={{ fontFamily: "'Mulish', sans-serif", fontSize: "12.5px", fontWeight: "normal" }} >
                             {n.NotificationDate
                               ? new Date(n.NotificationDate)
                                 .toLocaleDateString("en-GB", {
@@ -590,7 +590,7 @@ export default function HomePage() {
                                 .replace(/\//g, "-")
                               : n.date || ""}
                           </span>
-                          <span className="text-[#2196f3] font-normal" style={{ fontFamily: "'Mulish', sans-serif", fontSize: "12px", fontWeight: "normal" }}>
+                          <span className="text-[#2196f3] font-normal" style={{ fontFamily: "'Mulish', sans-serif", fontSize: "12.5px", fontWeight: "normal" }}>
                             {n.Title || n.title}
                             {isRecentNotification(n) && (
                               <img
@@ -611,7 +611,7 @@ export default function HomePage() {
                       </a>
 
                       {idx < Math.min(notifications.length, 5) - 1 && (
-                        <div className="mt-1.5 border-b-[1.2px] border-dotted border-[#cbd5e1]" />
+                        <div className="mt-1.5 border-b-[1.2px] border-dotted border-[#131414]" />
                       )}
                     </li>
                   ))}
@@ -624,7 +624,7 @@ export default function HomePage() {
           <div className="flex justify-end mt-auto border-t border-[#f1f5f9]">
             <Link
               to="/circulars"
-              className="bg-[#2196f3] hover:bg-[#1e88e5] text-white text-[14px] font-normal px-6 py-1.5 rounded-none transition-colors"
+              className="bg-[#2196f3] hover:bg-[#1e88e5] text-white text-[14px] font-normal px-6 py-1.5 rounded-none transition-colors border-none outline-none focus:outline-none focus-visible:outline-none select-none"
             >
               View All
             </Link>
@@ -877,7 +877,7 @@ export default function HomePage() {
             <div className="flex justify-end mt-auto border-t border-[#f1f5f9]">
               <Link
                 to="/circulars"
-                className="bg-[#2196f3] hover:bg-[#1e88e5] text-white text-[14px] font-normal px-6 py-1.5 rounded-none transition-colors"
+                className="bg-[#2196f3] hover:bg-[#1e88e5] text-white text-[14px] font-normal px-6 py-1.5 rounded-none transition-colors border-none outline-none focus:outline-none focus-visible:outline-none select-none"
               >
                 View All
               </Link>
@@ -978,81 +978,83 @@ export default function HomePage() {
       </section>
 
       {/* Course Detail Modal */}
-      {selectedCourse && (
-        <div
-          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs animate-fadeIn"
-          onClick={() => setSelectedCourse(null)}
-        >
+      {
+        selectedCourse && (
           <div
-            className="bg-white rounded-lg shadow-2xl max-w-lg w-full overflow-hidden border border-gray-200 animate-scaleUp"
-            onClick={(e) => e.stopPropagation()}
+            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs animate-fadeIn"
+            onClick={() => setSelectedCourse(null)}
           >
-            {/* Modal Header */}
-            <div className={`${selectedCourse.bgColor} p-6 text-white relative`}>
-              <button
-                type="button"
-                onClick={() => setSelectedCourse(null)}
-                className="absolute top-4 right-4 text-white/80 hover:text-white p-1 rounded-full hover:bg-white/20 transition-colors"
-              >
-                <X className="w-6 h-6" />
-              </button>
-              <div className="inline-block px-3 py-1 bg-white/20 rounded-full text-xs font-semibold uppercase tracking-wider mb-2">
-                {selectedCourse.badge}
+            <div
+              className="bg-white rounded-lg shadow-2xl max-w-lg w-full overflow-hidden border border-gray-200 animate-scaleUp"
+              onClick={(e) => e.stopPropagation()}
+            >
+              {/* Modal Header */}
+              <div className={`${selectedCourse.bgColor} p-6 text-white relative`}>
+                <button
+                  type="button"
+                  onClick={() => setSelectedCourse(null)}
+                  className="absolute top-4 right-4 text-white/80 hover:text-white p-1 rounded-full hover:bg-white/20 transition-colors"
+                >
+                  <X className="w-6 h-6" />
+                </button>
+                <div className="inline-block px-3 py-1 bg-white/20 rounded-full text-xs font-semibold uppercase tracking-wider mb-2">
+                  {selectedCourse.badge}
+                </div>
+                <h3 className="text-2xl font-bold tracking-tight">{selectedCourse.title}</h3>
+                <p className="text-white/90 text-sm mt-1">{selectedCourse.subtitle}</p>
               </div>
-              <h3 className="text-2xl font-bold tracking-tight">{selectedCourse.title}</h3>
-              <p className="text-white/90 text-sm mt-1">{selectedCourse.subtitle}</p>
-            </div>
 
-            {/* Modal Body */}
-            <div className="p-6 space-y-4 max-h-[70vh] overflow-y-auto no-scrollbar">
-              <p className="text-gray-700 text-sm leading-relaxed">{selectedCourse.description}</p>
+              {/* Modal Body */}
+              <div className="p-6 space-y-4 max-h-[70vh] overflow-y-auto no-scrollbar">
+                <p className="text-gray-700 text-sm leading-relaxed">{selectedCourse.description}</p>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
-                <div className="bg-gray-50 p-3 rounded border border-gray-200">
-                  <div className="flex items-center gap-2 text-xs font-semibold text-gray-500 uppercase tracking-wider">
-                    <Clock className="w-3.5 h-3.5 text-[#2196f3]" />
-                    Duration
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
+                  <div className="bg-gray-50 p-3 rounded border border-gray-200">
+                    <div className="flex items-center gap-2 text-xs font-semibold text-gray-500 uppercase tracking-wider">
+                      <Clock className="w-3.5 h-3.5 text-[#2196f3]" />
+                      Duration
+                    </div>
+                    <p className="text-gray-800 text-xs font-medium mt-1">{selectedCourse.duration}</p>
                   </div>
-                  <p className="text-gray-800 text-xs font-medium mt-1">{selectedCourse.duration}</p>
+
+                  <div className="bg-gray-50 p-3 rounded border border-gray-200">
+                    <div className="flex items-center gap-2 text-xs font-semibold text-gray-500 uppercase tracking-wider">
+                      <GraduationCap className="w-3.5 h-3.5 text-[#00c853]" />
+                      Eligibility
+                    </div>
+                    <p className="text-gray-800 text-xs font-medium mt-1">{selectedCourse.eligibility}</p>
+                  </div>
                 </div>
 
-                <div className="bg-gray-50 p-3 rounded border border-gray-200">
-                  <div className="flex items-center gap-2 text-xs font-semibold text-gray-500 uppercase tracking-wider">
-                    <GraduationCap className="w-3.5 h-3.5 text-[#00c853]" />
-                    Eligibility
-                  </div>
-                  <p className="text-gray-800 text-xs font-medium mt-1">{selectedCourse.eligibility}</p>
+                <div>
+                  <h4 className="text-xs font-bold text-gray-700 uppercase tracking-wider mb-2">
+                    Specializations &amp; Key Modules
+                  </h4>
+                  <ul className="space-y-1.5 list-none p-0 m-0">
+                    {selectedCourse.programs.map((prog, i) => (
+                      <li key={i} className="flex items-start gap-2 text-xs text-gray-700">
+                        <CheckCircle className="w-3.5 h-3.5 text-emerald-600 shrink-0 mt-0.5" />
+                        <span>{prog}</span>
+                      </li>
+                    ))}
+                  </ul>
                 </div>
               </div>
 
-              <div>
-                <h4 className="text-xs font-bold text-gray-700 uppercase tracking-wider mb-2">
-                  Specializations &amp; Key Modules
-                </h4>
-                <ul className="space-y-1.5 list-none p-0 m-0">
-                  {selectedCourse.programs.map((prog, i) => (
-                    <li key={i} className="flex items-start gap-2 text-xs text-gray-700">
-                      <CheckCircle className="w-3.5 h-3.5 text-emerald-600 shrink-0 mt-0.5" />
-                      <span>{prog}</span>
-                    </li>
-                  ))}
-                </ul>
+              {/* Modal Footer */}
+              <div className="bg-gray-50 px-6 py-3 border-t border-gray-200 flex justify-end">
+                <button
+                  type="button"
+                  onClick={() => setSelectedCourse(null)}
+                  className="px-4 py-2 bg-gray-200 hover:bg-gray-300 text-gray-800 text-xs font-semibold rounded transition-colors"
+                >
+                  Close
+                </button>
               </div>
-            </div>
-
-            {/* Modal Footer */}
-            <div className="bg-gray-50 px-6 py-3 border-t border-gray-200 flex justify-end">
-              <button
-                type="button"
-                onClick={() => setSelectedCourse(null)}
-                className="px-4 py-2 bg-gray-200 hover:bg-gray-300 text-gray-800 text-xs font-semibold rounded transition-colors"
-              >
-                Close
-              </button>
             </div>
           </div>
-        </div>
-      )}
-    </div>
+        )
+      }
+    </div >
   );
 }

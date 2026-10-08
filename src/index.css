@@ -342,6 +342,16 @@ html {
   animation: fast-pulse 1s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }
 
+/* Remove black focus outlines on links and buttons when clicked */
+a:focus,
+button:focus,
+a:focus-visible,
+button:focus-visible,
+[role="button"]:focus {
+  outline: none !important;
+  box-shadow: none;
+}
+
 /* Fast button & interactive tap feedback */
 button:active:not(:disabled),
 a:active:not([disabled]),
