@@ -590,7 +590,7 @@ export default function HomePage() {
                                 .replace(/\//g, "-")
                               : n.date || ""}
                           </span>
-                          <span className="text-[#2196f3] font-normal" style={{ fontFamily: "'Mulish', sans-serif", fontSize: "13px", fontWeight: "normal" }}>
+                          <span className="text-[#2196f3] font-normal" style={{ fontFamily: "'Mulish', sans-serif", fontSize: "12px", fontWeight: "normal" }}>
                             {n.Title || n.title}
                             {isRecentNotification(n) && (
                               <img
