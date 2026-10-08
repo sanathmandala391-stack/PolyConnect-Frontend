@@ -90,6 +90,23 @@ export default function GovFooter() {
           <ArrowUp className="w-4 h-4 text-black stroke-[3]" />
         </button>
       </div>
+
+      {/* Separate Disclaimer & Developer Contact Bar */}
+      <div className="w-full bg-[#083b63] border-t border-white/10 text-white py-2.5 px-4 sm:px-8 text-center select-none">
+        <div className="max-w-[1350px] mx-auto flex flex-col sm:flex-row items-center justify-center gap-1.5 sm:gap-2.5 text-[12px] text-white/90">
+          <span className="inline-flex items-center gap-1.5 font-medium text-amber-300">
+            <i className="fa-solid fa-triangle-exclamation text-xs"></i>
+            This is Not Official Site.
+          </span>
+          <span className="hidden sm:inline text-white/40">•</span>
+          <span className="text-white/80">
+            Contact Developer:{" "}
+            <span className="text-white font-semibold tracking-wide">
+              Mandala Sanath Kumar
+            </span>
+          </span>
+        </div>
+      </div>
     </footer>
   );
 }

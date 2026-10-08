@@ -342,8 +342,31 @@ html {
   animation: fast-pulse 1s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }
 
-/* Fast button tap feedback */
-button:active:not(:disabled) {
-  transform: scale(0.97);
-  transition: transform 0.08s ease-out;
+/* Fast button & interactive tap feedback */
+button:active:not(:disabled),
+a:active:not([disabled]),
+[role="button"]:active {
+  transform: scale(0.975);
+  transition: transform 0.12s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Smooth Accordion and Dropdown Transitions */
+.accordion-panel {
+  transition: max-height 0.35s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease;
+}
+
+/* Slide in drawer transition */
+@keyframes slideDrawerIn {
+  from {
+    transform: translateX(-100%);
+    opacity: 0.9;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.animate-drawer-slide {
+  animation: slideDrawerIn 0.26s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
