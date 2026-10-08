@@ -250,7 +250,7 @@ function StatCard({ label, count, suffix, icon: Icon }) {
 function StatsRibbon() {
   return (
     <section className="w-full bg-white py-2" id="stats-ribbon-section">
-      <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-3 sm:gap-3 lg:gap-3.5">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-8 gap-3 sm:gap-3 lg:gap-3.5">
         {STAT_ITEMS.map((item) => (
           <StatCard
             key={item.label}
@@ -480,7 +480,7 @@ export default function HomePage() {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-5 items-stretch">
         {/* Left: Carousel Slider */}
         <div
-          className="overflow-hidden relative bg-white h-[280px] sm:h-[320px] md:h-[340px] border border-[#cbd5e1] shadow-2xs flex items-center justify-center"
+          className="overflow-hidden relative bg-white h-[220px] sm:h-[300px] md:h-[340px] border border-[#cbd5e1] shadow-2xs flex items-center justify-center"
           onMouseEnter={() => setIsPaused(true)}
           onMouseLeave={() => setIsPaused(false)}
         >
@@ -519,7 +519,7 @@ export default function HomePage() {
                   <img
                     src={slide.src}
                     alt={slide.alt}
-                    className="block w-full h-full object-contain sm:object-cover"
+                    className="block w-full h-full object-cover"
                     draggable="false"
                   />
                 </div>
@@ -533,7 +533,7 @@ export default function HomePage() {
           className="bg-white border border-[#cbd5e1] flex flex-col justify-between overflow-hidden h-[280px] sm:h-[320px] md:h-[340px] shadow-2xs select-none"
           style={{ fontFamily: "Segoe UI, Roboto, Helvetica, Arial, sans-serif" }}
         >
-          <div className="overflow-y-auto flex-1">
+          <div className="overflow-y-auto no-scrollbar flex-1">
             {/* Header */}
             <div className="px-4 py-2 border-b border-[#cbd5e1] flex items-center gap-2 bg-white sticky top-0 z-10">
               <img
@@ -676,7 +676,7 @@ export default function HomePage() {
 
             {/* Links List Content */}
             <div
-              className="p-4 flex-1 overflow-y-auto"
+              className="p-4 flex-1 overflow-y-auto no-scrollbar"
               style={{ fontFamily: "'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" }}
             >
               {activeLinkTab === "quick" ? (
@@ -786,7 +786,7 @@ export default function HomePage() {
             className="bg-white border border-[#c8d1db] flex flex-col justify-between overflow-hidden h-[280px] sm:h-[320px] md:h-[330px] shadow-2xs"
             style={{ fontFamily: "Segoe UI, Roboto, Helvetica, Arial, sans-serif" }}
           >
-            <div className="overflow-y-auto flex-1">
+            <div className="overflow-y-auto no-scrollbar flex-1">
               {/* Header */}
               <div className="px-4 py-2 border-b border-[#cbd5e1] flex items-center gap-2 bg-white sticky top-0 z-10">
                 <img
@@ -1004,7 +1004,7 @@ export default function HomePage() {
             </div>
 
             {/* Modal Body */}
-            <div className="p-6 space-y-4 max-h-[70vh] overflow-y-auto">
+            <div className="p-6 space-y-4 max-h-[70vh] overflow-y-auto no-scrollbar">
               <p className="text-gray-700 text-sm leading-relaxed">{selectedCourse.description}</p>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
