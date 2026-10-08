@@ -624,7 +624,7 @@ export default function HomePage() {
           <div className="flex justify-end mt-auto border-t border-[#f1f5f9]">
             <Link
               to="/circulars"
-              className="bg-[#2196f3] hover:bg-[#1e88e5] text-white text-[14px] font-normal px-6 py-1.5 rounded-none transition-colors border-none outline-none focus:outline-none focus-visible:outline-none select-none"
+              className="bg-[#2196f3]  text-white text-[14px] font-normal px-6 py-1.5 rounded-none transition-colors border-none outline-none focus:outline-none focus-visible:outline-none select-none"
             >
               View All
             </Link>
