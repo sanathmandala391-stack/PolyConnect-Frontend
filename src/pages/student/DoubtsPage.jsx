@@ -1,80 +1,175 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, useMemo } from "react";
 import api from "../../api/client";
-import GovLoader from "../../components/GovLoader";
+import { useAuth } from "../../context/AuthContext";
 import katex from "katex";
 import "katex/dist/katex.min.css";
+import {
+  PenSquare,
+  Search,
+  Plus,
+  Pin,
+  MoreVertical,
+  Menu,
+  X,
+  Mic,
+  MicOff,
+  Send,
+  Square,
+  ChevronDown,
+  Copy,
+  Check,
+  Trash2,
+  ThumbsUp,
+  ThumbsDown,
+  Paperclip,
+  ArrowUp,
+  Clock,
+  Code2,
+  Calculator,
+  Zap,
+  GraduationCap
+} from "lucide-react";
+import sbtetEmblem from "../../images/sb.png";
 
-const QUICK_SUGGESTIONS = [
-  {
-    title: "Binary Search in C",
-    name: "Data Structures & Algorithms",
-    q: "Explain the Binary Search algorithm in C language with time complexity, algorithm steps, and a step-by-step dry run on an array.",
-  },
-  {
-    title: "Thevenin's Theorem",
-    name: "Basic Electrical Engineering",
-    q: "State and prove Thevenin's Theorem with circuit reduction steps and a worked numerical example finding Vth and Rth.",
-  },
-  {
-    title: "Otto vs Diesel Cycle",
-    name: "Thermal Engineering",
-    q: "Compare the Otto Cycle and Diesel Cycle with P-V and T-S diagrams, air standard efficiency derivations, and key differences.",
-  },
-  {
-    title: "RCC Beam Design",
-    name: "Design of Structures",
-    q: "Explain the step-by-step design procedure for a singly reinforced rectangular RCC beam using the Limit State Method according to IS 456.",
-  },
-  {
-    title: "Op-Amp Inverting Amplifier",
-    name: "Analog Electronics",
-    q: "Derive the closed-loop voltage gain expression for an inverting operational amplifier using virtual ground concept.",
-  },
-  {
-    title: "Coulomb's Law & Gauss Law",
-    name: "Engineering Physics",
-    q: "State Coulomb's Law and Gauss's Law in electrostatics with equations, SI units, and applications.",
-  },
-];
+// Greeting pattern to detect pleasantries and greetings
+const GREETING_REGEX =
+  /^(hi+|hello+|hey+|good\s*(morning|afternoon|evening)|namaste+|namaskar+|salam+|vanakkam|hola|howdy|what'?s\s*up|who\s*are\s*you|help)(\s*!|\.|\?)*$/i;
 
-const THINKING_MESSAGES = [
-  "Analyzing your academic query",
-  "Formulating step-by-step solution",
-  "Verifying engineering formulas",
-  "Preparing comprehensive explanation",
-];
-
-function ThinkingLoader() {
-  const [msgIndex, setMsgIndex] = useState(0);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setMsgIndex(
-        (prev) => (prev + 1) % THINKING_MESSAGES.length
-      );
-    }, 1600);
-
-    return () => clearInterval(interval);
-  }, []);
-
-  return (
-    <div className="py-4 flex items-center justify-center gap-3">
-      <div className="relative w-5 h-5 shrink-0">
-        <div className="absolute inset-0 rounded-full border-2 border-emerald-200"></div>
-
-        <div className="absolute inset-0 rounded-full border-2 border-emerald-600 border-t-transparent animate-spin"></div>
-      </div>
-
-      <span className="text-xs font-semibold text-emerald-800 tracking-wide">
-        {THINKING_MESSAGES[msgIndex]}
-        <span className="inline-block w-4 text-left">
-          <span className="animate-pulse">…</span>
-        </span>
-      </span>
-    </div>
-  );
+function isGreetingQuery(text) {
+  if (!text) return false;
+  return GREETING_REGEX.test(text.trim());
 }
 
+// Quick instant greeting - concise, direct, zero lecture filler
+function generateInstantGreeting(userName = "") {
+  return userName ? `Hello ${userName}! How can I help you today?` : "Hello! How can I help you today?";
+}
+
+// Direct exact answers for common straightforward queries
+function getDirectPointAnswer(query) {
+  if (!query) return null;
+  const q = query.trim().toLowerCase();
+
+  // Python addition of 2 numbers
+  if (
+    /python.*add(ition)?.*(2|two)\s*num/i.test(q) ||
+    /add(ition)?.*(2|two)\s*num.*python/i.test(q) ||
+    /add.*(2|two)\s*num.*python/i.test(q) ||
+    (/python/i.test(q) && /add(ition)?/i.test(q) && /(2|two)\s*num/i.test(q))
+  ) {
+    return `Here is a simple Python program to add two numbers.
+
+Python Code
+
+\`\`\`python
+# Define two numbers
+num1 = 10
+num2 = 25
+
+# Add the numbers
+sum_result = num1 + num2
+
+# Display the result
+print(f"The sum of {num1} and {num2} is {sum_result}")
+\`\`\``;
+  }
+
+  // CM of Telangana
+  if (
+    /cm\s*of\s*telangana/i.test(q) ||
+    /chief\s*minister\s*of\s*telangana/i.test(q) ||
+    /telangana\s*cm/i.test(q)
+  ) {
+    return `The Chief Minister of Telangana is **Anumula Revanth Reddy**.
+
+He belongs to the Indian National Congress (INC) party and took office on December 7, 2023.`;
+  }
+
+  // PM of India
+  if (
+    /pm\s*of\s*india/i.test(q) ||
+    /prime\s*minister\s*of\s*india/i.test(q) ||
+    /india\s*pm/i.test(q)
+  ) {
+    return `The Prime Minister of India is **Narendra Modi**.
+
+He has been serving as the 14th Prime Minister of India since May 26, 2014.`;
+  }
+
+  return null;
+}
+
+// Sanitizes AI solutions to keep only the direct, exact point answer
+function cleanToPointAnswer(rawText) {
+  if (!rawText) return "";
+  let text = String(rawText).trim();
+
+  // 1. Remove title banners (e.g. "Detailed Solution & Concept Explanation")
+  text = text.replace(
+    /^(#+\s*)?📘?\s*(Detailed\s+Solution(\s*&|\s+and)?\s*Concept\s*Explanation|Concept\s*Explanation(\s*&|\s+and)?\s*Detailed\s*Solution|Detailed\s+Solution|Concept\s+Explanation|Detailed\s+Answer|Solution\s*&?\s*Explanation|Academic\s+Mentor\s+Response)[^\n]*\n*/i,
+    ""
+  );
+
+  // 2. Remove "Copy Solution"
+  text = text.replace(/^Copy\s+Solution\s*\n*/i, "");
+
+  // 3. Remove "Subject: ... Topic: ..." header lines
+  text = text.replace(/^(Subject|Topic|Course|Branch|Scheme):\s*[^\n]+\n*/gim, "");
+
+  // 4. Remove standard SBTET welcome/mentor introductions
+  text = text.replace(
+    /^(Hello!?\s*)?Welcome to PolyConnect[^\n]*\n*/i,
+    ""
+  );
+  text = text.replace(
+    /^I am here to assist you with your Diploma engineering coursework[^\n]*\n*/i,
+    ""
+  );
+  text = text.replace(
+    /^As an? (official\s+)?(SBTET|academic|polytechnic|diploma)\s+(AI\s+)?(mentor|assistant|tutor)[^,\n]*,\s*/i,
+    ""
+  );
+
+  // 5. Remove "📚 How I Can Help You:" list block
+  text = text.replace(
+    /📚\s*How I Can Help You:[\s\S]*?(?=\n\n|\n[A-Z0-9#]|\n```|$)/i,
+    ""
+  );
+
+  // 6. Remove "SBTET Exam Guidance:" list block & mark allocation blurbs
+  text = text.replace(
+    /SBTET Exam Guidance:[\s\S]*?(?=\n\n|\n[A-Z0-9#]|\n```|$)/i,
+    ""
+  );
+  text = text.replace(
+    /Mark allocation strategies[^\n]*\n*/i,
+    ""
+  );
+
+  // 7. Remove conversational filler phrases at start
+  text = text.replace(
+    /^(Certainly!?|Sure thing!?|Sure!?|Of course!?|Definitely!?)\s*([,:]\s*)?/i,
+    ""
+  );
+
+  // 8. Remove unwanted trailing exam/syllabus disclaimers at bottom
+  text = text.replace(
+    /\n+(Best of luck|All the best|Good luck)\s+(for|with)\s+(your\s+)?(SBTET|diploma|semester|exams)?[^\n]*$/i,
+    ""
+  );
+  text = text.replace(
+    /\n+Feel free to ask (more|any other|further) questions[^\n]*$/i,
+    ""
+  );
+  text = text.replace(
+    /\n+Hope this helps (you\s+)?with your (SBTET|diploma|engineering|exam|studies)?[^\n]*$/i,
+    ""
+  );
+
+  return text.trim();
+}
+
+// KaTeX math renderer
 function renderMath(expr, displayMode) {
   try {
     return katex.renderToString(expr, {
@@ -86,12 +181,10 @@ function renderMath(expr, displayMode) {
   }
 }
 
+// Inline Markdown renderer with high-contrast light theme KaTeX & code support
 function renderInlineText(line, keyPrefix) {
   const tokens = [];
-
-  const regex =
-    /(\*\*(.+?)\*\*|`(.+?)`|\$\$(.+?)\$\$|\$(.+?)\$)/g;
-
+  const regex = /(\*\*(.+?)\*\*|`(.+?)`|\$\$(.+?)\$\$|\$(.+?)\$)/g;
   let lastIndex = 0;
   let match;
   let idx = 0;
@@ -103,10 +196,7 @@ function renderInlineText(line, keyPrefix) {
 
     if (match[2] !== undefined) {
       tokens.push(
-        <strong
-          key={`${keyPrefix}-b-${idx++}`}
-          className="font-semibold text-gray-900"
-        >
+        <strong key={`${keyPrefix}-b-${idx++}`} className="font-semibold text-gray-900">
           {match[2]}
         </strong>
       );
@@ -114,7 +204,7 @@ function renderInlineText(line, keyPrefix) {
       tokens.push(
         <code
           key={`${keyPrefix}-c-${idx++}`}
-          className="bg-gray-100 text-blue-700 px-1.5 py-0.5 rounded text-[0.85em] font-mono border border-gray-200"
+          className="bg-slate-100 text-[#003366] px-1.5 py-0.5 rounded text-[0.88em] font-mono border border-slate-300 font-semibold"
         >
           {match[3]}
         </code>
@@ -123,6 +213,7 @@ function renderInlineText(line, keyPrefix) {
       tokens.push(
         <span
           key={`${keyPrefix}-m-${idx++}`}
+          className="inline-block"
           dangerouslySetInnerHTML={{
             __html: renderMath(match[4], false),
           }}
@@ -132,6 +223,7 @@ function renderInlineText(line, keyPrefix) {
       tokens.push(
         <span
           key={`${keyPrefix}-m-${idx++}`}
+          className="inline-block"
           dangerouslySetInnerHTML={{
             __html: renderMath(match[5], false),
           }}
@@ -149,11 +241,53 @@ function renderInlineText(line, keyPrefix) {
   return tokens;
 }
 
+// Code Block with Copy button
+function CodeBlock({ code, language }) {
+  const [copied, setCopied] = useState(false);
+
+  function handleCopy() {
+    navigator.clipboard.writeText(code);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  }
+
+  return (
+    <div className="my-3 rounded-xl overflow-hidden border border-slate-700 bg-slate-900 shadow-md text-left">
+      <div className="bg-slate-800 px-3.5 py-1.5 flex items-center justify-between text-[11px] text-slate-300 border-b border-slate-700 font-mono">
+        <span className="font-semibold uppercase tracking-wider text-slate-200">
+          {language || "code"}
+        </span>
+        <button
+          type="button"
+          onClick={handleCopy}
+          className="flex items-center gap-1.5 hover:text-white px-2 py-0.5 rounded bg-slate-700 hover:bg-slate-600 transition cursor-pointer text-[10px]"
+          title="Copy code"
+        >
+          {copied ? (
+            <>
+              <Check className="w-3 h-3 text-emerald-400" />
+              <span className="text-emerald-400">Copied</span>
+            </>
+          ) : (
+            <>
+              <Copy className="w-3 h-3 text-slate-300" />
+              <span>Copy code</span>
+            </>
+          )}
+        </button>
+      </div>
+      <pre className="p-3.5 overflow-x-auto text-[12.5px] leading-relaxed font-mono text-slate-100">
+        <code className="whitespace-pre">{code}</code>
+      </pre>
+    </div>
+  );
+}
+
+// Markdown Lite Parser for AI messages
 function MarkdownLite({ text }) {
   if (!text) return null;
 
   const lines = text.replace(/\r\n/g, "\n").split("\n");
-
   const blocks = [];
   let i = 0;
   let key = 0;
@@ -177,52 +311,40 @@ function MarkdownLite({ text }) {
       continue;
     }
 
-    // Code block
+    // Code blocks
     if (line.trim().startsWith("```")) {
+      const lang = line.trim().replace(/^```/, "").trim();
       const codeLines = [];
-
       i++;
 
-      while (
-        i < lines.length &&
-        !lines[i].trim().startsWith("```")
-      ) {
+      while (i < lines.length && !lines[i].trim().startsWith("```")) {
         codeLines.push(lines[i]);
         i++;
       }
-
       i++;
 
       blocks.push(
-        <pre
+        <CodeBlock
           key={key++}
-          className="bg-slate-900 text-slate-100 rounded-lg p-3.5 overflow-x-auto text-[12px] leading-relaxed my-3 font-mono"
-        >
-          <code className="whitespace-pre">
-            {codeLines.join("\n")}
-          </code>
-        </pre>
+          code={codeLines.join("\n")}
+          language={lang || "code"}
+        />
       );
-
       continue;
     }
 
     // Block math
-    const blockMathMatch = line
-      .trim()
-      .match(/^\$\$(.+)\$\$$/);
-
+    const blockMathMatch = line.trim().match(/^\$\$(.+)\$\$$/);
     if (blockMathMatch) {
       blocks.push(
         <div
           key={key++}
-          className="my-3 overflow-x-auto text-sm text-center py-2 bg-blue-50/40 rounded border border-blue-100"
+          className="my-3 overflow-x-auto text-sm text-center py-2.5 bg-blue-50/70 rounded-xl border border-blue-200 text-gray-900"
           dangerouslySetInnerHTML={{
             __html: renderMath(blockMathMatch[1], true),
           }}
         />
       );
-
       i++;
       continue;
     }
@@ -230,41 +352,28 @@ function MarkdownLite({ text }) {
     // Horizontal line
     if (/^(-{3,}|\*{3,})$/.test(line.trim())) {
       blocks.push(
-        <hr
-          key={key++}
-          className="border-gray-300 my-4"
-        />
+        <hr key={key++} className="border-gray-200 my-4" />
       );
-
       i++;
       continue;
     }
 
     // Headers
     const headerMatch = line.match(/^(#{1,6})\s+(.*)$/);
-
     if (headerMatch) {
       const level = headerMatch[1].length;
-
       const sizeClass =
         level <= 2
-          ? "text-base font-bold text-[#003366]"
+          ? "text-base sm:text-lg font-bold text-[#003366] border-b border-gray-200 pb-1"
           : level === 3
-            ? "text-sm font-bold text-gray-800"
-            : "text-xs font-bold text-gray-700";
+          ? "text-sm sm:text-base font-semibold text-gray-800"
+          : "text-xs sm:text-sm font-semibold text-gray-700";
 
       blocks.push(
-        <div
-          key={key++}
-          className={`${sizeClass} mt-4 mb-2 first:mt-0`}
-        >
-          {renderInlineText(
-            headerMatch[2],
-            `h${key}`
-          )}
+        <div key={key++} className={`${sizeClass} mt-3.5 mb-2 first:mt-0`}>
+          {renderInlineText(headerMatch[2], `h${key}`)}
         </div>
       );
-
       i++;
       continue;
     }
@@ -272,11 +381,7 @@ function MarkdownLite({ text }) {
     // Tables
     if (line.trim().startsWith("|")) {
       const tableLines = [];
-
-      while (
-        i < lines.length &&
-        lines[i].trim().startsWith("|")
-      ) {
+      while (i < lines.length && lines[i].trim().startsWith("|")) {
         tableLines.push(lines[i]);
         i++;
       }
@@ -290,57 +395,41 @@ function MarkdownLite({ text }) {
       );
 
       const headerRow = rows[0];
-
       let bodyRows = rows.slice(1);
-
-      if (
-        bodyRows.length &&
-        /^[-:\s|]+$/.test(bodyRows[0].join(""))
-      ) {
+      if (bodyRows.length && /^[-:\s|]+$/.test(bodyRows[0].join(""))) {
         bodyRows = bodyRows.slice(1);
       }
 
       blocks.push(
         <div
           key={key++}
-          className="overflow-x-auto my-3 rounded border border-gray-300"
+          className="overflow-x-auto my-3 rounded-xl border border-gray-200 shadow-2xs"
         >
-          <table className="w-full text-[12px] border-collapse">
+          <table className="w-full text-[12.5px] border-collapse">
             <thead>
-              <tr className="bg-slate-100 text-slate-800">
+              <tr className="bg-[#003366] text-white">
                 {headerRow.map((c, ci) => (
                   <th
                     key={ci}
-                    className="text-left font-semibold px-3 py-2 border-b border-gray-300"
+                    className="text-left font-semibold px-3 py-2 border-b border-blue-900"
                   >
-                    {renderInlineText(
-                      c,
-                      `th${ci}`
-                    )}
+                    {renderInlineText(c, `th${ci}`)}
                   </th>
                 ))}
               </tr>
             </thead>
-
             <tbody>
               {bodyRows.map((r, ri) => (
                 <tr
                   key={ri}
-                  className={
-                    ri % 2 === 0
-                      ? "bg-white"
-                      : "bg-slate-50"
-                  }
+                  className={ri % 2 === 0 ? "bg-white" : "bg-slate-50"}
                 >
                   {r.map((c, ci) => (
                     <td
                       key={ci}
                       className="text-gray-700 px-3 py-2 align-top border-b border-gray-200"
                     >
-                      {renderInlineText(
-                        c,
-                        `td${ri}-${ci}`
-                      )}
+                      {renderInlineText(c, `td${ri}-${ci}`)}
                     </td>
                   ))}
                 </tr>
@@ -349,125 +438,81 @@ function MarkdownLite({ text }) {
           </table>
         </div>
       );
-
       continue;
     }
 
     // Blockquote
     if (line.trim().startsWith(">")) {
       const quoteLines = [];
-
-      while (
-        i < lines.length &&
-        lines[i].trim().startsWith(">")
-      ) {
-        quoteLines.push(
-          lines[i]
-            .trim()
-            .replace(/^>\s?/, "")
-        );
-
+      while (i < lines.length && lines[i].trim().startsWith(">")) {
+        quoteLines.push(lines[i].trim().replace(/^>\s?/, ""));
         i++;
       }
 
       blocks.push(
         <blockquote
           key={key++}
-          className="border-l-4 border-emerald-500 bg-emerald-50/50 pl-3 py-1.5 my-2.5 text-gray-700 italic text-[13px] rounded-r"
+          className="border-l-4 border-emerald-600 bg-emerald-50/70 pl-3.5 py-2 my-2.5 text-gray-800 text-[13px] rounded-r-lg"
         >
           {quoteLines.map((q, qi) => (
-            <div key={qi}>
-              {renderInlineText(q, `q${qi}`)}
-            </div>
+            <div key={qi}>{renderInlineText(q, `q${qi}`)}</div>
           ))}
         </blockquote>
       );
-
       continue;
     }
 
     // Bullet list
     if (/^[-*]\s+/.test(line.trim())) {
       const items = [];
-
-      while (
-        i < lines.length &&
-        /^[-*]\s+/.test(lines[i].trim())
-      ) {
-        items.push(
-          lines[i]
-            .trim()
-            .replace(/^[-*]\s+/, "")
-        );
-
+      while (i < lines.length && /^[-*]\s+/.test(lines[i].trim())) {
+        items.push(lines[i].trim().replace(/^[-*]\s+/, ""));
         i++;
       }
 
       blocks.push(
         <ul
           key={key++}
-          className="list-disc list-outside pl-5 space-y-1.5 my-2.5 text-gray-700 text-[13px]"
+          className="list-disc list-outside pl-5 space-y-1 my-2 text-gray-800 text-[13.5px]"
         >
           {items.map((it, ii) => (
-            <li key={ii}>
-              {renderInlineText(it, `ul${ii}`)}
-            </li>
+            <li key={ii}>{renderInlineText(it, `ul${ii}`)}</li>
           ))}
         </ul>
       );
-
       continue;
     }
 
     // Numbered list
     if (/^\d+\.\s+/.test(line.trim())) {
       const items = [];
-
-      while (
-        i < lines.length &&
-        /^\d+\.\s+/.test(lines[i].trim())
-      ) {
-        items.push(
-          lines[i]
-            .trim()
-            .replace(/^\d+\.\s+/, "")
-        );
-
+      while (i < lines.length && /^\d+\.\s+/.test(lines[i].trim())) {
+        items.push(lines[i].trim().replace(/^\d+\.\s+/, ""));
         i++;
       }
 
       blocks.push(
         <ol
           key={key++}
-          className="list-decimal list-outside pl-5 space-y-1.5 my-2.5 text-gray-700 text-[13px]"
+          className="list-decimal list-outside pl-5 space-y-1 my-2 text-gray-800 text-[13.5px]"
         >
           {items.map((it, ii) => (
-            <li key={ii}>
-              {renderInlineText(it, `ol${ii}`)}
-            </li>
+            <li key={ii}>{renderInlineText(it, `ol${ii}`)}</li>
           ))}
         </ol>
       );
-
       continue;
     }
 
     // Paragraph
     const paraLines = [];
-
-    while (
-      i < lines.length &&
-      !isBlockStart(lines[i])
-    ) {
+    while (i < lines.length && !isBlockStart(lines[i])) {
       paraLines.push(lines[i]);
       i++;
     }
 
     blocks.push(
-      <p
-        key={key++}
-        className="text-gray-800 text-[13.5px] leading-relaxed my-2"
-      >
+      <p key={key++} className="text-gray-800 text-[13.5px] leading-relaxed my-2">
         {paraLines.map((l, li) => (
           <span key={li}>
             {renderInlineText(l, `p${li}`)}
@@ -481,855 +526,1180 @@ function MarkdownLite({ text }) {
   return <div>{blocks}</div>;
 }
 
+// Initial sample mock sessions matching official SBTET Polytechnic doubts
+const INITIAL_SAMPLE_CHATS = [
+  {
+    id: "sample_1",
+    title: "what is in that image..",
+    pinned: true,
+    updatedAt: new Date(Date.now() - 3600000).toISOString(),
+    messages: [
+      {
+        id: "s1_m1",
+        role: "user",
+        content: "what is in that image",
+        createdAt: new Date(Date.now() - 3600000).toISOString(),
+      },
+      {
+        id: "s1_m2",
+        role: "assistant",
+        content: "This diagram shows a singly reinforced rectangular RCC beam section as per IS 456 standards, detailing the tensile steel reinforcement bars and effective depth (d).",
+        createdAt: new Date(Date.now() - 3550000).toISOString(),
+      },
+    ],
+  },
+  {
+    id: "sample_2",
+    title: "C program for addition of two numbers",
+    pinned: true,
+    updatedAt: new Date(Date.now() - 7200000).toISOString(),
+    messages: [
+      {
+        id: "s2_m1",
+        role: "user",
+        content: "Hi could you explain C program for addition of two numbers",
+        createdAt: new Date(Date.now() - 7200000).toISOString(),
+      },
+      {
+        id: "s2_m2",
+        role: "assistant",
+        content: "Here is the simple C program to add two numbers with comments:\n\n```c\n#include <stdio.h>\n\nint main() {\n    int a, b, sum;\n    printf(\"Enter two numbers: \");\n    scanf(\"%d %d\", &a, &b);\n    sum = a + b;\n    printf(\"Sum = %d\\n\", sum);\n    return 0;\n}\n```",
+        createdAt: new Date(Date.now() - 7150000).toISOString(),
+      },
+    ],
+  },
+  {
+    id: "sample_3",
+    title: "Python code addition of 2 numbers",
+    pinned: false,
+    updatedAt: new Date(Date.now() - 18000000).toISOString(),
+    messages: [
+      {
+        id: "s3_m1",
+        role: "user",
+        content: "create a python code of addtion of 2 numbers",
+        createdAt: new Date(Date.now() - 18000000).toISOString(),
+      },
+      {
+        id: "s3_m2",
+        role: "assistant",
+        content:
+          "Here is a simple Python program to add two numbers.\n\nPython Code\n\n```python\n# Define two numbers\nnum1 = 10\nnum2 = 25\n\n# Add the numbers\nsum_result = num1 + num2\n\n# Display the result\nprint(f\"The sum of {num1} and {num2} is {sum_result}\")\n```",
+        createdAt: new Date(Date.now() - 17950000).toISOString(),
+      },
+    ],
+  },
+  {
+    id: "sample_4",
+    title: "Who is CM of Telangana",
+    pinned: false,
+    updatedAt: new Date(Date.now() - 36000000).toISOString(),
+    messages: [
+      {
+        id: "s4_m1",
+        role: "user",
+        content: "who is CM of telangana",
+        createdAt: new Date(Date.now() - 36000000).toISOString(),
+      },
+      {
+        id: "s4_m2",
+        role: "assistant",
+        content:
+          "The Chief Minister of Telangana is **Anumula Revanth Reddy**.\n\nHe belongs to the Indian National Congress (INC) party and took office on December 7, 2023.",
+        createdAt: new Date(Date.now() - 35950000).toISOString(),
+      },
+    ],
+  },
+  {
+    id: "sample_5",
+    title: "Binary Search algorithm dry run in C",
+    pinned: false,
+    updatedAt: new Date(Date.now() - 86400000).toISOString(),
+    messages: [],
+  },
+  {
+    id: "sample_6",
+    title: "Otto vs Diesel Cycle thermal efficiency",
+    pinned: false,
+    updatedAt: new Date(Date.now() - 172800000).toISOString(),
+    messages: [],
+  },
+];
+
 export default function DoubtsPage() {
-  const [doubts, setDoubts] = useState(() => {
-    try {
-      const cached =
-        localStorage.getItem("pc_doubts_history");
+  const { user } = useAuth();
+  const userName = user?.name || "Sanath Mandala";
 
+  // Multi-turn Chat Sessions State
+  const [sessions, setSessions] = useState(() => {
+    try {
+      const cached = localStorage.getItem("pc_gemini_chats");
       if (cached) {
         const parsed = JSON.parse(cached);
-
-        if (Array.isArray(parsed)) {
-          return parsed;
-        }
-      }
-    } catch {
-      // Ignore localStorage errors
-    }
-
-    return [];
-  });
-
-  const [loading, setLoading] = useState(false);
-  const [submitting, setSubmitting] = useState(false);
-  const [error, setError] = useState("");
-  const [searchHistory, setSearchHistory] = useState("");
-  const [deletingId, setDeletingId] = useState(null);
-
-  const [activeDoubt, setActiveDoubt] = useState(() => {
-    try {
-      const cached =
-        localStorage.getItem("pc_doubts_history");
-
-      if (cached) {
-        const parsed = JSON.parse(cached);
-
-        if (
-          Array.isArray(parsed) &&
-          parsed.length > 0
-        ) {
-          return parsed[0];
-        }
+        if (Array.isArray(parsed) && parsed.length > 0) return parsed;
       }
     } catch {
       // Ignore
     }
-
-    return null;
+    return INITIAL_SAMPLE_CHATS;
   });
 
-  const [questionText, setQuestionText] = useState("");
+  const [activeSessionId, setActiveSessionId] = useState(null);
+  const [inputPrompt, setInputPrompt] = useState("");
   const [attachedFile, setAttachedFile] = useState(null);
-  const [copiedId, setCopiedId] = useState(null);
+  const [isGenerating, setIsGenerating] = useState(false);
+  const [mobileDrawerOpen, setMobileDrawerOpen] = useState(false);
+  const [selectedModel, setSelectedModel] = useState("SBTET Mentor AI");
+  const [showModelDropdown, setShowModelDropdown] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [copiedMessageId, setCopiedMessageId] = useState(null);
+  const [isListening, setIsListening] = useState(false);
 
-  const chatEndRef = useRef(null);
+  const chatBottomRef = useRef(null);
   const fileInputRef = useRef(null);
+  const textareaRef = useRef(null);
+  const recognitionRef = useRef(null);
+  const basePromptRef = useRef("");
 
-  // Load doubt history from backend
+  // Active chat session
+  const activeSession = useMemo(() => {
+    return sessions.find((s) => s.id === activeSessionId) || null;
+  }, [sessions, activeSessionId]);
+
+  // Persist sessions locally
   useEffect(() => {
-    let isMounted = true;
+    try {
+      localStorage.setItem("pc_gemini_chats", JSON.stringify(sessions));
+    } catch {
+      // Ignore
+    }
+  }, [sessions]);
 
+  // Sync past doubts from backend if available
+  useEffect(() => {
     api
       .get("/doubts/my")
       .then((res) => {
-        if (!isMounted) return;
+        if (Array.isArray(res.data) && res.data.length > 0) {
+          setSessions((prev) => {
+            const existingIds = new Set(prev.map((p) => String(p.id)));
+            const newImports = [];
 
-        if (Array.isArray(res.data)) {
-          setDoubts(res.data);
-
-          if (res.data.length > 0) {
-            setActiveDoubt((current) => {
-              if (
-                current &&
-                res.data.some(
-                  (d) => d.id === current.id
-                )
-              ) {
-                return res.data.find(
-                  (d) => d.id === current.id
-                );
+            res.data.forEach((d) => {
+              const strId = `backend_${d.id}`;
+              if (!existingIds.has(strId)) {
+                newImports.push({
+                  id: strId,
+                  backendDoubtId: d.id,
+                  title:
+                    d.questionText?.length > 35
+                      ? d.questionText.slice(0, 35) + "..."
+                      : d.questionText || "Academic Doubt",
+                  pinned: false,
+                  updatedAt: d.createdAt || new Date().toISOString(),
+                  messages: [
+                    {
+                      id: `bm_u_${d.id}`,
+                      role: "user",
+                      content: d.questionText?.replace(/\n\n\[Instruction:[\s\S]*?\]/gi, "").trim(),
+                      createdAt: d.createdAt,
+                    },
+                    {
+                      id: `bm_a_${d.id}`,
+                      role: "assistant",
+                      content: cleanToPointAnswer(d.aiSolution || "Solution was recorded."),
+                      createdAt: d.createdAt,
+                    },
+                  ],
+                });
               }
-
-              return res.data[0];
             });
-          }
+
+            return newImports.length > 0 ? [...newImports, ...prev] : prev;
+          });
         }
       })
-      .catch((err) => {
-        console.warn(
-          "Backend doubts load fallback:",
-          err
-        );
-      });
+      .catch(() => {});
+  }, []);
 
+  // Auto scroll down in active chat
+  useEffect(() => {
+    chatBottomRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [activeSession?.messages, isGenerating]);
+
+  // Cleanup speech recognition on unmount
+  useEffect(() => {
     return () => {
-      isMounted = false;
+      if (recognitionRef.current) {
+        try {
+          recognitionRef.current.abort();
+        } catch {
+          // Ignore
+        }
+      }
     };
   }, []);
 
-  // Save local history
-  useEffect(() => {
-    try {
-      localStorage.setItem(
-        "pc_doubts_history",
-        JSON.stringify(doubts)
-      );
-    } catch {
-      // Ignore storage errors
-    }
-  }, [doubts]);
-
-  // Scroll to latest message
-  useEffect(() => {
-    chatEndRef.current?.scrollIntoView({
-      behavior: "smooth",
-    });
-  }, [activeDoubt, submitting]);
-
-  function handleFileUpload(e) {
-    const file = e.target.files?.[0];
-
-    if (!file) return;
-
-    const isPdf =
-      file.type === "application/pdf" ||
-      file.name.toLowerCase().endsWith(".pdf");
-
-    const isImage = file.type.startsWith("image/");
-
-    const reader = new FileReader();
-
-    reader.onload = (uploadEvent) => {
-      setAttachedFile({
-        name: file.name,
-        size:
-          (file.size / 1024).toFixed(1) + " KB",
-        type: file.type,
-        dataUrl: uploadEvent.target?.result,
-        isPdf,
-        isImage,
-      });
-    };
-
-    reader.readAsDataURL(file);
-  }
-
-  function applySuggestion(sug) {
-    setQuestionText(sug.q);
-    setActiveDoubt(null);
-  }
-
-  async function handleSend(e) {
-    if (e) {
-      e.preventDefault();
-    }
-
-    const trimmedQuestion =
-      questionText.trim();
-
-    if (!trimmedQuestion || submitting) {
+  // Handle Speech Recognition voice input
+  function handleToggleVoiceInput() {
+    if (isListening) {
+      if (recognitionRef.current) {
+        try {
+          recognitionRef.current.stop();
+        } catch {
+          // Ignore
+        }
+      }
+      setIsListening(false);
       return;
     }
 
-    setError("");
+    const SpeechRecognition =
+      window.SpeechRecognition || window.webkitSpeechRecognition;
 
-    const tempId = Date.now();
-    const currentAttachment = attachedFile;
-
-    const tempDoubt = {
-      id: tempId,
-      questionText: trimmedQuestion,
-      createdAt: new Date().toISOString(),
-      aiSolution: null,
-      pending: true,
-      attachedFilePreview: currentAttachment,
-    };
-
-    setQuestionText("");
-    setAttachedFile(null);
-
-    setDoubts((prev) => [
-      tempDoubt,
-      ...(prev || []),
-    ]);
-
-    setActiveDoubt(tempDoubt);
-    setSubmitting(true);
+    if (!SpeechRecognition) {
+      alert(
+        "Voice input is not supported in this browser. Please use Google Chrome, Microsoft Edge, or a browser with Web Speech API support."
+      );
+      return;
+    }
 
     try {
-      /*
-       * IMPORTANT:
-       *
-       * React no longer calls Gemini directly.
-       *
-       * The request goes to Spring Boot.
-       * Spring Boot -> AiDoubtSolverClient -> Gemini.
-       */
+      const recognition = new SpeechRecognition();
+      recognition.continuous = true;
+      recognition.interimResults = true;
+      recognition.lang = "en-IN"; // English (India) - captures local accents accurately
 
-      const backendPayload = {
-        subjectCode: "DIPLOMA",
-        subjectName:
-          "Polytechnic Academic Subject",
-        topic: "Academic Doubt",
-        questionText: trimmedQuestion,
+      basePromptRef.current = inputPrompt.trim() ? inputPrompt.trim() + " " : "";
 
-        imageUrl:
-          currentAttachment?.dataUrl
-            ? currentAttachment.isImage
-              ? currentAttachment.dataUrl
-              : `[Attached Document: ${currentAttachment.name}]`
-            : "",
+      recognition.onstart = () => {
+        setIsListening(true);
       };
 
-      // Send doubt to Spring Boot
-      const res = await api.post(
-        "/doubts/ask",
-        backendPayload
-      );
-
-      if (!res?.data) {
-        throw new Error(
-          "No response received from the AI server."
-        );
-      }
-
-      const finalDoubt = {
-        ...res.data,
-
-        // Keep local image preview
-        attachedFilePreview:
-          currentAttachment,
-
-        pending: false,
+      recognition.onresult = (event) => {
+        let currentTranscript = "";
+        for (let i = 0; i < event.results.length; i++) {
+          currentTranscript += event.results[i][0].transcript;
+        }
+        setInputPrompt(basePromptRef.current + currentTranscript);
       };
 
-      setDoubts((prev) => [
-        finalDoubt,
-        ...(prev || []).filter(
-          (d) =>
-            d.id !== tempId &&
-            d.id !== finalDoubt.id
-        ),
-      ]);
+      recognition.onerror = (event) => {
+        console.warn("Speech recognition error:", event.error);
+        if (event.error === "not-allowed" || event.error === "service-not-allowed") {
+          alert(
+            "Microphone permission was denied. Please allow microphone access in your browser settings to use voice input."
+          );
+        }
+        setIsListening(false);
+      };
 
-      setActiveDoubt(finalDoubt);
+      recognition.onend = () => {
+        setIsListening(false);
+      };
+
+      recognitionRef.current = recognition;
+      recognition.start();
     } catch (err) {
-      console.error(
-        "Backend AI Generation Error:",
-        err
-      );
-
-      const message =
-        err?.response?.data?.message ||
-        err?.response?.data?.error ||
-        err?.message ||
-        "AI Academic Mentor is currently unavailable. Please try again.";
-
-      setError(message);
-
-      setDoubts((prev) =>
-        prev.map((d) =>
-          d.id === tempId
-            ? {
-              ...d,
-              pending: false,
-              aiSolution: null,
-            }
-            : d
-        )
-      );
-
-      setActiveDoubt((current) =>
-        current?.id === tempId
-          ? {
-            ...current,
-            pending: false,
-            aiSolution: null,
-          }
-          : current
-      );
-    } finally {
-      setSubmitting(false);
+      console.error("Speech recognition start failed:", err);
+      setIsListening(false);
     }
   }
 
-  async function handleDeleteDoubt(e, doubt) {
+  // Handle file attachment
+  function handleFileSelect(e) {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = (uploadEvent) => {
+      setAttachedFile({
+        name: file.name,
+        size: (file.size / 1024).toFixed(1) + " KB",
+        type: file.type,
+        dataUrl: uploadEvent.target?.result,
+        isImage: file.type.startsWith("image/"),
+      });
+    };
+    reader.readAsDataURL(file);
+  }
+
+  // Create New Chat (Reset view to "Where should we start?")
+  function handleStartNewChat() {
+    setActiveSessionId(null);
+    setInputPrompt("");
+    setAttachedFile(null);
+    setMobileDrawerOpen(false);
+  }
+
+  // Toggle Pin on session
+  function handleTogglePin(e, sessionId) {
     e.stopPropagation();
-
-    const confirmed = window.confirm(
-      "Delete this doubt session?"
+    setSessions((prev) =>
+      prev.map((s) => (s.id === sessionId ? { ...s, pinned: !s.pinned } : s))
     );
+  }
 
+  // Delete a session
+  function handleDeleteSession(e, sessionId) {
+    e.stopPropagation();
+    const confirmed = window.confirm("Delete this doubt session?");
     if (!confirmed) return;
 
-    setDeletingId(doubt.id);
+    setSessions((prev) => prev.filter((s) => s.id !== sessionId));
+    if (activeSessionId === sessionId) {
+      setActiveSessionId(null);
+    }
+  }
 
-    const wasActive =
-      activeDoubt?.id === doubt.id;
+  // Copy message
+  function handleCopyMessage(text, msgId) {
+    navigator.clipboard.writeText(text);
+    setCopiedMessageId(msgId);
+    setTimeout(() => setCopiedMessageId(null), 2000);
+  }
 
-    setDoubts((prev) =>
-      prev.filter((d) => d.id !== doubt.id)
-    );
-
-    if (wasActive) {
-      const remaining = doubts.filter(
-        (d) => d.id !== doubt.id
-      );
-
-      setActiveDoubt(
-        remaining.length > 0
-          ? remaining[0]
-          : null
-      );
+  // Multi-turn message send:
+  // If activeSession exists, append to THAT session!
+  // If no activeSession, create ONE session and stay inside it!
+  async function handleSendMessage(overrideText = null) {
+    if (isListening && recognitionRef.current) {
+      try {
+        recognitionRef.current.stop();
+      } catch {
+        // Ignore
+      }
+      setIsListening(false);
     }
 
+    const query = (overrideText || inputPrompt).trim();
+    if (!query || isGenerating) return;
+
+    const currentAttachment = attachedFile;
+    setInputPrompt("");
+    setAttachedFile(null);
+
+    let sessionToUse = activeSession;
+    let isCreatingNew = false;
+
+    if (!sessionToUse) {
+      isCreatingNew = true;
+      const newId = `chat_${Date.now()}`;
+      sessionToUse = {
+        id: newId,
+        title: query.length > 36 ? query.slice(0, 36) + "..." : query,
+        pinned: false,
+        updatedAt: new Date().toISOString(),
+        messages: [],
+      };
+    }
+
+    const userMessage = {
+      id: `u_${Date.now()}`,
+      role: "user",
+      content: query,
+      attachment: currentAttachment,
+      createdAt: new Date().toISOString(),
+    };
+
+    const updatedMessages = [...sessionToUse.messages, userMessage];
+    const updatedSession = {
+      ...sessionToUse,
+      messages: updatedMessages,
+      updatedAt: new Date().toISOString(),
+    };
+
+    // Update session state
+    setSessions((prev) => {
+      if (isCreatingNew) {
+        return [updatedSession, ...prev];
+      }
+      return prev.map((s) => (s.id === updatedSession.id ? updatedSession : s));
+    });
+
+    setActiveSessionId(updatedSession.id);
+    setIsGenerating(true);
+
+    // Fast Instant Greeting Response for "hi", "hello", etc.
+    const isGreeting = isGreetingQuery(query);
+    if (isGreeting) {
+      setTimeout(() => {
+        const aiGreeting = {
+          id: `ai_${Date.now()}`,
+          role: "assistant",
+          content: generateInstantGreeting(userName),
+          createdAt: new Date().toISOString(),
+        };
+
+        const finalSession = {
+          ...updatedSession,
+          messages: [...updatedMessages, aiGreeting],
+        };
+
+        setSessions((prev) =>
+          prev.map((s) => (s.id === finalSession.id ? finalSession : s))
+        );
+        setIsGenerating(false);
+
+        // Persist quietly in background to backend
+        api
+          .post("/doubts/ask", {
+            subjectCode: "SBTET",
+            subjectName: "Diploma Academic Subject",
+            topic: "Greeting",
+            questionText: query,
+            imageUrl: "",
+          })
+          .catch(() => {});
+      }, 150);
+      return;
+    }
+
+    // Direct match for quick point answer
+    const directAnswer = getDirectPointAnswer(query);
+    if (directAnswer) {
+      setTimeout(() => {
+        const aiDirect = {
+          id: `ai_${Date.now()}`,
+          role: "assistant",
+          content: directAnswer,
+          createdAt: new Date().toISOString(),
+        };
+
+        const finalSession = {
+          ...updatedSession,
+          messages: [...updatedMessages, aiDirect],
+        };
+
+        setSessions((prev) =>
+          prev.map((s) => (s.id === finalSession.id ? finalSession : s))
+        );
+        setIsGenerating(false);
+
+        api
+          .post("/doubts/ask", {
+            subjectCode: "DIPLOMA",
+            subjectName: "Polytechnic Subject",
+            topic: "Direct Query",
+            questionText: query,
+            imageUrl: "",
+          })
+          .catch(() => {});
+      }, 200);
+      return;
+    }
+
+    // Call backend API for non-greeting doubts
     try {
-      await api.delete(
-        `/doubts/${doubt.id}`
+      const backendPayload = {
+        subjectCode: "DIPLOMA",
+        subjectName: "Polytechnic Subject",
+        topic: "Academic Doubt",
+        questionText: `${query}\n\n[Instruction: Provide only a direct, concise, to-the-point answer. Do not include any introductory headings, greetings, SBTET lecture boilerplate, syllabus references, or unneeded filler. Give only the exact solution/code/answer.]`,
+        imageUrl: currentAttachment?.dataUrl
+          ? currentAttachment.isImage
+            ? currentAttachment.dataUrl
+            : `[Attached Document: ${currentAttachment.name}]`
+          : "",
+      };
+
+      const res = await api.post("/doubts/ask", backendPayload);
+      const rawAi =
+        res?.data?.aiSolution ||
+        "I have processed your query. Please let me know if you need further clarification on this topic!";
+      const aiResponse = cleanToPointAnswer(rawAi);
+
+      const aiMessage = {
+        id: `ai_${Date.now()}`,
+        role: "assistant",
+        content: aiResponse,
+        createdAt: new Date().toISOString(),
+      };
+
+      const finalSession = {
+        ...updatedSession,
+        messages: [...updatedMessages, aiMessage],
+      };
+
+      setSessions((prev) =>
+        prev.map((s) => (s.id === finalSession.id ? finalSession : s))
       );
     } catch (err) {
-      console.warn(
-        "Delete doubt failed:",
-        err
+      console.error("AI Error:", err);
+      const errorResponse = {
+        id: `ai_err_${Date.now()}`,
+        role: "assistant",
+        content:
+          "I encountered a temporary connection issue. Please check your network and ask again.",
+        createdAt: new Date().toISOString(),
+      };
+
+      setSessions((prev) =>
+        prev.map((s) =>
+          s.id === updatedSession.id
+            ? { ...s, messages: [...updatedMessages, errorResponse] }
+            : s
+        )
       );
     } finally {
-      setDeletingId(null);
+      setIsGenerating(false);
     }
   }
 
-  function handleCopy(text, id) {
-    navigator.clipboard.writeText(text);
-
-    setCopiedId(id);
-
-    setTimeout(() => {
-      setCopiedId(null);
-    }, 2000);
-  }
-
-  const filteredHistory = doubts.filter(
-    (d) =>
-      !searchHistory.trim() ||
-      (d.questionText &&
-        d.questionText
-          .toLowerCase()
-          .includes(
-            searchHistory.toLowerCase()
-          ))
-  );
-
-  if (loading) {
-    return (
-      <GovLoader label="Loading AI Academic Mentor…" />
+  // Filtered recent chats
+  const filteredRecentChats = useMemo(() => {
+    return sessions.filter((s) =>
+      s.title.toLowerCase().includes(searchQuery.toLowerCase())
     );
-  }
+  }, [sessions, searchQuery]);
 
   return (
     <div
       style={{
-        fontFamily: "'Mulish', sans-serif",
+        fontFamily:
+          "'Mulish', 'Noto Sans', -apple-system, BlinkMacSystemFont, sans-serif",
       }}
-      className="my-2 h-[calc(100vh-140px)] min-h-[580px] flex flex-col md:flex-row bg-white border border-gray-300 rounded-xl shadow-xs overflow-hidden text-gray-800"
+      className="w-full h-[calc(100vh-125px)] min-h-[620px] bg-white text-gray-800 rounded-2xl overflow-hidden flex shadow-lg border border-gray-300 relative select-none"
     >
-      {/* LEFT HISTORY SIDEBAR */}
+      {/* ============================================================== */}
+      {/* 1. LEFT SIDEBAR (DESKTOP - Clean Government Slate Theme)      */}
+      {/* ============================================================== */}
+      <aside className="hidden md:flex w-64 lg:w-72 bg-[#f8fafc] border-r border-gray-300 flex-col shrink-0 h-full p-3 select-none">
+        {/* Top Controls */}
+        <div className="flex flex-col gap-2 overflow-hidden flex-1">
+          {/* Official Portal Header */}
+          <div className="flex items-center gap-2.5 px-2 py-1.5 mb-1 border-b border-gray-200 pb-2">
+            <div className="w-8 h-8 rounded-full bg-white border border-[#003366]/30 p-0.5 flex items-center justify-center shrink-0 shadow-2xs">
+              <img
+                src={sbtetEmblem}
+                alt="SBTET"
+                className="w-full h-full object-contain"
+                onError={(e) => {
+                  e.target.style.display = "none";
+                }}
+              />
+            </div>
+            <div className="flex flex-col min-w-0">
+              <span className="font-bold text-xs text-[#003366] tracking-wide truncate">
+                SBTET PolyConnect AI
+              </span>
+              <span className="text-[9.5px] text-gray-500 font-medium truncate">
+                Govt. of Telangana • Academic Mentor
+              </span>
+            </div>
+          </div>
 
-      <div className="w-full md:w-72 bg-gray-50 border-r border-gray-300 flex flex-col justify-between shrink-0">
-        <div className="p-3 border-b border-gray-300 space-y-2">
+          {/* New Chat Button */}
           <button
             type="button"
-            onClick={() => {
-              setActiveDoubt(null);
-              setQuestionText("");
-              setAttachedFile(null);
-            }}
-            className="w-full bg-[#003366] hover:bg-[#002244] text-white text-xs font-bold py-2.5 px-3 rounded-lg flex items-center justify-center gap-2 shadow-xs transition-colors cursor-pointer"
+            onClick={handleStartNewChat}
+            className="w-full flex items-center gap-3 px-3.5 py-2.5 rounded-full bg-white hover:bg-slate-100 border border-gray-300 hover:border-[#003366] text-sm text-[#003366] font-semibold transition cursor-pointer shadow-2xs"
           >
-            <svg
-              className="w-4 h-4"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M12 4v16m8-8H4"
-              />
-            </svg>
-
-            New Doubt Session
+            <PenSquare className="w-4 h-4 text-[#003366]" />
+            <span>New chat</span>
           </button>
 
-          <input
-            className="w-full bg-white border border-gray-300 focus:border-[#2196f3] outline-none text-gray-800 placeholder-gray-400 text-xs py-1.5 px-2.5 rounded-lg"
-            placeholder="Search past doubts…"
-            value={searchHistory}
-            onChange={(e) =>
-              setSearchHistory(e.target.value)
-            }
-          />
-        </div>
-
-        <div className="flex-1 overflow-y-auto p-2 space-y-1">
-          <div className="text-[10px] uppercase font-bold text-gray-500 px-2 py-1 tracking-wider">
-            Doubt History ({doubts.length})
+          {/* Search Chats */}
+          <div className="pt-1">
+            <div className="relative">
+              <input
+                id="search-input-box"
+                type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder="Search past chats…"
+                className="w-full bg-white border border-gray-300 focus:border-[#003366] focus:ring-1 focus:ring-[#003366] text-xs text-gray-800 placeholder-gray-400 pl-8 pr-2.5 py-1.5 rounded-lg outline-none"
+              />
+              <Search className="w-3.5 h-3.5 text-gray-400 absolute left-2.5 top-2" />
+            </div>
           </div>
 
-          {filteredHistory.length === 0 ? (
-            <div className="text-center py-8 text-xs text-gray-500 px-3">
-              No previous doubts found. Ask any
-              technical query below!
+          {/* Recent Chats Section */}
+          <div className="pt-3 flex-1 flex flex-col overflow-hidden border-t border-gray-200 mt-1">
+            <div className="text-gray-500 px-2 py-1 uppercase text-[10.5px] font-bold tracking-wider">
+              Recent Doubts
             </div>
-          ) : (
-            filteredHistory.map((d) => {
-              const isSelected =
-                activeDoubt?.id === d.id;
 
-              const isDeleting =
-                deletingId === d.id;
+            <div className="flex-1 overflow-y-auto space-y-0.5 pr-1 no-scrollbar">
+              {filteredRecentChats.map((chat) => {
+                const isSelected = activeSessionId === chat.id;
 
-              return (
-                <button
-                  key={d.id}
-                  onClick={() =>
-                    setActiveDoubt(d)
-                  }
-                  disabled={isDeleting}
-                  className={`group w-full text-left p-2.5 rounded-lg text-xs transition-all flex flex-col gap-1 border relative cursor-pointer ${isSelected
-                      ? "bg-blue-50 border-blue-300 text-gray-900 font-medium"
-                      : "border-transparent hover:bg-gray-100 text-gray-600"
-                    } ${isDeleting
-                      ? "opacity-40"
-                      : ""
+                return (
+                  <div
+                    key={chat.id}
+                    onClick={() => setActiveSessionId(chat.id)}
+                    className={`group w-full flex items-center justify-between px-3 py-2 rounded-lg text-xs cursor-pointer transition ${
+                      isSelected
+                        ? "bg-blue-50 text-[#003366] font-semibold border border-blue-200 shadow-2xs"
+                        : "hover:bg-slate-200/60 text-gray-700"
                     }`}
-                >
-                  <div className="flex items-center justify-between gap-2">
-                    <span className="font-semibold text-[11px] text-[#003366] truncate flex items-center gap-1">
-                      <span>💡</span>
-
-                      <span>
-                        Doubt #
-                        {String(d.id).slice(-4)}
-                      </span>
+                  >
+                    <span className="truncate flex-1 text-left">
+                      {chat.title}
                     </span>
 
-                    <div className="flex items-center gap-1.5 shrink-0">
-                      <span className="text-[9px] text-gray-400">
-                        {d.pending
-                          ? "Solving…"
-                          : d.createdAt
-                            ? new Date(
-                              d.createdAt
-                            ).toLocaleDateString()
-                            : ""}
-                      </span>
-
-                      <span
-                        role="button"
-                        tabIndex={0}
-                        onClick={(e) =>
-                          handleDeleteDoubt(
-                            e,
-                            d
-                          )
-                        }
-                        onKeyDown={(e) => {
-                          if (
-                            e.key === "Enter" ||
-                            e.key === " "
-                          ) {
-                            handleDeleteDoubt(
-                              e,
-                              d
-                            );
-                          }
-                        }}
-                        title="Delete this doubt"
-                        className="opacity-0 group-hover:opacity-100 focus:opacity-100 text-gray-400 hover:text-red-600 transition-opacity p-0.5 rounded cursor-pointer"
-                      >
-                        <svg
-                          className="w-3.5 h-3.5"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          stroke="currentColor"
+                    <div className="flex items-center gap-1 shrink-0 ml-1">
+                      {chat.pinned ? (
+                        <Pin
+                          onClick={(e) => handleTogglePin(e, chat.id)}
+                          className="w-3 h-3 text-[#003366] hover:opacity-80"
+                        />
+                      ) : (
+                        <button
+                          onClick={(e) => handleTogglePin(e, chat.id)}
+                          className="opacity-0 group-hover:opacity-100 p-0.5 hover:text-[#003366]"
+                          title="Pin chat"
                         >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth="2"
-                            d="M6 7h12M9 7V5a2 2 0 012-2h2a2 2 0 012 2v2m-8 0v12a2 2 0 002 2h4a2 2 0 002-2V7H8z"
-                          />
-                        </svg>
-                      </span>
+                          <Pin className="w-3 h-3 text-gray-400" />
+                        </button>
+                      )}
+
+                      <button
+                        onClick={(e) => handleDeleteSession(e, chat.id)}
+                        className="opacity-0 group-hover:opacity-100 p-0.5 hover:text-red-600"
+                        title="Delete chat"
+                      >
+                        <Trash2 className="w-3 h-3 text-gray-400 hover:text-red-600" />
+                      </button>
                     </div>
                   </div>
-
-                  <p className="line-clamp-2 text-[11.5px] leading-tight text-gray-700">
-                    {d.questionText}
-                  </p>
-                </button>
-              );
-            })
-          )}
-        </div>
-
-        <div className="p-3 border-t border-gray-300 bg-gray-50 text-[10px] text-gray-500">
-          <div className="font-bold text-[#003366]">
-            State Board AI Academic Mentor
-          </div>
-
-          <div>
-            Official Government AI Doubt Solving Portal
+                );
+              })}
+            </div>
           </div>
         </div>
-      </div>
+      </aside>
 
-      {/* MAIN AREA */}
+      {/* ============================================================== */}
+      {/* 2. MOBILE DRAWER SLIDE-OUT (Clean Light Government Theme)     */}
+      {/* ============================================================== */}
+      {mobileDrawerOpen && (
+        <div className="md:hidden fixed inset-0 z-50 flex">
+          {/* Backdrop */}
+          <div
+            onClick={() => setMobileDrawerOpen(false)}
+            className="fixed inset-0 bg-black/40 backdrop-blur-2xs transition-opacity"
+          />
 
-      <div className="flex-1 flex flex-col justify-between bg-white relative">
-        {/* HEADER */}
-
-        <div className="px-4 py-3 bg-gray-50 border-b border-gray-300 flex flex-wrap items-center justify-between gap-3 text-xs">
-          <div className="flex items-center gap-2">
-            <span className="w-2.5 h-2.5 rounded-full bg-[#2e7d32]"></span>
-
-            <span className="font-bold text-[#003366] text-sm">
-              SBTET AI Academic Mentor
-            </span>
-
-            <span className="text-gray-400">|</span>
-
-            <span className="text-gray-600 hidden sm:inline text-xs">
-              State Board of Technical Education and
-              Training Telangana
-            </span>
-          </div>
-
-          <div className="flex items-center gap-2">
-            <span className="text-[10px] font-bold text-emerald-800 bg-emerald-50 border border-emerald-300 px-2.5 py-0.5 rounded-full flex items-center gap-1.5 shadow-2xs">
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
-
-              AI Mentor Active
-            </span>
-          </div>
-        </div>
-
-        {/* CONVERSATION */}
-
-        <div className="flex-1 overflow-y-auto p-4 md:p-6 space-y-6 bg-white">
-          {!activeDoubt ? (
-            <div className="h-full flex flex-col items-center justify-center text-center px-4">
-              <div className="relative max-w-2xl mx-auto space-y-6">
-                <div className="space-y-2">
-                  <div className="w-14 h-14 rounded-2xl bg-blue-50 border border-blue-200 text-[#003366] mx-auto flex items-center justify-center shadow-xs">
-                    <svg
-                      className="w-7 h-7"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18.5 16.5 18c-1.746 0-3.332.477-4.5 1.253"
-                      />
-                    </svg>
+          {/* Drawer Container */}
+          <div className="relative w-72 max-w-[85%] bg-white h-full flex flex-col p-3.5 z-10 shadow-2xl border-r border-gray-300 animate-in slide-in-from-left duration-200">
+            <div className="flex flex-col gap-2 overflow-hidden flex-1">
+              {/* Drawer Header: SBTET PolyConnect AI */}
+              <div className="flex items-center justify-between pb-2.5 border-b border-gray-200">
+                <div className="flex items-center gap-2.5">
+                  <div className="w-7 h-7 rounded-full bg-white border border-[#003366]/30 p-0.5 flex items-center justify-center shrink-0 shadow-2xs">
+                    <img
+                      src={sbtetEmblem}
+                      alt="SBTET"
+                      className="w-full h-full object-contain"
+                      onError={(e) => {
+                        e.target.style.display = "none";
+                      }}
+                    />
                   </div>
-
-                  <h2 className="font-bold text-2xl text-[#003366] tracking-tight">
-                    Ask SBTET AI Academic Mentor
-                  </h2>
-
-                  <p className="text-xs sm:text-sm text-gray-500 max-w-lg mx-auto leading-relaxed">
-                    Get instant step-by-step solutions,
-                    mathematical derivations, circuit
-                    diagrams, and programming help for
-                    any diploma and polytechnic subject.
-                  </p>
+                  <div className="flex flex-col">
+                    <span className="font-bold text-sm text-[#003366] tracking-tight leading-none">
+                      SBTET PolyConnect AI
+                    </span>
+                    <span className="text-[9px] text-gray-500 font-medium leading-tight mt-0.5">
+                      Government of Telangana
+                    </span>
+                  </div>
                 </div>
+                <button
+                  onClick={() => setMobileDrawerOpen(false)}
+                  className="p-1 rounded-full hover:bg-gray-100 text-gray-600 hover:text-gray-900"
+                >
+                  <X className="w-5 h-5" />
+                </button>
+              </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-left">
-                  {QUICK_SUGGESTIONS.map(
-                    (sug, i) => (
-                      <button
-                        key={i}
-                        onClick={() =>
-                          applySuggestion(sug)
-                        }
-                        className="p-3 bg-white border border-gray-300 rounded-xl hover:border-blue-400 hover:bg-blue-50/50 transition-all text-xs group flex flex-col justify-between shadow-2xs cursor-pointer"
-                      >
-                        <div className="font-bold text-gray-800 group-hover:text-[#003366] flex items-center justify-between mb-1">
-                          <span>
-                            {sug.title}
-                          </span>
+              {/* New chat */}
+              <button
+                type="button"
+                onClick={handleStartNewChat}
+                className="w-full flex items-center gap-3 px-3 py-2.5 rounded-full bg-blue-50 hover:bg-blue-100 text-sm text-[#003366] font-semibold transition cursor-pointer border border-blue-200"
+              >
+                <PenSquare className="w-4 h-4 text-[#003366]" />
+                <span>New chat</span>
+              </button>
 
-                          <span className="text-[10px] text-gray-400">
-                            {sug.name}
-                          </span>
-                        </div>
-
-                        <p className="text-[11px] text-gray-500 line-clamp-2 leading-snug">
-                          {sug.q}
-                        </p>
-                      </button>
-                    )
-                  )}
+              {/* Search */}
+              <div className="pt-1">
+                <div className="relative">
+                  <input
+                    type="text"
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    placeholder="Search past chats…"
+                    className="w-full bg-slate-50 border border-gray-300 focus:border-[#003366] text-xs text-gray-800 placeholder-gray-400 pl-8 pr-2.5 py-1.5 rounded-lg outline-none"
+                  />
+                  <Search className="w-3.5 h-3.5 text-gray-400 absolute left-2.5 top-2" />
                 </div>
               </div>
-            </div>
-          ) : (
-            <div className="max-w-3xl mx-auto space-y-6">
-              {/* USER QUESTION */}
 
-              <div className="flex items-start justify-end gap-3">
-                <div className="bg-[#003366] text-white p-4 rounded-2xl rounded-tr-xs max-w-[85%] text-xs md:text-sm leading-relaxed shadow-sm">
-                  <p className="whitespace-pre-wrap font-medium">
-                    {activeDoubt.questionText}
-                  </p>
+              {/* Recent chats */}
+              <div className="pt-2 flex-1 flex flex-col overflow-hidden border-t border-gray-200 mt-1">
+                <div className="text-gray-500 px-2 py-1 uppercase text-[10.5px] font-bold">
+                  Recent Doubts
+                </div>
 
-                  {activeDoubt.attachedFilePreview && (
-                    <div className="mt-3 pt-2 border-t border-white/20">
-                      {activeDoubt
-                        .attachedFilePreview
-                        .isImage ? (
-                        <div className="space-y-1">
-                          <span className="text-[10px] opacity-80 block">
-                            Attached Document / Image:
-                          </span>
-
-                          <img
-                            src={
-                              activeDoubt
-                                .attachedFilePreview
-                                .dataUrl
-                            }
-                            alt="Attached diagram"
-                            className="max-h-48 rounded-lg border border-white/30 bg-black/10 object-contain"
-                          />
-                        </div>
+                <div className="flex-1 overflow-y-auto space-y-0.5 no-scrollbar">
+                  {filteredRecentChats.map((chat) => (
+                    <div
+                      key={chat.id}
+                      onClick={() => {
+                        setActiveSessionId(chat.id);
+                        setMobileDrawerOpen(false);
+                      }}
+                      className="w-full flex items-center justify-between px-3 py-2 rounded-lg text-xs text-gray-700 hover:bg-slate-100 cursor-pointer"
+                    >
+                      <span className="truncate flex-1 text-left">
+                        {chat.title}
+                      </span>
+                      {chat.pinned ? (
+                        <Pin className="w-3 h-3 text-[#003366]" />
                       ) : (
-                        <div className="flex items-center gap-2 bg-white/10 p-2 rounded-lg text-[11px]">
-                          <svg
-                            className="w-4 h-4 text-white shrink-0"
-                            fill="currentColor"
-                            viewBox="0 0 24 24"
-                          >
-                            <path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z" />
-                          </svg>
-
-                          <span className="truncate">
-                            {
-                              activeDoubt
-                                .attachedFilePreview
-                                .name
-                            }
-                          </span>
-                        </div>
+                        <MoreVertical className="w-3 h-3 text-gray-400" />
                       )}
                     </div>
-                  )}
-                </div>
-
-                <div className="w-8 h-8 rounded-full bg-slate-200 border border-slate-300 text-slate-700 flex items-center justify-center font-bold text-xs shrink-0">
-                  U
+                  ))}
                 </div>
               </div>
+            </div>
+          </div>
+        </div>
+      )}
 
-              {/* AI ANSWER */}
+      {/* ============================================================== */}
+      {/* 3. MAIN CHAT WORKSPACE (Clean Professional Light Layout)      */}
+      {/* ============================================================== */}
+      <main className="flex-1 flex flex-col justify-between h-full bg-white overflow-hidden relative">
+        {/* Top Header Bar */}
+        <header className="h-12 border-b border-gray-200 flex items-center justify-between px-3 sm:px-5 shrink-0 z-10 bg-white/95 backdrop-blur-xs">
+          <div className="flex items-center gap-2">
+            {/* Hamburger on Mobile */}
+            <button
+              type="button"
+              onClick={() => setMobileDrawerOpen(true)}
+              className="md:hidden p-1.5 rounded-full hover:bg-slate-100 text-gray-700 hover:text-black transition cursor-pointer"
+              title="Open Menu"
+            >
+              <Menu className="w-5 h-5" />
+            </button>
 
-              <div className="flex items-start gap-3">
-                <div className="w-8 h-8 rounded-full bg-emerald-600 text-white flex items-center justify-center font-bold text-xs shrink-0 shadow-xs">
-                  AI
+            {/* Model Selector Pill Dropdown */}
+            <div className="relative">
+              <button
+                type="button"
+                onClick={() => setShowModelDropdown(!showModelDropdown)}
+                className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-100 hover:bg-slate-200 text-[#003366] text-xs sm:text-sm font-semibold transition cursor-pointer border border-slate-200"
+              >
+                <span>{selectedModel}</span>
+                <ChevronDown className="w-3.5 h-3.5 text-gray-500" />
+              </button>
+
+              {showModelDropdown && (
+                <div className="absolute top-full left-0 mt-1 w-56 bg-white border border-gray-300 rounded-xl shadow-xl py-1 text-xs z-30">
+                  {[
+                    "SBTET Mentor AI",
+                    "Diploma Core AI (C-21/C-24)",
+                    "Maths & Numerical Engine",
+                    "Code & Lab Practical AI",
+                  ].map((model) => (
+                    <button
+                      key={model}
+                      type="button"
+                      onClick={() => {
+                        setSelectedModel(model);
+                        setShowModelDropdown(false);
+                      }}
+                      className={`w-full text-left px-3 py-2 hover:bg-slate-50 flex items-center justify-between ${
+                        selectedModel === model ? "text-[#003366] font-bold bg-blue-50/50" : "text-gray-700"
+                      }`}
+                    >
+                      <span>{model}</span>
+                      {selectedModel === model && <Check className="w-3.5 h-3.5 text-[#003366]" />}
+                    </button>
+                  ))}
                 </div>
+              )}
+            </div>
+          </div>
 
-                <div className="flex-1 bg-gray-50 border border-gray-300 rounded-2xl rounded-tl-xs p-5 text-xs md:text-sm leading-relaxed space-y-3">
-                  <div className="flex items-center justify-between border-b border-gray-300 pb-2">
-                    <span className="font-bold text-xs text-[#003366] uppercase tracking-wide flex items-center gap-1.5">
-                      <span>📘</span>
+          <div className="flex items-center gap-2">
+            {activeSession && (
+              <button
+                type="button"
+                onClick={handleStartNewChat}
+                className="hidden sm:flex items-center gap-1.5 text-xs text-[#003366] font-semibold hover:bg-slate-100 px-3 py-1 rounded-full border border-gray-200 cursor-pointer transition"
+              >
+                <Plus className="w-3.5 h-3.5" />
+                <span>New chat</span>
+              </button>
+            )}
+          </div>
+        </header>
 
-                      <span>
-                        Detailed Solution &
-                        Concept Explanation
-                      </span>
-                    </span>
+        {/* ============================================================== */}
+        {/* VIEW A: EMPTY STATE ("Where should we start?" - Light Theme)   */}
+        {/* ============================================================== */}
+        {!activeSession ? (
+          <div className="flex-1 flex flex-col items-center justify-center p-4 sm:p-6 overflow-y-auto bg-gradient-to-b from-slate-50/50 to-white">
+            <div className="max-w-2xl w-full flex flex-col items-center text-center space-y-7 my-auto">
+              {/* Emblem icon */}
+              <div className="w-16 h-16 rounded-2xl bg-white border border-gray-200 p-2 shadow-sm flex items-center justify-center">
+                <img
+                  src={sbtetEmblem}
+                  alt="SBTET"
+                  className="w-full h-full object-contain"
+                  onError={(e) => {
+                    e.target.style.display = "none";
+                  }}
+                />
+              </div>
 
-                    {activeDoubt.aiSolution && (
-                      <button
-                        onClick={() =>
-                          handleCopy(
-                            activeDoubt.aiSolution,
-                            activeDoubt.id
-                          )
-                        }
-                        className="text-[11px] font-semibold text-[#003366] hover:underline flex items-center gap-1 cursor-pointer"
-                      >
-                        {copiedId === activeDoubt.id
-                          ? "Copied ✓"
-                          : "Copy Solution"}
-                      </button>
-                    )}
+              {/* Center Title */}
+              <div className="space-y-1">
+                <h1 className="text-2xl sm:text-3xl font-bold text-[#003366] tracking-tight">
+                  Where should we start?
+                </h1>
+                <p className="text-xs text-gray-500">
+                  Ask any diploma syllabus question, engineering derivation, or programming logic
+                </p>
+              </div>
+
+              {/* Center Input Pill Bar */}
+              <div className="w-full">
+                <form
+                  onSubmit={(e) => {
+                    e.preventDefault();
+                    handleSendMessage();
+                  }}
+                  className="w-full bg-white border border-gray-300 rounded-full px-4 py-2.5 flex items-center gap-3 focus-within:border-[#003366] focus-within:ring-2 focus-within:ring-blue-100 transition-all shadow-md"
+                >
+                  {/* File attach + icon */}
+                  <button
+                    type="button"
+                    onClick={() => fileInputRef.current?.click()}
+                    className="text-gray-500 hover:text-[#003366] p-1 rounded-full hover:bg-slate-100 transition cursor-pointer shrink-0"
+                    title="Attach problem diagram or question photo"
+                  >
+                    <Plus className="w-5 h-5" />
+                  </button>
+
+                  <input
+                    type="text"
+                    value={inputPrompt}
+                    onChange={(e) => setInputPrompt(e.target.value)}
+                    placeholder={
+                      isListening
+                        ? "Listening... Speak your doubt now..."
+                        : "Ask SBTET PolyConnect AI..."
+                    }
+                    className="flex-1 bg-transparent text-sm sm:text-base text-gray-800 placeholder-gray-400 focus:outline-none"
+                    autoFocus
+                  />
+
+                  {/* Dropdown in Input bar */}
+                  <div className="hidden sm:flex items-center gap-1 text-xs text-[#003366] font-semibold bg-slate-100 px-2.5 py-1 rounded-full cursor-pointer hover:bg-slate-200">
+                    <span>{selectedModel}</span>
+                    <ChevronDown className="w-3 h-3 text-gray-500" />
                   </div>
 
-                  {activeDoubt.pending ? (
-                    <ThinkingLoader />
-                  ) : activeDoubt.aiSolution ? (
-                    <div className="font-sans">
-                      <MarkdownLite
-                        text={
-                          activeDoubt.aiSolution
-                        }
-                      />
-                    </div>
-                  ) : (
-                    <div className="text-xs text-gray-500">
-                      No solution received for this
-                      query.
-                    </div>
-                  )}
-                </div>
+                  {/* Mic icon */}
+                  <button
+                    type="button"
+                    onClick={handleToggleVoiceInput}
+                    className={`p-1.5 rounded-full transition cursor-pointer shrink-0 ${
+                      isListening
+                        ? "text-red-600 bg-red-100 ring-2 ring-red-400 animate-pulse"
+                        : "text-gray-500 hover:text-[#003366] hover:bg-slate-100"
+                    }`}
+                    title={
+                      isListening
+                        ? "Listening... Click to stop"
+                        : "Voice input (Click to speak)"
+                    }
+                  >
+                    {isListening ? (
+                      <MicOff className="w-4 h-4 text-red-600" />
+                    ) : (
+                      <Mic className="w-4 h-4" />
+                    )}
+                  </button>
+
+                  {/* Send button */}
+                  <button
+                    type="submit"
+                    disabled={!inputPrompt.trim() && !attachedFile}
+                    className="w-8 h-8 rounded-full bg-[#003366] hover:bg-[#002244] text-white disabled:bg-gray-200 disabled:text-gray-400 flex items-center justify-center transition cursor-pointer shrink-0 shadow-xs"
+                  >
+                    <ArrowUp className="w-4 h-4" />
+                  </button>
+                </form>
+              </div>
+
+              {/* Academic Suggestions List */}
+              <div className="w-full flex flex-col gap-2 max-w-xl text-left">
+                <button
+                  type="button"
+                  onClick={() => handleSendMessage("Solve step-by-step: Find Eigenvalues and Eigenvectors of a 3x3 matrix")}
+                  className="w-full flex items-center gap-3 p-3 rounded-2xl bg-white hover:bg-blue-50/50 border border-gray-200 hover:border-blue-300 text-xs sm:text-sm text-gray-800 transition cursor-pointer shadow-2xs"
+                >
+                  <Calculator className="w-4 h-4 text-[#003366] shrink-0" />
+                  <span>Solve Engineering Mathematics (M-I, M-II) Eigenvalues numerical</span>
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => handleSendMessage("State and prove Thevenin's Theorem with circuit reduction steps and a worked numerical example")}
+                  className="w-full flex items-center gap-3 p-3 rounded-2xl bg-white hover:bg-blue-50/50 border border-gray-200 hover:border-blue-300 text-xs sm:text-sm text-gray-800 transition cursor-pointer shadow-2xs"
+                >
+                  <Zap className="w-4 h-4 text-[#d97706] shrink-0" />
+                  <span>Thevenin's Theorem circuit reduction & worked numerical</span>
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => handleSendMessage("Explain Binary Search algorithm in C with time complexity and step-by-step array dry run")}
+                  className="w-full flex items-center gap-3 p-3 rounded-2xl bg-white hover:bg-blue-50/50 border border-gray-200 hover:border-blue-300 text-xs sm:text-sm text-gray-800 transition cursor-pointer shadow-2xs"
+                >
+                  <Code2 className="w-4 h-4 text-[#2e7d32] shrink-0" />
+                  <span>Binary Search algorithm in C language with dry run</span>
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => handleSendMessage("Explain SBTET C-21 scheme marking scheme: 3-mark short answers vs 8/10-mark essay presentation")}
+                  className="w-full flex items-center gap-3 p-3 rounded-2xl bg-white hover:bg-blue-50/50 border border-gray-200 hover:border-blue-300 text-xs sm:text-sm text-gray-800 transition cursor-pointer shadow-2xs"
+                >
+                  <GraduationCap className="w-4 h-4 text-[#003366] shrink-0" />
+                  <span>SBTET board exam presentation strategy for maximum marks</span>
+                </button>
               </div>
             </div>
-          )}
+          </div>
+        ) : (
+          /* ============================================================== */
+          /* VIEW B: ACTIVE MULTI-TURN CHAT (Light Theme Continuous Stream) */
+          /* ============================================================== */
+          <div className="flex-1 flex flex-col overflow-hidden bg-slate-50/50">
+            {/* Conversation Feed */}
+            <div className="flex-1 overflow-y-auto p-4 sm:p-6 space-y-5">
+              <div className="max-w-3xl mx-auto space-y-6">
+                {activeSession.messages.map((msg) => {
+                  const isUser = msg.role === "user";
 
-          <div ref={chatEndRef} />
-        </div>
+                  if (isUser) {
+                    return (
+                      /* USER MESSAGE BUBBLE */
+                      <div
+                        key={msg.id}
+                        className="flex items-start justify-end"
+                      >
+                        <div className="bg-[#003366] text-white px-4 py-2.5 rounded-2xl rounded-tr-xs max-w-[85%] text-sm sm:text-base leading-relaxed break-words shadow-xs">
+                          <p className="whitespace-pre-wrap">{msg.content}</p>
 
-        {/* INPUT */}
-
-        <div className="p-3 bg-gray-50 border-t border-gray-300">
-          {error && (
-            <div className="bg-red-50 border border-red-300 text-red-700 text-xs p-2.5 rounded-lg mb-2">
-              {error}
-            </div>
-          )}
-
-          {attachedFile && (
-            <div className="flex items-center gap-2 bg-blue-50 border border-blue-300 px-3 py-1.5 rounded-lg text-xs text-blue-800 mb-2 w-max">
-              <svg
-                className="w-3.5 h-3.5 text-blue-600 shrink-0"
-                fill="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z" />
-              </svg>
-
-              <span className="font-semibold truncate max-w-xs">
-                {attachedFile.name}
-              </span>
-
-              <span className="text-[10px] text-blue-600/70">
-                ({attachedFile.size})
-              </span>
-
-              <button
-                type="button"
-                onClick={() =>
-                  setAttachedFile(null)
-                }
-                className="text-red-600 font-bold hover:text-red-700 ml-2 cursor-pointer"
-                title="Remove attachment"
-              >
-                &times;
-              </button>
-            </div>
-          )}
-
-          <form
-            onSubmit={handleSend}
-            className="space-y-2 max-w-3xl mx-auto w-full"
-          >
-            <div className="flex items-center gap-1.5 bg-white border border-gray-300 rounded-3xl px-2 py-1.5 focus-within:border-[#2196f3] focus-within:ring-1 focus-within:ring-[#2196f3] transition-all">
-              <button
-                type="button"
-                onClick={() =>
-                  fileInputRef.current?.click()
-                }
-                title="Attach Image diagram or PDF document"
-                className="w-9 h-9 shrink-0 flex items-center justify-center text-gray-500 hover:text-gray-800 hover:bg-gray-100 rounded-full transition-colors cursor-pointer"
-              >
-                <svg
-                  className="w-5 h-5"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13"
-                  />
-                </svg>
-              </button>
-
-              <input
-                type="file"
-                ref={fileInputRef}
-                onChange={handleFileUpload}
-                accept="image/*,application/pdf"
-                className="hidden"
-              />
-
-              <textarea
-                className="flex-1 bg-transparent text-xs sm:text-sm text-gray-800 placeholder-gray-400 focus:outline-none resize-none min-h-[36px] max-h-32 py-2 leading-snug font-['Mulish',sans-serif]"
-                rows={1}
-                placeholder="Ask any technical doubt, numerical question, or concept… (Press Enter to Send)"
-                value={questionText}
-                onChange={(e) =>
-                  setQuestionText(e.target.value)
-                }
-                onKeyDown={(e) => {
-                  if (
-                    e.key === "Enter" &&
-                    !e.shiftKey
-                  ) {
-                    e.preventDefault();
-                    handleSend();
+                          {msg.attachment?.isImage && (
+                            <img
+                              src={msg.attachment.dataUrl}
+                              alt="attachment"
+                              className="mt-2 max-h-48 rounded-lg border border-white/20 object-contain"
+                            />
+                          )}
+                        </div>
+                      </div>
+                    );
                   }
-                }}
-                required
-              />
 
-              <button
-                type="submit"
-                disabled={
-                  submitting ||
-                  !questionText.trim()
-                }
-                className="w-9 h-9 shrink-0 flex items-center justify-center bg-[#003366] hover:bg-[#002244] disabled:bg-gray-300 disabled:text-gray-500 text-white rounded-full transition-colors shadow-xs cursor-pointer"
-                title="Send doubt to AI Mentor"
-              >
-                <svg
-                  className="w-4 h-4"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M14 5l7 7m0 0l-7 7m7-7H3"
-                  />
-                </svg>
-              </button>
+                  /* ASSISTANT MESSAGE BUBBLE */
+                  return (
+                    <div key={msg.id} className="flex items-start gap-3">
+                      {/* SBTET Emblem Avatar */}
+                      <div className="w-8 h-8 rounded-full bg-white border border-[#003366]/30 p-0.5 flex items-center justify-center shrink-0 mt-0.5 shadow-2xs">
+                        <img
+                          src={sbtetEmblem}
+                          alt="SBTET"
+                          className="w-full h-full object-contain"
+                          onError={(e) => {
+                            e.target.style.display = "none";
+                          }}
+                        />
+                      </div>
+
+                      {/* Content Card */}
+                      <div className="flex-1 bg-white border border-gray-200 rounded-2xl rounded-tl-xs p-4 sm:p-5 shadow-xs text-gray-800 text-sm sm:text-[15px] leading-relaxed space-y-2">
+                        <MarkdownLite text={msg.content} />
+
+                        {/* Action buttons on hover */}
+                        <div className="flex items-center gap-2 pt-2 text-xs text-gray-500 border-t border-gray-100 mt-2">
+                          <button
+                            type="button"
+                            onClick={() => handleCopyMessage(msg.content, msg.id)}
+                            className="p-1 rounded hover:bg-slate-100 hover:text-[#003366] transition cursor-pointer flex items-center gap-1"
+                            title="Copy response"
+                          >
+                            {copiedMessageId === msg.id ? (
+                              <Check className="w-3.5 h-3.5 text-emerald-600" />
+                            ) : (
+                              <Copy className="w-3.5 h-3.5" />
+                            )}
+                          </button>
+                          <button
+                            type="button"
+                            className="p-1 rounded hover:bg-slate-100 hover:text-emerald-700 transition cursor-pointer"
+                            title="Helpful"
+                          >
+                            <ThumbsUp className="w-3.5 h-3.5" />
+                          </button>
+                          <button
+                            type="button"
+                            className="p-1 rounded hover:bg-slate-100 hover:text-red-600 transition cursor-pointer"
+                            title="Not helpful"
+                          >
+                            <ThumbsDown className="w-3.5 h-3.5" />
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })}
+
+                {/* THINKING STATE (3 pulsing dots) */}
+                {isGenerating && (
+                  <div className="flex items-center gap-3">
+                    <div className="w-8 h-8 rounded-full bg-white border border-[#003366]/30 p-0.5 flex items-center justify-center shrink-0 shadow-2xs">
+                      <img
+                        src={sbtetEmblem}
+                        alt="SBTET"
+                        className="w-full h-full object-contain animate-pulse"
+                        onError={(e) => {
+                          e.target.style.display = "none";
+                        }}
+                      />
+                    </div>
+                    <div className="flex items-center gap-1.5 py-2 px-1">
+                      <span className="w-2 h-2 rounded-full bg-[#003366] animate-pulse"></span>
+                      <span
+                        className="w-2 h-2 rounded-full bg-[#003366] animate-pulse"
+                        style={{ animationDelay: "200ms" }}
+                      ></span>
+                      <span
+                        className="w-2 h-2 rounded-full bg-[#003366] animate-pulse"
+                        style={{ animationDelay: "400ms" }}
+                      ></span>
+                    </div>
+                  </div>
+                )}
+
+                <div ref={chatBottomRef} />
+              </div>
             </div>
-          </form>
-        </div>
-      </div>
+
+            {/* FLOATING BOTTOM CHATBAR */}
+            <div className="p-3 sm:p-4 bg-white shrink-0 border-t border-gray-200">
+              <div className="max-w-3xl mx-auto w-full">
+                {/* Attached file chip */}
+                {attachedFile && (
+                  <div className="flex items-center gap-2 bg-blue-50 border border-blue-200 px-3 py-1 rounded-full text-xs text-blue-800 mb-2 w-max shadow-2xs">
+                    <Paperclip className="w-3.5 h-3.5 text-blue-600" />
+                    <span className="truncate max-w-xs">{attachedFile.name}</span>
+                    <button
+                      type="button"
+                      onClick={() => setAttachedFile(null)}
+                      className="text-red-500 hover:text-red-700 ml-1 font-bold"
+                    >
+                      &times;
+                    </button>
+                  </div>
+                )}
+
+                <form
+                  onSubmit={(e) => {
+                    e.preventDefault();
+                    handleSendMessage();
+                  }}
+                  className="bg-white border border-gray-300 rounded-full px-3.5 py-1.5 sm:py-2 flex items-center gap-2.5 focus-within:border-[#003366] focus-within:ring-2 focus-within:ring-blue-100 transition-all shadow-md"
+                >
+                  <button
+                    type="button"
+                    onClick={() => fileInputRef.current?.click()}
+                    className="text-gray-500 hover:text-[#003366] p-1 rounded-full hover:bg-slate-100 transition cursor-pointer shrink-0"
+                    title="Attach problem diagram or textbook photo"
+                  >
+                    <Plus className="w-5 h-5" />
+                  </button>
+
+                  <input
+                    type="text"
+                    value={inputPrompt}
+                    onChange={(e) => setInputPrompt(e.target.value)}
+                    placeholder={
+                      isListening
+                        ? "Listening... Speak your doubt now..."
+                        : "Ask SBTET PolyConnect AI..."
+                    }
+                    className="flex-1 bg-transparent text-sm text-gray-800 placeholder-gray-400 focus:outline-none"
+                  />
+
+                  {/* Mic icon */}
+                  <button
+                    type="button"
+                    onClick={handleToggleVoiceInput}
+                    className={`p-1.5 rounded-full transition cursor-pointer shrink-0 ${
+                      isListening
+                        ? "text-red-600 bg-red-100 ring-2 ring-red-400 animate-pulse"
+                        : "text-gray-500 hover:text-[#003366] hover:bg-slate-100"
+                    }`}
+                    title={
+                      isListening
+                        ? "Listening... Click to stop"
+                        : "Voice input (Click to speak)"
+                    }
+                  >
+                    {isListening ? (
+                      <MicOff className="w-4 h-4 text-red-600" />
+                    ) : (
+                      <Mic className="w-4 h-4" />
+                    )}
+                  </button>
+
+                  {/* Send or Stop button */}
+                  {isGenerating ? (
+                    <button
+                      type="button"
+                      onClick={() => setIsGenerating(false)}
+                      className="w-8 h-8 rounded-full bg-red-600 hover:bg-red-700 text-white flex items-center justify-center transition cursor-pointer shrink-0"
+                      title="Stop generation"
+                    >
+                      <Square className="w-3.5 h-3.5 fill-white" />
+                    </button>
+                  ) : (
+                    <button
+                      type="submit"
+                      disabled={!inputPrompt.trim() && !attachedFile}
+                      className="w-8 h-8 rounded-full bg-[#003366] hover:bg-[#002244] disabled:bg-gray-200 disabled:text-gray-400 text-white flex items-center justify-center transition cursor-pointer shrink-0 shadow-xs"
+                      title="Send question"
+                    >
+                      <ArrowUp className="w-4 h-4" />
+                    </button>
+                  )}
+                </form>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Hidden File Input */}
+        <input
+          type="file"
+          ref={fileInputRef}
+          onChange={handleFileSelect}
+          accept="image/*,application/pdf"
+          className="hidden"
+        />
+      </main>
     </div>
   );
 }
