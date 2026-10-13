@@ -275,7 +275,7 @@ const BANNER_SLIDES = [
 
 const EXTENDED_SLIDES = [...BANNER_SLIDES, BANNER_SLIDES[0]];
 const SLIDE_INTERVAL_MS = 3000;
-const NEW_GIF_URL = "https://tgpolycet.nic.in/images/new.gif";
+const NEW_GIF_URL = "/images/new.gif";
 
 // Quick Links and External Links Lists
 const QUICK_LINKS = [
@@ -306,47 +306,84 @@ function parseNotificationDate(val) {
     return isNaN(d.getTime()) ? null : d;
   }
 
+  // Handle DD-MM-YYYY or DD/MM/YYYY
   const ddmmyyyy = str.match(/^(\d{1,2})[-/](\d{1,2})[-/](\d{4})(.*)$/);
   if (ddmmyyyy) {
-    const day = parseInt(ddmmyyyy[1], 10);
-    const month = parseInt(ddmmyyyy[2], 10) - 1;
+    const p1 = parseInt(ddmmyyyy[1], 10);
+    const p2 = parseInt(ddmmyyyy[2], 10);
     const year = parseInt(ddmmyyyy[3], 10);
-    const d = new Date(year, month, day);
-    if (!isNaN(d.getTime())) return d;
+
+    // Standard DD-MM-YYYY
+    const d1 = new Date(year, p2 - 1, p1);
+    const now = new Date();
+    // If d1 is far in the future (> now + 1 day) and p1 <= 12, check if MM-DD-YYYY resolves an inverted date
+    if (d1.getTime() > now.getTime() + 86400000 && p1 <= 12) {
+      const d2 = new Date(year, p1 - 1, p2);
+      if (!isNaN(d2.getTime()) && d2.getTime() <= now.getTime() + 86400000) {
+        return d2;
+      }
+    }
+    if (!isNaN(d1.getTime())) return d1;
   }
 
   const d = new Date(str);
-  if (!isNaN(d.getTime())) return d;
+  if (!isNaN(d.getTime())) {
+    const now = new Date();
+    // If date string is far in the future (> now + 1 day), check if day and month were swapped (e.g. 2026-12-10 for Oct 12)
+    if (d.getTime() > now.getTime() + 86400000) {
+      const day = d.getDate();
+      const month = d.getMonth();
+      const year = d.getFullYear();
+      if (day <= 12) {
+        const swapped = new Date(year, day - 1, month + 1);
+        if (!isNaN(swapped.getTime()) && swapped.getTime() <= now.getTime() + 86400000) {
+          return swapped;
+        }
+      }
+    }
+    return d;
+  }
   return null;
 }
 
-function isRecentNotification(itemOrDate, daysThreshold = 7) {
-  if (!itemOrDate) return false;
-  let candidates = [];
-  if (typeof itemOrDate === "object" && !(itemOrDate instanceof Date)) {
-    if (itemOrDate.timeStamp) candidates.push(itemOrDate.timeStamp);
-    if (itemOrDate.timestamp) candidates.push(itemOrDate.timestamp);
-    if (itemOrDate.NotificationDate) candidates.push(itemOrDate.NotificationDate);
-    if (itemOrDate.date) candidates.push(itemOrDate.date);
-    if (itemOrDate.createdAt) candidates.push(itemOrDate.createdAt);
-    if (itemOrDate.created_at) candidates.push(itemOrDate.created_at);
-  } else {
-    candidates.push(itemOrDate);
+function getNotificationPublishDate(itemOrDate) {
+  if (!itemOrDate) return null;
+  if (itemOrDate instanceof Date || typeof itemOrDate === "number" || typeof itemOrDate === "string") {
+    return parseNotificationDate(itemOrDate);
   }
 
-  const validTimestamps = candidates
-    .map((c) => parseNotificationDate(c))
-    .filter((d) => d !== null && !isNaN(d.getTime()))
-    .map((d) => d.getTime());
+  // timeStamp is the authoritative arrival/publication timestamp recorded by the system
+  const ts = parseNotificationDate(itemOrDate.timeStamp || itemOrDate.timestamp);
+  const nd = parseNotificationDate(
+    itemOrDate.NotificationDate || itemOrDate.date || itemOrDate.createdAt || itemOrDate.created_at
+  );
 
-  if (validTimestamps.length === 0) return false;
+  const now = new Date();
+  if (ts && !isNaN(ts.getTime()) && ts.getTime() <= now.getTime() + 86400000) {
+    return ts;
+  }
 
-  const newestTime = Math.max(...validTimestamps);
-  const now = Date.now();
-  const diffMs = now - newestTime;
-  const diffDays = diffMs / (1000 * 60 * 60 * 24);
+  if (nd && !isNaN(nd.getTime())) {
+    return nd;
+  }
 
-  return diffDays >= -1 && diffDays <= daysThreshold;
+  return ts || null;
+}
+
+/**
+ * Checks if a notification was published within the last 5 to 6 calendar days.
+ * E.g., if published on 10th Oct, shows through 16th Oct.
+ */
+function isRecentNotification(itemOrDate, maxDays = 6) {
+  const pubDate = getNotificationPublishDate(itemOrDate);
+  if (!pubDate || isNaN(pubDate.getTime())) return false;
+
+  const now = new Date();
+  const pubMidnight = new Date(pubDate.getFullYear(), pubDate.getMonth(), pubDate.getDate()).getTime();
+  const nowMidnight = new Date(now.getFullYear(), now.getMonth(), now.getDate()).getTime();
+
+  const diffDays = Math.floor((nowMidnight - pubMidnight) / (24 * 60 * 60 * 1000));
+  return diffDays >= -1 && diffDays <= maxDays;
 }
 
 export default function HomePage() {
@@ -596,9 +633,10 @@ export default function HomePage() {
                               <img
                                 src={newGif || NEW_GIF_URL}
                                 alt="New"
-                                className="inline-block h-[12px] w-auto align-middle ml-1.5"
+                                className="inline-block h-[13px] w-auto align-middle ml-1.5 select-none"
                                 onError={(e) => {
-                                  if (e.currentTarget.src !== NEW_GIF_URL) {
+                                  if (!e.currentTarget.dataset.retried) {
+                                    e.currentTarget.dataset.retried = "true";
                                     e.currentTarget.src = NEW_GIF_URL;
                                   } else {
                                     e.currentTarget.style.display = "none";
@@ -849,9 +887,10 @@ export default function HomePage() {
                                 <img
                                   src={newGif || NEW_GIF_URL}
                                   alt="New"
-                                  className="inline-block h-[12px] w-auto align-middle ml-1.5"
+                                  className="inline-block h-[13px] w-auto align-middle ml-1.5 select-none"
                                   onError={(e) => {
-                                    if (e.currentTarget.src !== NEW_GIF_URL) {
+                                    if (!e.currentTarget.dataset.retried) {
+                                      e.currentTarget.dataset.retried = "true";
                                       e.currentTarget.src = NEW_GIF_URL;
                                     } else {
                                       e.currentTarget.style.display = "none";

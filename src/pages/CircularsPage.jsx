@@ -2,6 +2,8 @@ import { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import api, { apiErrorMessage } from "../api/client";
 import GovLoader from "../components/GovLoader";
+import newGif from "../images/new.gif";
+import { isRecentNotification } from "../utils/notificationUtils";
 
 function formatNotificationDate(dateStr) {
   if (!dateStr) return "-";
@@ -419,7 +421,22 @@ export default function CircularsPage() {
 
                       {/* Description */}
                       <td className="border border-gray-400 py-2 px-3 text-gray-800 font-normal leading-relaxed text-left align-middle min-w-[380px]">
-                        {c.Title}
+                        <span>{c.Title}</span>
+                        {isRecentNotification(c) && (
+                          <img
+                            src={newGif || "/images/new.gif"}
+                            alt="New"
+                            className="inline-block h-[13px] w-auto align-middle ml-2 select-none"
+                            onError={(e) => {
+                              if (!e.currentTarget.dataset.retried) {
+                                e.currentTarget.dataset.retried = "true";
+                                e.currentTarget.src = "/images/new.gif";
+                              } else {
+                                e.currentTarget.style.display = "none";
+                              }
+                            }}
+                          />
+                        )}
                       </td>
 
                       {/* Notification Date */}
