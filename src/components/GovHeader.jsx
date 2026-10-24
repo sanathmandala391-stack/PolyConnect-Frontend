@@ -227,14 +227,17 @@ export default function GovHeader() {
                 <a
                   href="#"
                   aria-label="Facebook"
-                  className="w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-[#1a3c78] text-white flex items-center justify-center text-[10px] sm:text-xs hover:opacity-80 transition-opacity"
+                  // className="w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-[#35a5f1] text-white flex items-center justify-center text-[10px] sm:text-xs hover:opacity-80 transition-opacity"
+                  className="w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-[#368ec9] hover:bg-[#094088] text-white flex items-center justify-center text-[10px] sm:text-xs hover:opacity-80 hover:rotate-[360deg] transition-transform transition-colors duration-700 ease-in-out"
                 >
                   <i className="fa-brands fa-facebook-f" />
                 </a>
                 <a
                   href="#"
                   aria-label="Twitter"
-                  className="w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-[#1a3c78] text-white flex items-center justify-center text-[10px] sm:text-xs hover:opacity-80 transition-opacity"
+                  // className="w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-[#35a5f1] text-white flex items-center justify-center text-[10px] sm:text-xs hover:opacity-80 transition-opacity"
+                  // className="w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-[#35a5f1] text-white flex items-center justify-center text-[10px] sm:text-xs hover:opacity-80  hover:rotate-[360deg] transition-transform duration-700 ease-in-out"
+                  className="w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-[#368ec9] hover:bg-[#094088] text-white flex items-center justify-center text-[10px] sm:text-xs hover:opacity-80 hover:rotate-[360deg] transition-transform transition-colors duration-700 ease-in-out"
                 >
                   <i className="fa-brands fa-twitter" />
                 </a>
@@ -493,14 +496,14 @@ export default function GovHeader() {
             </div>
 
             {/* CONTACT-US */}
-            <a
-              href="#contact-us"
+            <Link
+              to="/contact-us"
               className="px-2 xl:px-2.5 py-2 text-[12px] xl:text-[12.5px] uppercase font-bold tracking-[0.01em] flex items-center gap-1.5 whitespace-nowrap text-white transition-colors shrink-0 cursor-pointer sbtet-nav-font"
               style={{ fontFamily: "'Mulish', 'Muli', sans-serif" }}
             >
               <i className="fa-solid fa-square-phone text-[19px] shrink-0 text-white" />
               <span style={{ fontFamily: "'Mulish', sans-serif", fontSize: "12.5px", fontWeight: "normal" }}>CONTACT-US</span>
-            </a>
+            </Link>
 
             {/* 6. MORE MEGA MENU */}
             <div className="group static">
@@ -527,17 +530,17 @@ export default function GovHeader() {
                   <div>
                     <div className="bg-[#24a2dc] text-white font-bold px-3 py-1.5 uppercase text-[11px] mb-2 tracking-wide" style={{ fontFamily: "'Mulish', 'Muli', sans-serif" }}>PORTAL</div>
                     <ul className="divide-y divide-dotted divide-[#cbd5e1]">
-                      <li><a href="#" className="block py-2 px-1 hover:bg-slate-50 hover:text-[#24a2dc] font-normal text-[13px] text-[#444444] transition-colors">Site Map</a></li>
-                      <li><a href="#" className="block py-2 px-1 hover:bg-slate-50 hover:text-[#24a2dc] font-normal text-[13px] text-[#444444] transition-colors">Tenders & Downloads</a></li>
+                      <li><Link to="/sitemap" className="block py-2 px-1 hover:bg-slate-50 hover:text-[#24a2dc] font-normal text-[13px] text-[#444444] transition-colors">Site Map</Link></li>
+                      <li><Link to="/tenders" className="block py-2 px-1 hover:bg-slate-50 hover:text-[#24a2dc] font-normal text-[13px] text-[#444444] transition-colors">Tenders</Link></li>
                       <li><Link to="/circulars" className="block py-2 px-1 hover:bg-slate-50 hover:text-[#24a2dc] font-normal text-[13px] text-[#444444] transition-colors">Latest News Notifications</Link></li>
                     </ul>
                   </div>
                   <div>
                     <div className="bg-[#24a2dc] text-white font-bold px-3 py-1.5 uppercase text-[11px] mb-2 tracking-wide" style={{ fontFamily: "'Mulish', 'Muli', sans-serif" }}>RTI</div>
                     <ul className="divide-y divide-dotted divide-[#cbd5e1]">
-                      <li><a href="#" className="block py-2 px-1 hover:bg-slate-50 hover:text-[#24a2dc] font-normal text-[13px] text-[#444444] transition-colors">Full details of Right to Information Act</a></li>
-                      <li><a href="#" className="block py-2 px-1 hover:bg-slate-50 hover:text-[#24a2dc] font-normal text-[13px] text-[#444444] transition-colors">About Right to Information</a></li>
-                      <li><a href="#" className="block py-2 px-1 hover:bg-slate-50 hover:text-[#24a2dc] font-normal text-[13px] text-[#444444] transition-colors">Obligations of Public Authority</a></li>
+                      <li><Link to="/rti/full-details" className="block py-2 px-1 hover:bg-slate-50 hover:text-[#24a2dc] font-normal text-[13px] text-[#444444] transition-colors">Full details of Right to Information Act</Link></li>
+                      <li><Link to="/rti/about" className="block py-2 px-1 hover:bg-slate-50 hover:text-[#24a2dc] font-normal text-[13px] text-[#444444] transition-colors">About Right to Information</Link></li>
+                      <li><Link to="/rti/obligations" className="block py-2 px-1 hover:bg-slate-50 hover:text-[#24a2dc] font-normal text-[13px] text-[#444444] transition-colors">Obligations of Public Authority</Link></li>
                     </ul>
                   </div>
                 </div>
@@ -912,16 +915,19 @@ export default function GovHeader() {
               </div>
 
               {/* 6. CONTACT-US Link */}
-              <a
-                href="#contact-us"
+              <Link
+                to="/contact-us"
                 onClick={() => setMobileMenuOpen(false)}
-                className="flex items-center gap-3 px-4 py-2.5 bg-white hover:bg-slate-50 transition-colors"
+                className={`flex items-center gap-3 px-4 py-2.5 transition-colors ${location.pathname === "/contact-us"
+                  ? "bg-blue-50 text-[#1e88e5]"
+                  : "bg-white hover:bg-slate-50 text-slate-800"
+                  }`}
               >
-                <i className="fa-solid fa-phone text-slate-800 text-[13px] w-4 text-center shrink-0" />
-                <span className="font-semibold text-[13px] uppercase text-slate-800 tracking-normal" style={{ fontFamily: "'Mulish', sans-serif" }}>
+                <i className="fa-solid fa-phone text-[13px] w-4 text-center shrink-0" />
+                <span className="font-semibold text-[13px] uppercase tracking-normal" style={{ fontFamily: "'Mulish', sans-serif" }}>
                   CONTACT-US
                 </span>
-              </a>
+              </Link>
 
               {/* 7. MORE */}
               <div>
@@ -957,8 +963,8 @@ export default function GovHeader() {
                       PORTAL
                     </div>
                     <div className="divide-y divide-dotted divide-[#cbd5e1]">
-                      <a href="#" onClick={() => setMobileMenuOpen(false)} className="block px-5 py-2 hover:bg-slate-50 hover:text-[#35a5f1] font-normal text-[13px] text-[#444444] transition-colors">Site Map</a>
-                      <a href="#" onClick={() => setMobileMenuOpen(false)} className="block px-5 py-2 hover:bg-slate-50 hover:text-[#35a5f1] font-normal text-[13px] text-[#444444] transition-colors">Tenders &amp; Downloads</a>
+                      <Link to="/sitemap" onClick={() => setMobileMenuOpen(false)} className="block px-5 py-2 hover:bg-slate-50 hover:text-[#35a5f1] font-normal text-[13px] text-[#444444] transition-colors">Site Map</Link>
+                      <Link to="/tenders" onClick={() => setMobileMenuOpen(false)} className="block px-5 py-2 hover:bg-slate-50 hover:text-[#35a5f1] font-normal text-[13px] text-[#444444] transition-colors">Tenders</Link>
                       <Link to="/circulars" onClick={() => setMobileMenuOpen(false)} className="block px-5 py-2 hover:bg-slate-50 hover:text-[#35a5f1] font-normal text-[13px] text-[#444444] transition-colors">Latest News Notifications</Link>
                     </div>
 
@@ -966,9 +972,9 @@ export default function GovHeader() {
                       RTI
                     </div>
                     <div className="divide-y divide-dotted divide-[#cbd5e1]">
-                      <a href="#" onClick={() => setMobileMenuOpen(false)} className="block px-5 py-2 hover:bg-slate-50 hover:text-[#35a5f1] font-normal text-[13px] text-[#444444] transition-colors">Full details of Right to Information Act</a>
-                      <a href="#" onClick={() => setMobileMenuOpen(false)} className="block px-5 py-2 hover:bg-slate-50 hover:text-[#35a5f1] font-normal text-[13px] text-[#444444] transition-colors">About Right to Information</a>
-                      <a href="#" onClick={() => setMobileMenuOpen(false)} className="block px-5 py-2 hover:bg-slate-50 hover:text-[#35a5f1] font-normal text-[13px] text-[#444444] transition-colors">Obligations of Public Authority</a>
+                      <Link to="/rti/full-details" onClick={() => setMobileMenuOpen(false)} className="block px-5 py-2 hover:bg-slate-50 hover:text-[#35a5f1] font-normal text-[13px] text-[#444444] transition-colors">Full details of Right to Information Act</Link>
+                      <Link to="/rti/about" onClick={() => setMobileMenuOpen(false)} className="block px-5 py-2 hover:bg-slate-50 hover:text-[#35a5f1] font-normal text-[13px] text-[#444444] transition-colors">About Right to Information</Link>
+                      <Link to="/rti/obligations" onClick={() => setMobileMenuOpen(false)} className="block px-5 py-2 hover:bg-slate-50 hover:text-[#35a5f1] font-normal text-[13px] text-[#444444] transition-colors">Obligations of Public Authority</Link>
                     </div>
                   </div>
                 )}

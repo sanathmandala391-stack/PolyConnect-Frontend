@@ -39,6 +39,7 @@ export default function WhatsNew() {
               >
                 <img
                   src={"https://www.sbtet.telangana.gov.in/contents/img/gif.gif"}
+                  // src={newGif}
                   alt="new"
                   className="w-8 h-8 shrink-0 object-contain inline-block"
                   onError={(e) => {

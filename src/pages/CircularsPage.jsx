@@ -237,15 +237,15 @@ export default function CircularsPage() {
         style={{ boxSizing: "border-box" }}
       >
         <div className="max-w-7xl w-full mx-auto px-3 sm:px-4 md:px-6 flex items-center gap-2 text-[13px] text-[#003366] font-semibold">
-          <Link to="/" className="hover:text-[#003366]" style={{color: "black",fontSize: "14px"}}>
+          <Link to="/" className="hover:text-[#003366]" style={{ color: "black", fontSize: "14px" }}>
             Home
           </Link>
           <span className="text-gray-500 font-normal">/</span>
-          <Link to="/circulars" className="hover:text-[#003366]" style={{color: "black",fontSize: "14px"}}>
+          <Link to="/circulars" className="hover:text-[#003366]" style={{ color: "black", fontSize: "14px" }}>
             More
           </Link>
           <span className="text-gray-500 font-normal">/</span>
-          <span className="text-[#003366] font-bold" style={{color: "black",fontSize: "14px"}}>Notifications</span>
+          <span className="text-[#003366] font-bold" style={{ color: "black", fontSize: "14px" }}>Notifications</span>
         </div>
       </div>
 
@@ -264,11 +264,10 @@ export default function CircularsPage() {
           <button
             type="button"
             onClick={() => setTypeFilter("ALL")}
-            className={`px-3 py-1.5 text-xs rounded-[3px] border transition-colors cursor-pointer ${
-              typeFilter === "ALL"
-                ? "bg-[#2196f3] text-white border-[#2196f3] font-bold shadow-xs"
-                : "bg-white border-gray-300 text-gray-700 hover:bg-gray-50 font-medium"
-            }`}
+            className={`px-3 py-1.5 text-xs rounded-[3px] border transition-colors cursor-pointer ${typeFilter === "ALL"
+              ? "bg-[#2196f3] text-white border-[#2196f3] font-bold shadow-xs"
+              : "bg-white border-gray-300 text-gray-700 hover:bg-gray-50 font-medium"
+              }`}
           >
             All ({circulars.length})
           </button>
@@ -282,11 +281,10 @@ export default function CircularsPage() {
                 key={t}
                 type="button"
                 onClick={() => setTypeFilter(t)}
-                className={`px-3 py-1.5 text-xs rounded-[3px] border transition-colors cursor-pointer ${
-                  isActive
-                    ? "bg-[#2196f3] text-white border-[#2196f3] font-bold shadow-xs"
-                    : "bg-white border-gray-300 text-gray-700 hover:bg-gray-50 font-medium"
-                }`}
+                className={`px-3 py-1.5 text-xs rounded-[3px] border transition-colors cursor-pointer ${isActive
+                  ? "bg-[#2196f3] text-white border-[#2196f3] font-bold shadow-xs"
+                  : "bg-white border-gray-300 text-gray-700 hover:bg-gray-50 font-medium"
+                  }`}
               >
                 {t} ({count})
               </button>
@@ -403,11 +401,10 @@ export default function CircularsPage() {
                     <tr
                       key={c.ID || `${sNo}-${c.Title}`}
                       onClick={() => setSelectedRow(c.ID || sNo)}
-                      className={`transition-colors cursor-pointer ${
-                        isSelected
-                          ? "bg-[#cce5ff] hover:bg-[#bde4ff]"
-                          : "hover:bg-blue-50/30 bg-white"
-                      }`}
+                      className={`transition-colors cursor-pointer ${isSelected
+                        ? "bg-[#cce5ff] hover:bg-[#bde4ff]"
+                        : "hover:bg-blue-50/30 bg-white"
+                        }`}
                     >
                       {/* S.No */}
                       <td className="border border-gray-400 py-2 px-3 text-gray-800 font-medium text-left align-middle w-[60px] min-w-[60px]">

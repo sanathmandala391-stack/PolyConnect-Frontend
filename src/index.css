@@ -449,3 +449,17 @@ a:active:not([disabled]),
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
+
+
+/* rotate css for Header */
+
+
+.rotate-box {
+  transition: transform 1s ease-in-out;
+  transform: rotate(0deg);
+}
+
+.rotate-box:hover {
+  transform: rotate(360deg);
+  background-Color:#1a3c78;
+}

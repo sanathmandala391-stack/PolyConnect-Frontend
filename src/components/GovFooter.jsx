@@ -1,4 +1,5 @@
 import { ArrowUp } from "lucide-react";
+import { Link } from "react-router-dom";
 
 export default function GovFooter() {
   return (
@@ -23,7 +24,15 @@ export default function GovFooter() {
 
           {/* Contacts Us Column */}
           <div>
-            <h5 className="text-[18px] font-normal text-white mb-2 tracking-wide">Contacts Us</h5>
+            {/* <div className="flex items-center justify-between mb-2">
+              <h5 className="text-[18px] font-normal text-white tracking-wide m-0">Contacts Us</h5>
+              <Link
+                to="/contact-us"
+                className="text-[12px] text-blue-200 hover:text-white underline font-medium"
+              >
+                View Full Page &rarr;
+              </Link>
+            </div> */}
             <dl className="contact-list m-0">
               <dt className="text-[14px] font-normal text-white leading-relaxed m-0">
                 Email : <span>
