@@ -827,8 +827,8 @@ export default function ChatPage() {
           {/* WebSocket Badge */}
           <div
             className={`inline-flex items-center gap-1.5 text-[11px] font-medium px-2.5 py-0.5 rounded-full border ${connected
-                ? "bg-emerald-50 text-emerald-800 border-emerald-200"
-                : "bg-slate-100 text-slate-600 border-slate-200"
+              ? "bg-emerald-50 text-emerald-800 border-emerald-200"
+              : "bg-slate-100 text-slate-600 border-slate-200"
               }`}
           >
             <span
@@ -1058,8 +1058,8 @@ export default function ChatPage() {
             <div key={alert.id} className="flex justify-center">
               <div
                 className={`text-[11px] font-medium px-4 py-1.5 rounded-full shadow-xs max-w-lg text-center ${alert.type === "success"
-                    ? "bg-emerald-50 border border-emerald-200 text-emerald-900"
-                    : "bg-blue-50 border border-blue-200 text-[#003366]"
+                  ? "bg-emerald-50 border border-emerald-200 text-emerald-900"
+                  : "bg-blue-50 border border-blue-200 text-[#003366]"
                   }`}
               >
                 {alert.text}
@@ -1214,8 +1214,8 @@ export default function ChatPage() {
                 {/* =========================================================== */}
                 <div
                   className={`max-w-[85%] sm:max-w-[72%] rounded-2xl px-3.5 py-2 text-sm leading-relaxed shadow-xs relative transition-all ${isMine
-                      ? "bg-[#003366] text-white rounded-tr-xs shadow-md"
-                      : "bg-white text-slate-800 rounded-tl-xs border border-slate-200/90 shadow-sm"
+                    ? "bg-[#003366] text-white rounded-tr-xs shadow-md"
+                    : "bg-white text-slate-800 rounded-tl-xs border border-slate-200/90 shadow-sm"
                     } ${m.isDeleted ? "italic opacity-80" : ""}`}
                 >
                   {/* Sender Label for Mentor Messages */}
@@ -1230,8 +1230,8 @@ export default function ChatPage() {
                   {m.replyTo && (
                     <div
                       className={`mb-2 p-2 rounded-lg border-l-4 text-xs ${isMine
-                          ? "bg-white/10 border-cyan-300 text-white"
-                          : "bg-slate-100 border-[#003366] text-slate-700"
+                        ? "bg-white/10 border-cyan-300 text-white"
+                        : "bg-slate-100 border-[#003366] text-slate-700"
                         }`}
                     >
                       <div className="font-semibold text-[11px] text-cyan-200 mb-0.5">
@@ -1284,8 +1284,8 @@ export default function ChatPage() {
                         type="button"
                         onClick={() => handleTogglePlayAudio(m.id)}
                         className={`w-9 h-9 rounded-full flex items-center justify-center transition cursor-pointer shrink-0 shadow-xs ${isMine
-                            ? "bg-white text-[#003366] hover:bg-slate-100"
-                            : "bg-[#003366] text-white hover:bg-[#002244]"
+                          ? "bg-white text-[#003366] hover:bg-slate-100"
+                          : "bg-[#003366] text-white hover:bg-[#002244]"
                           }`}
                       >
                         {playingAudioId === m.id ? (
@@ -1506,8 +1506,8 @@ export default function ChatPage() {
                     type="button"
                     onClick={() => setActiveEmojiTab(cat)}
                     className={`px-2 py-1 rounded-md font-semibold transition ${activeEmojiTab === cat
-                        ? "bg-[#003366] text-white"
-                        : "text-slate-600 hover:bg-slate-100"
+                      ? "bg-[#003366] text-white"
+                      : "text-slate-600 hover:bg-slate-100"
                       }`}
                   >
                     {cat}

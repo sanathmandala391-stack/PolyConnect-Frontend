@@ -1,7 +1,70 @@
 import { ArrowUp } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
+
+const SBTET_VISITOR_API_PROXIED = "/sbtet-api/PreExamination/GetWebSiteVisiterCount";
+const SBTET_VISITOR_API_DIRECT = "https://www.sbtet.telangana.gov.in/api/api/PreExamination/GetWebSiteVisiterCount";
 
 export default function GovFooter() {
+  const [visitorCount, setVisitorCount] = useState(() => {
+    try {
+      const cached = localStorage.getItem("sbtet_visitor_count");
+      if (cached) return cached;
+    } catch {
+      // ignore storage error
+    }
+    return "1468953";
+  });
+
+  useEffect(() => {
+    let isMounted = true;
+
+    async function fetchVisitorCount() {
+      // 1. Try proxied path first to prevent browser CORS, then try direct SBTET endpoint
+      const endpoints = [SBTET_VISITOR_API_PROXIED, SBTET_VISITOR_API_DIRECT];
+
+      for (const url of endpoints) {
+        try {
+          const res = await fetch(url, {
+            headers: {
+              Accept: "application/json",
+            },
+          });
+          if (!res.ok) continue;
+
+          const data = await res.json();
+          const count =
+            data?.Table?.[0]?.WebsiteVisitedCount ??
+            data?.Table1?.[0]?.WebsiteVisitedCount ??
+            (Array.isArray(data) ? data[0]?.WebsiteVisitedCount : null) ??
+            data?.WebsiteVisitedCount;
+
+          if (count && isMounted) {
+            const countStr = String(count);
+            setVisitorCount(countStr);
+            try {
+              localStorage.setItem("sbtet_visitor_count", countStr);
+            } catch {
+              // ignore storage error
+            }
+            break; // successfully fetched
+          }
+        } catch {
+          // silently continue to fallback
+        }
+      }
+    }
+
+    fetchVisitorCount();
+
+    // Live refresh every 60 seconds
+    const interval = setInterval(fetchVisitorCount, 60000);
+    return () => {
+      isMounted = false;
+      clearInterval(interval);
+    };
+  }, []);
+
   return (
     <footer
       id="contact-us"
@@ -24,15 +87,6 @@ export default function GovFooter() {
 
           {/* Contacts Us Column */}
           <div>
-            {/* <div className="flex items-center justify-between mb-2">
-              <h5 className="text-[18px] font-normal text-white tracking-wide m-0">Contacts Us</h5>
-              <Link
-                to="/contact-us"
-                className="text-[12px] text-blue-200 hover:text-white underline font-medium"
-              >
-                View Full Page &rarr;
-              </Link>
-            </div> */}
             <dl className="contact-list m-0">
               <dt className="text-[14px] font-normal text-white leading-relaxed m-0">
                 Email : <span>
@@ -70,20 +124,27 @@ export default function GovFooter() {
             </span>
 
             {/* Site Views Counter */}
-            <div className="flex items-center select-none whitespace-nowrap">
-              <span>Total Site Views: </span>
-              <span
-                className="site-visit font-bold"
-                style={{
-                  backgroundColor: "rgb(255, 255, 255)",
-                  color: "rgb(0, 0, 0)",
-                  letterSpacing: "10px",
-                  marginLeft: "5px",
-                  padding: "2px 0px 2px 8px",
-                }}
-              >
-                1468929
+            <div
+              className="flex items-center select-none whitespace-nowrap"
+              title={`Live Website Visitors: ${visitorCount} (SBTET Telangana)`}
+            >
+              <span className="text-white text-[12px] font-normal tracking-normal mr-3" style={{ fontFamily: "Mulish", color: "white" }}>
+                Total Site Views:
               </span>
+              <div
+                className="inline-flex items-center bg-white h-[25px] px-[6px] select-all"
+                style={{ backgroundColor: "#ffffff" }}
+              >
+                {visitorCount.split("").map((digit, idx) => (
+                  <span
+                    key={idx}
+                    className="w-[22px] h-full flex items-center justify-center font-normal text-black text-[14px] leading-none select-all"
+                    style={{ fontFamily: "Mulish" }}
+                  >
+                    {digit}
+                  </span>
+                ))}
+              </div>
             </div>
           </div>
         </div>

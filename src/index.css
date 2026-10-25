@@ -1,3 +1,5 @@
+@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css');
+
 @import url('https://fonts.googleapis.com/css2?family=Mulish:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,600;1,700&display=swap');
 
 @tailwind base;
@@ -45,6 +47,24 @@ body {
 .sbtet-nav-font .fa-regular {
   font-family: "Font Awesome 6 Free", "FontAwesome" !important;
   font-style: normal;
+}
+
+/* Explicitly preserve Font Awesome 5 classic home icon with chimney */
+.sbtet-nav-font .fa-home,
+.fa-home,
+.fas.fa-home {
+  font-family: inherit !important;
+  font-style: normal !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.sbtet-nav-font .fa-home::before,
+.fa-home::before,
+.fas.fa-home::before {
+  content: none !important;
+  display: none !important;
 }
 
 .sbtet-nav-font .fa-brands,
@@ -461,5 +481,5 @@ a:active:not([disabled]),
 
 .rotate-box:hover {
   transform: rotate(360deg);
-  background-Color:#1a3c78;
+  background-Color: #1a3c78;
 }

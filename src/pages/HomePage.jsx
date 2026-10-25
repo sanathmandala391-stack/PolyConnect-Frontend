@@ -203,17 +203,20 @@ export function CcicIcon({ className = "w-14 h-14 text-white shrink-0" }) {
 //   },
 // ];
 
-// --- Stats Items matching Images 3 & 4 ---
-const STAT_ITEMS = [
-  { label: "Migration", count: "2110", suffix: "Certificate Issued", icon: CertificateIcon },
-  { label: "Interim", count: "40869", suffix: "Certificate Issued", icon: CertificateIcon },
-  { label: "Bonafied", count: "12621", suffix: "Certificate Issued", icon: CertificateIcon },
-  { label: "Transcript", count: "4309", suffix: "Transcript Issued", icon: BullhornIcon },
-  { label: "Duplicate Memo", count: "6223", suffix: "Memo Issued", icon: BullhornIcon },
-  { label: "Duplicate ODC", count: "31", suffix: "Certificate Issued", icon: CertificateIcon },
-  { label: "Transfer", count: "59882", suffix: "Certificate Issued", icon: CertificateIcon },
-  { label: "Name Correction", count: "2422", suffix: "Performed", icon: NameCorrectionIcon },
-];
+// --- Stats Items matching Images 3 & 4 (Dynamic from SBTET API) ---
+const SBTET_STUDENT_SERVICES_API_PROXIED = "/sbtet-api/PreExamination/GetStudentServicesCounts";
+const SBTET_STUDENT_SERVICES_API_DIRECT = "https://www.sbtet.telangana.gov.in/api/api/PreExamination/GetStudentServicesCounts";
+
+const DEFAULT_SERVICES_COUNTS = {
+  DDCCount: 31,
+  DMMCount: 6248,
+  MigrationCount: 2116,
+  InterimCount: 42352,
+  TranscriptsCount: 4321,
+  NameCorrectionCount: 2429,
+  BonafiedCount: 12809,
+  TransferCount: 59953,
+};
 
 function StatCard({ label, count, suffix, icon: Icon }) {
   return (
@@ -248,10 +251,88 @@ function StatCard({ label, count, suffix, icon: Icon }) {
 }
 
 function StatsRibbon() {
+  const [counts, setCounts] = useState(() => {
+    try {
+      const cached = localStorage.getItem("sbtet_student_services_counts");
+      if (cached) {
+        return { ...DEFAULT_SERVICES_COUNTS, ...JSON.parse(cached) };
+      }
+    } catch {
+      // ignore
+    }
+    return DEFAULT_SERVICES_COUNTS;
+  });
+
+  useEffect(() => {
+    let isMounted = true;
+
+    async function fetchCounts() {
+      const endpoints = [
+        SBTET_STUDENT_SERVICES_API_PROXIED,
+        SBTET_STUDENT_SERVICES_API_DIRECT,
+      ];
+
+      for (const url of endpoints) {
+        try {
+          const res = await fetch(url, {
+            headers: { Accept: "application/json" },
+          });
+          if (!res.ok) continue;
+
+          const data = await res.json();
+          const tableData =
+            data?.Table?.[0] ??
+            data?.Table1?.[0] ??
+            (Array.isArray(data) ? data[0] : null) ??
+            data;
+
+          if (tableData && typeof tableData === "object" && isMounted) {
+            setCounts((prev) => {
+              const updated = {
+                ...prev,
+                ...tableData,
+              };
+              try {
+                localStorage.setItem(
+                  "sbtet_student_services_counts",
+                  JSON.stringify(updated)
+                );
+              } catch {
+                // ignore
+              }
+              return updated;
+            });
+            break;
+          }
+        } catch {
+          // ignore and try next endpoint
+        }
+      }
+    }
+
+    fetchCounts();
+    const interval = setInterval(fetchCounts, 60000);
+    return () => {
+      isMounted = false;
+      clearInterval(interval);
+    };
+  }, []);
+
+  const statItems = [
+    { label: "Migration", count: counts.MigrationCount ?? 2116, suffix: "Certificate Issued", icon: CertificateIcon },
+    { label: "Interim", count: counts.InterimCount ?? 42352, suffix: "Certificate Issued", icon: CertificateIcon },
+    { label: "Bonafied", count: counts.BonafiedCount ?? 12809, suffix: "Certificate Issued", icon: CertificateIcon },
+    { label: "Transcript", count: counts.TranscriptsCount ?? 4321, suffix: "Transcript Issued", icon: BullhornIcon },
+    { label: "Duplicate Memo", count: counts.DMMCount ?? 6248, suffix: "Memo Issued", icon: BullhornIcon },
+    { label: "Duplicate ODC", count: counts.DDCCount ?? 31, suffix: "Certificate Issued", icon: CertificateIcon },
+    { label: "Transfer", count: counts.TransferCount ?? 59953, suffix: "Certificate Issued", icon: CertificateIcon },
+    { label: "Name Correction", count: counts.NameCorrectionCount ?? 2429, suffix: "Performed", icon: NameCorrectionIcon },
+  ];
+
   return (
     <section className="w-full bg-white py-2" id="stats-ribbon-section">
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-8 gap-3 sm:gap-3 lg:gap-3.5">
-        {STAT_ITEMS.map((item) => (
+        {statItems.map((item) => (
           <StatCard
             key={item.label}
             label={item.label}
