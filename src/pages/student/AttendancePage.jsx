@@ -14,7 +14,7 @@ import GovLoader from "../../components/GovLoader";
 import sbtetHeader from "../../images/sb.png";
 import BackButton from "../../components/BackButton";
 
-const MONTHS = ["June", "July", "August", "September", "October"];
+const DEFAULT_MONTHS = ["June", "July", "August", "September", "October", "November"];
 
 function parseJsonSafely(val) {
   if (!val) return null;
@@ -43,16 +43,24 @@ function extractSbtetDetails(liveData, attData) {
     parseJsonSafely(liveData),
     liveData?.rawResponse,
     parseJsonSafely(liveData?.rawResponse),
+    liveData?.rawSummaryJson,
+    parseJsonSafely(liveData?.rawSummaryJson),
     liveData?.summaryJson,
     parseJsonSafely(liveData?.summaryJson),
+    liveData?.summary,
+    parseJsonSafely(liveData?.summary),
     liveData?.data,
     parseJsonSafely(liveData?.data),
     attData,
     parseJsonSafely(attData),
     attData?.rawResponse,
     parseJsonSafely(attData?.rawResponse),
+    attData?.rawSummaryJson,
+    parseJsonSafely(attData?.rawSummaryJson),
     attData?.summaryJson,
     parseJsonSafely(attData?.summaryJson),
+    attData?.summary,
+    parseJsonSafely(attData?.summary),
     attData?.data,
     parseJsonSafely(attData?.data),
   ];
@@ -66,6 +74,24 @@ function extractSbtetDetails(liveData, attData) {
       tableRow = item.Table[0];
       if (Array.isArray(item.Table1)) table1Rows = item.Table1;
       break;
+    }
+    if (!tableRow && (item.WorkingDays != null || item.ExamsNDP != null || item.ExamsPer != null || item.AttendeeId)) {
+      tableRow = item;
+    }
+  }
+
+  if (table1Rows.length === 0) {
+    for (const item of candidates) {
+      if (!item) continue;
+      if (Array.isArray(item.dailyRecords)) {
+        table1Rows = item.dailyRecords;
+        break;
+      }
+      const rawCal = parseJsonSafely(item?.rawCalendarJson);
+      if (Array.isArray(rawCal)) {
+        table1Rows = rawCal;
+        break;
+      }
     }
   }
 
@@ -110,8 +136,14 @@ export default function AttendancePage() {
     }
     load();
 
+    // Auto-fetch fresh attendance from SBTET gateway every 10 minutes
+    const intervalId = setInterval(() => {
+      load();
+    }, 10 * 60 * 1000);
+
     return () => {
       isMounted = false;
+      clearInterval(intervalId);
     };
   }, []);
 
@@ -172,9 +204,44 @@ export default function AttendancePage() {
     return records;
   })();
 
+  // Dynamically determine academic calendar months from daily attendance records
+  const displayMonths = useMemo(() => {
+    const calendarOrder = [
+      "June", "July", "August", "September", "October", "November",
+      "December", "January", "February", "March", "April", "May"
+    ];
+    const foundMonths = new Set();
+
+    if (Array.isArray(table1Rows)) {
+      table1Rows.forEach((row) => {
+        const m = row.AttendanceMonth || row.month;
+        if (m) foundMonths.add(m);
+      });
+    }
+
+    Object.keys(dailyRecords).forEach((key) => {
+      const parts = key.split("-");
+      if (parts[0]) foundMonths.add(parts[0]);
+    });
+
+    const table2 = parseJsonSafely(liveReport?.monthLookup) || 
+                   parseJsonSafely(liveReport?.rawMonthLookupJson) || 
+                   parseJsonSafely(attendance?.rawMonthLookupJson);
+    if (Array.isArray(table2)) {
+      table2.forEach((item) => {
+        if (item.AttendanceMonth) foundMonths.add(item.AttendanceMonth);
+      });
+    }
+
+    if (foundMonths.size === 0) return DEFAULT_MONTHS;
+
+    const ordered = calendarOrder.filter((m) => foundMonths.has(m));
+    return ordered.length > 0 ? ordered : DEFAULT_MONTHS;
+  }, [table1Rows, dailyRecords, liveReport, attendance]);
+
   // Compute monthly attendance summary data dynamically for graph
   const chartData = useMemo(() => {
-    return MONTHS.map((month) => {
+    return displayMonths.map((month) => {
       let present = 0;
       let absent = 0;
       let halfPresent = 0;
@@ -212,6 +279,10 @@ export default function AttendancePage() {
           workingDaysCount = 6;
           present = 2;
           absent = 4;
+        } else if (month === "November") {
+          workingDaysCount = 4;
+          present = 0;
+          absent = 3;
         }
       }
 
@@ -224,7 +295,7 @@ export default function AttendancePage() {
         error: errorCount,
       };
     });
-  }, [dailyRecords, days]);
+  }, [displayMonths, dailyRecords, days]);
 
   if (loading) {
     return (
@@ -259,9 +330,9 @@ export default function AttendancePage() {
       })
     : "—";
 
-  const totalWorkingDaysExams = tableRow?.ExamsWorkingDays != null ? tableRow.ExamsWorkingDays : (tableRow?.TotalWorkingDays != null ? tableRow.TotalWorkingDays : (attendance?.examsWorkingDays ?? 90));
-  const totalPresentDaysExams = tableRow?.ExamsNDP != null ? tableRow.ExamsNDP : (tableRow?.NumberOfDaysPresent != null ? tableRow.NumberOfDaysPresent : (attendance?.presentDays ?? "—"));
-  const examAttendancePercentage = tableRow?.ExamsPer != null ? Number(tableRow.ExamsPer).toFixed(2) : (tableRow?.TotalPercentage != null ? Number(tableRow.TotalPercentage).toFixed(2) : (attendance?.examEligibilityPercentage != null ? Number(attendance.examEligibilityPercentage).toFixed(2) : "—"));
+  const totalWorkingDaysExams = tableRow?.ExamsWorkingDays != null ? tableRow.ExamsWorkingDays : (tableRow?.TotalWorkingDays != null ? tableRow.TotalWorkingDays : (attendance?.examsWorkingDays ?? 180));
+  const totalPresentDaysExams = tableRow?.ExamsNDP != null ? tableRow.ExamsNDP : (attendance?.examsPresentDays != null ? attendance.examsPresentDays : (attendance?.presentDays ?? "—"));
+  const examAttendancePercentage = tableRow?.ExamsPer != null ? Number(tableRow.ExamsPer).toFixed(2) : (attendance?.examEligibilityPercentage != null ? Number(attendance.examEligibilityPercentage).toFixed(2) : (tableRow?.TotalPercentage != null ? Number(tableRow.TotalPercentage).toFixed(2) : "—"));
 
   return (
     <>
@@ -587,7 +658,7 @@ export default function AttendancePage() {
                 </tr>
               </thead>
               <tbody>
-                {MONTHS.map((month, idx) => {
+                {displayMonths.map((month, idx) => {
                   return (
                     <tr key={month} className="text-gray-800 hover:bg-gray-50">
                       <td className="border border-gray-300 py-1 px-1.5 text-center text-gray-600" style={{

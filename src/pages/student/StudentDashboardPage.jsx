@@ -77,7 +77,11 @@ export default function StudentDashboardPage() {
           if (typeof parsedLive === "string") {
             try { parsedLive = JSON.parse(parsedLive); } catch { parsedLive = null; }
           }
-          const row = parsedLive?.Table?.[0] || (parsedLive?.rawResponse ? JSON.parse(parsedLive.rawResponse)?.Table?.[0] : null);
+          const row = parsedLive?.Table?.[0] || 
+                      (parsedLive?.rawResponse ? (typeof parsedLive.rawResponse === "string" ? JSON.parse(parsedLive.rawResponse)?.Table?.[0] : parsedLive.rawResponse?.Table?.[0]) : null) ||
+                      (parsedLive?.rawSummaryJson ? (typeof parsedLive.rawSummaryJson === "string" ? JSON.parse(parsedLive.rawSummaryJson) : parsedLive.rawSummaryJson) : null) ||
+                      (sumData?.rawSummaryJson ? (typeof sumData.rawSummaryJson === "string" ? JSON.parse(sumData.rawSummaryJson) : sumData.rawSummaryJson) : null) ||
+                      (parsedLive?.ExamsPer != null ? parsedLive : null);
 
           if (row) {
             const sem = row.Semester ? row.Semester.replace(/SEM$/i, "") : (row.semid ? String(row.semid) : undefined);
@@ -120,8 +124,14 @@ export default function StudentDashboardPage() {
 
     loadDashboardData();
 
+    // Auto-refresh dashboard & attendance every 10 minutes
+    const intervalId = setInterval(() => {
+      loadDashboardData();
+    }, 10 * 60 * 1000);
+
     return () => {
       isMounted = false;
+      clearInterval(intervalId);
     };
   }, []);
 
