@@ -11,6 +11,7 @@ import sbtet2 from "../images/sbtet2.png";
 import sbtet3 from "../images/sbtet3.png";
 import sbtet4 from "../images/sbtet4.png";
 import sbtetDip from "../images/sbtet-diploma.jpg";
+import sbtetFbCover from "../images/sbtet-fb-cover.jpg";
 import SbtetType from "../images/typewriter.jpg";
 import newGif from "../images/new.gif";
 
@@ -844,60 +845,73 @@ export default function HomePage() {
             </div>
           </div>
 
-          {/* BOX 2 (MIDDLE): SBTET Telangana Facebook Social Widget Card */}
+          {/* BOX 2 (MIDDLE): SBTET Telangana Facebook Social Widget Card (Matching Real SBTET Official Portal) */}
           <div
-            className="bg-white border border-[#c8d1db] flex flex-col justify-between overflow-hidden h-[280px] sm:h-[320px] md:h-[330px] shadow-2xs"
+            className="bg-white border border-[#c8d1db] flex flex-col overflow-hidden h-[280px] sm:h-[320px] md:h-[330px] shadow-2xs select-none"
             style={{ fontFamily: "Segoe UI, Roboto, Helvetica, Arial, sans-serif" }}
           >
-            {/* Facebook Header */}
-            <div className="p-3 border-b border-[#e2e8f0] flex items-center gap-3 bg-white">
+            {/* SBTET Masab Tank Building Cover Header */}
+            <div className="relative w-full h-[125px] sm:h-[135px] md:h-[145px] bg-[#e2e8f0] overflow-hidden shrink-0">
               <img
-                src={sbLogo}
-                alt="SBTET Emblem"
-                className="w-11 h-11 object-contain rounded-full border border-gray-200 p-0.5 shadow-2xs shrink-0"
+                src={sbtetFbCover}
+                alt="SBTET Campus Masab Tank Hyderabad"
+                className="w-full h-full object-cover object-top"
               />
-              <div className="flex-1 min-w-0">
-                <h3 className="text-[14.5px] font-bold text-[#1c2b36] tracking-tight leading-tight m-0 truncate">
-                  SBTET, Telangana
-                </h3>
-                <div className="flex items-center gap-2 mt-1 flex-wrap">
-                  <a
-                    href="https://www.facebook.com/profile.php?id=100076925755314&ref=embed_page#"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1.5 bg-[#f0f2f5] hover:bg-[#e4e6eb] text-[#1877f2] font-semibold text-[11px] px-2 py-0.5 rounded border border-[#ced0d4] no-underline transition-colors"
-                  >
-                    <i className="fa-brands fa-facebook text-[#1877f2] text-xs"></i>
-                    <span>Follow Page</span>
-                  </a>
-                  <span className="text-[11.5px] text-[#65676b] font-normal">
+              {/* Circular Facebook Badge Link */}
+              <a
+                href="https://www.facebook.com/profile.php?id=100076925755314&ref=embed_page#"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="absolute top-2.5 right-2.5 w-6 h-6 rounded-full bg-[#1877f2] hover:bg-[#166fe5] flex items-center justify-center text-white shadow-xs transition-transform hover:scale-110 no-underline"
+                title="Visit SBTET Official Facebook Page"
+              >
+                <i className="fa-brands fa-facebook-f text-xs leading-none"></i>
+              </a>
+            </div>
+
+            {/* Profile Card Body Overlay */}
+            <div className="relative z-10 bg-white rounded-t-[14px] -mt-5 px-4 pt-1 pb-3 sm:pb-3.5 flex-1 flex flex-col justify-between">
+              {/* Top Row: Circular Emblem + Name & Followers */}
+              <div className="flex items-center gap-3">
+                <div className="relative shrink-0 -mt-6 sm:-mt-7">
+                  <img
+                    src={sbLogo}
+                    alt="SBTET Emblem"
+                    className="w-14 h-14 sm:w-16 sm:h-16 rounded-full border-[3px] border-white shadow-md object-contain bg-white"
+                  />
+                </div>
+                <div className="min-w-0 pt-0.5">
+                  <h3 className="text-[15.5px] sm:text-[16.5px] font-bold text-[#050505] tracking-tight leading-tight m-0 truncate">
+                    SBTET, Telangana
+                  </h3>
+                  <p className="text-[11.5px] sm:text-[12px] text-[#65676B] font-normal m-0 mt-0.5 leading-tight">
                     3.2K followers
-                  </span>
+                  </p>
                 </div>
               </div>
-            </div>
 
-            {/* Simulated Live Feed Center */}
-            <div className="flex-1 bg-[#f8fafc] flex flex-col items-center justify-center p-4 text-center">
-              <div className="w-6 h-6 border-2 border-[#cbd5e1] border-t-[#1877f2] rounded-full animate-spin mb-2"></div>
-              <p className="text-[11.5px] text-gray-500 font-normal m-0 max-w-[200px]">
-                Connecting to SBTET official social stream...
-              </p>
-            </div>
+              {/* Category Info */}
+              <div className="flex items-center gap-2 text-[#050505] text-[13px] font-medium my-auto pt-1">
+                <svg className="w-4 h-4 text-black shrink-0 fill-current" viewBox="0 0 24 24">
+                  <path d="M10 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2h-8l-2-2z" />
+                </svg>
+                <span>Education</span>
+              </div>
 
-            {/* Facebook Bottom Banner */}
-            <a
-              href="https://www.facebook.com/profile.php?id=100076925755314&ref=embed_page#"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="bg-[#f0f2f5] hover:bg-[#e4e6eb] border-t border-[#e2e8f0] py-2 px-4 flex items-center justify-between text-[#1c2b36] hover:text-[#1877f2] text-[12.5px] font-medium no-underline transition-colors"
-            >
-              <span className="flex items-center gap-2">
-                <i className="fa-brands fa-facebook text-[#1877f2] text-sm"></i>
-                Find us on Facebook
-              </span>
-              <ChevronRight className="w-4 h-4 text-gray-500" />
-            </a>
+              {/* Action Button: Official Facebook Follow */}
+              <a
+                href="https://www.facebook.com/profile.php?id=100076925755314&ref=embed_page#"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full bg-[#1877f2] hover:bg-[#166fe5] active:bg-[#1465d2] text-white py-2 px-4 rounded-[6px] font-semibold text-[13.5px] flex items-center justify-center gap-2 transition-all no-underline shadow-2xs hover:shadow-xs cursor-pointer"
+              >
+                {/* Facebook Follow Icon (ID badge with plus) */}
+                <svg className="w-4 h-4 fill-white shrink-0" viewBox="0 0 24 24">
+                  <path d="M14 2H10C8.9 2 8 2.9 8 4v1H5c-1.1 0-2 .9-2 2v13c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2h-3V4c0-1.1-.9-2-2-2zm-4 2h4v1h-4V4zm3 8h2v2h-2v2h-2v-2H9v-2h2v-2h2v2z" />
+                </svg>
+                <span>Follow</span>
+              </a>
+            </div>
           </div>
 
           {/* BOX 3 (RIGHT): Latest News Card with View All Button */}
